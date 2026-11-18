@@ -15,3 +15,7 @@ data/*.sqlite-wal
 backups/
 data/*.sqlite*
 data/*.db*
+
+public/assets/*.jpg
+
+public/assets/*.jpg
