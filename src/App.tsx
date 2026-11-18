@@ -1,7 +1,7 @@
 ﻿import { JuryCommandCenter } from './components/JuryCommandCenter';
 import { SovereignAuthGate } from './components/SovereignAuthGate';
 import { IsefMasterDashboard } from './components/IsefMasterDashboard';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { motion } from 'motion/react';
 import { ArrowLeft, Award, RefreshCw } from 'lucide-react';
 import { AjrakLivingStage } from './components/AjrakLivingStage';
@@ -502,5 +502,6 @@ function App() {
 }
 
 export default App;
+
 
 
