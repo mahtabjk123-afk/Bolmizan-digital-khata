@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # BolMizan — Merchant Ledger & Scam-Awareness Prototype
 
 **A pilot-stage bookkeeping and scam-awareness application for small merchants.** The current repository is a software prototype, not a financial service or production-ready fintech platform.
@@ -67,3 +68,7 @@ npm run dev
 ## Regulatory and product scope
 
 BolMizan is a non-custodial software prototype. It is not a licensed bank, EMI, wallet, payment processor, credit bureau, certified fraud detector, or audited financial system. Do not use it to make real-money settlement or regulatory-compliance claims.
+=======
+# bolmizan-protocol
+Delay-Tolerant Multimodal Financial Infrastructure &amp; Explainable Vernacular Fraud Prevention Protocol
+>>>>>>> 459b89d5f197e4f40dc9c839d2965835928070e4
