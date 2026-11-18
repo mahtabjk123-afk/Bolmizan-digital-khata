@@ -1,7 +1,7 @@
 ﻿import { JuryCommandCenter } from './components/JuryCommandCenter';
 import { SovereignAuthGate } from './components/SovereignAuthGate';
 import { IsefMasterDashboard } from './components/IsefMasterDashboard';
-import React, { lazy, Suspense, useCallback, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { ArrowLeft, Award, RefreshCw } from 'lucide-react';
 import { AjrakLivingStage } from './components/AjrakLivingStage';
@@ -54,6 +54,7 @@ const TAB_CONTEXT: Record<Exclude<OsTab, 'treasury'>, { title: string; subtitle:
 };
 
 function App() {
+  const [juryMode, setJuryMode] = useState(false);
   const localHaqProofMode = new URLSearchParams(window.location.search).get('mode') === 'haqproof';
   const [state, setState] = useState<SovereignSystemState | null>(null);
   const [loading, setLoading] = useState(true);
@@ -501,4 +502,5 @@ function App() {
 }
 
 export default App;
+
 

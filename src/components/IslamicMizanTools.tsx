@@ -241,9 +241,10 @@ PKR {ushrIrrigated.toLocaleString()}
 
 
 Security Lock (#93–#99): Algorithm-Agile ES256-PQ-READY | Voice Deepfake Guard (Physical Tap Required) | Non-Fatwa Risk Advisory.
-
-
-
-
-);
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+  );
 };
