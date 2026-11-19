@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">BolMizan Sovereign</string>
+    <string name="title_activity_main">BolMizan Sovereign</string>
+    <string name="package_name">pk.sindh.bolmizan</string>
+    <string name="custom_url_scheme">pk.sindh.bolmizan</string>
+</resources>

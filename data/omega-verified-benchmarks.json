@@ -1,0 +1,12 @@
+{
+  "generatedAt": "2026-11-19T05:41:41.202Z",
+  "environment": "win32 (x64) | Node v26.13.1",
+  "metrics": {
+    "cryptographicThroughputTxPerSec": 11801,
+    "totalTransactionsBenchmarked": 10000,
+    "totalCryptoTimeMs": 847.4,
+    "whatsappCompressionStegoSurvivalPercent": 100,
+    "floatingPointDriftPaisa": 0,
+    "offlineCrdtConflictRatePercent": 0
+  }
+}

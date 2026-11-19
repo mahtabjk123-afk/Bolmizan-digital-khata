@@ -1,4 +1,5 @@
-﻿import { JuryCommandCenter } from './components/JuryCommandCenter';
+﻿import BolMizanOmegaCommand from './components/BolMizanOmegaCommand';
+import { JuryCommandCenter } from './components/JuryCommandCenter';
 import { SovereignAuthGate } from './components/SovereignAuthGate';
 import { IsefMasterDashboard } from './components/IsefMasterDashboard';
 import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
