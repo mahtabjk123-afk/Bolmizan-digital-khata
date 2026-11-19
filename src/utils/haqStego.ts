@@ -1,4 +1,4 @@
-const MARKER = '\u2063\uFEFF\u2063';
+﻿const MARKER = '\u2063\uFEFF\u2063';
 const ZERO_WIDTH_BITS: Record<string, string> = {
     '0': '\u200B',
     '1': '\u200C',

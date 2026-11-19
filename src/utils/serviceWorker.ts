@@ -1,4 +1,4 @@
-export interface ServiceWorkerEnvironment {
+﻿export interface ServiceWorkerEnvironment {
     production: boolean;
     secureContext: boolean;
     supported: boolean;

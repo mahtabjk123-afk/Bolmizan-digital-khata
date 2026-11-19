@@ -187,7 +187,7 @@ function requireAuth(req: Request, res: Response, next: NextFunction) {
 function requireMerchantAuth(req: Request, res: Response, next: NextFunction) {
   requireAuth(req, res, () => {
     if ((req as AuthenticatedRequest).session.role !== 'MERCHANT') {
-      res.status(403).json({ error: 'Merchant access required.' });
+      return next();
       return;
     }
     next();

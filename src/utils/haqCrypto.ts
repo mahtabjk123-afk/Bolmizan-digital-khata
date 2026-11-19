@@ -1,4 +1,4 @@
-export type ProofKind = 'RECEIPT' | 'AGREEMENT';
+﻿export type ProofKind = 'RECEIPT' | 'AGREEMENT';
 
 export type ProofPayload = {
     version: 1;

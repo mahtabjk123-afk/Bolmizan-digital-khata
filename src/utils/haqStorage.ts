@@ -1,4 +1,4 @@
-import { createPersistentIdentity, sha256Hex, type ReplayRecord, type TrustedContact } from './haqCrypto';
+﻿import { createPersistentIdentity, sha256Hex, type ReplayRecord, type TrustedContact } from './haqCrypto';
 
 const DB_NAME = 'haqproof-local-v1';
 const DB_VERSION = 2;

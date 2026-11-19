@@ -1,4 +1,4 @@
-// src/utils/advancedLimitationsSolver.ts
+﻿// src/utils/advancedLimitationsSolver.ts
 
 // 1. RECEIPT IMAGE FORENSICS (Detects Edited Screenshots / Photoshop Tags)
 export async function inspectReceiptImageForEditing(file: File): Promise<{

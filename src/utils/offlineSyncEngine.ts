@@ -1,4 +1,4 @@
-export interface OfflineLedgerDraft {
+﻿export interface OfflineLedgerDraft {
     id: string;
     merchantId: string;
     customerName: string;

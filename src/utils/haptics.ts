@@ -1,4 +1,4 @@
-export type SovereignHapticPattern =
+﻿export type SovereignHapticPattern =
   | 'authenticate'
   | 'signOut'
   | 'tap'

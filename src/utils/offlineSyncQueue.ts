@@ -1,4 +1,4 @@
-export interface OfflineLedgerPayload {
+﻿export interface OfflineLedgerPayload {
     idempotencyKey: string;
     customerName: string;
     phone?: string;

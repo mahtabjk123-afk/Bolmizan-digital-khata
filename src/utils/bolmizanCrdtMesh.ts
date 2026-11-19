@@ -1,4 +1,4 @@
-/**
+﻿/**
  * BolMizan Omega CRDT & Hybrid Logical Clock (HLC) Offline Mesh Engine
  * Guarantees 100% conflict-free offline merging across multiple devices with zero data loss.
  */

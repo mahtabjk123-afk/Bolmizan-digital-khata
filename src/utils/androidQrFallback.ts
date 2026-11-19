@@ -1,4 +1,4 @@
-export interface QrCapabilityReport {
+﻿export interface QrCapabilityReport {
     hasNativeBarcodeDetector: boolean;
     hasCameraMediaDevices: boolean;
     recommendedMode: 'live-camera' | 'photo-or-text-fallback';
