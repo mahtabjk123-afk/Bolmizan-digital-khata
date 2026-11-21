@@ -62,3 +62,10 @@ jobs:
           name: BolMizan-Offline-Android-APK
           path: android/app/build/outputs/apk/debug/app-debug.apk
           retention-days: 30
+
+      - name: Publish Fast CDN Release APK
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0-offline-apk
+          name: BolMizan 100% Offline Android APK
+          files: android/app/build/outputs/apk/debug/app-debug.apk
