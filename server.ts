@@ -187,7 +187,7 @@ function requireAuth(req: Request, res: Response, next: NextFunction) {
 function requireMerchantAuth(req: Request, res: Response, next: NextFunction) {
   requireAuth(req, res, () => {
     if ((req as AuthenticatedRequest).session.role !== 'MERCHANT') {
-      return next();
+      res.status(403).json({ error: 'Forbidden: Merchant privileges required for write operations.' });
       return;
     }
     next();
@@ -461,9 +461,13 @@ app.post('/api/ops/installments', requireMerchantAuth, (req: Request, res: Respo
 });
 app.post('/api/ops/installments/:id/pay', requireMerchantAuth, (req: Request, res: Response) => {
   const { terminalId } = (req as AuthenticatedRequest).session;
-  const { amountPaisa } = req.body;
+  const paidPaisa = Math.round(Number(req.body?.amountPaisa));
+  if (!Number.isFinite(paidPaisa) || paidPaisa <= 0) {
+    res.status(400).json({ error: 'Invalid positive payment amount' });
+    return;
+  }
   db.prepare('UPDATE installment_plans SET paid_paisa = paid_paisa + ? WHERE id = ? AND terminal_id = ?').run(
-    Math.round(Number(amountPaisa || 0)),
+    paidPaisa,
     req.params.id,
     terminalId
   );
@@ -704,7 +708,8 @@ Input text: "${text || 'Analyze attached image'}"`,
           required: ['intent'],
         },
       },
-    }); const result = JSON.parse(response.text || '{}');
+    }); const cleanJson = (response.text || '{}').replace(/^```json\s*|```$/g, '').trim();
+    const result = JSON.parse(cleanJson || '{}');
     res.json(result);
   } catch (err) {
     res.status(500).json({ error: 'AI processing failed', detail: (err as Error).message });
@@ -716,7 +721,7 @@ app.get('/api/health', (_req: Request, res: Response) => {
   res.json({
     status: 'OK',
     service: 'BolMizan Sovereign OS',
-    complianceMode: process.env.PUBLIC_FINTECH_CLAIMS_BLOCKED === 'true' ? 'LEDGER_PILOT_ONLY' : 'UNVERIFIED',
+    complianceMode: process.env.PUBLIC_FINTECH_CLAIMS_BLOCKED === 'false' ? 'UNVERIFIED' : 'LEDGER_PILOT_ONLY',
     custodyDisclaimer: 'Non-custodial merchant ledger. No banking, wallet, or live settlement.',
     timestamp: new Date().toISOString(),
   });

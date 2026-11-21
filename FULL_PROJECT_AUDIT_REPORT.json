@@ -1,0 +1,387 @@
+{
+  "summary": {
+    "totalFilesScanned": 63,
+    "criticalBlockers": 22,
+    "warnings": 18,
+    "apiEndpointsFound": [
+      "/api/ledger/summary",
+      "/api/ai/unified-process",
+      "/api/health",
+      "/api/ledger/sync",
+      "/api/scam/analyze",
+      "/api/ledger/entry",
+      "/api/tenant/session",
+      "/api/tenant/auth",
+      "/api/auth/me",
+      "/api/auth/login",
+      "/api/sovereign/deals",
+      "/api/sovereign/mukasa/add",
+      "/api/sovereign/mukasa/clear",
+      "/api/sovereign/wages/add",
+      "/api/sovereign/reset",
+      "/api/ai/extract-voice",
+      "/api/ai/mizan-advisor"
+    ],
+    "externalUrlsFound": [
+      "https://wa.me{smsBody}",
+      "https://wa.me/${phone}?text=${encodeURIComponent(message",
+      "https://wa.me/${intlWa",
+      "https://bolmizan.app",
+      "https://wa.me{formattedPhone}?text=${encodeURIComponent(message",
+      "https://fonts.googleapis.com",
+      "https://fonts.gstatic.com",
+      "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    ],
+    "heavyAssetsFound": [
+      {
+        "file": "src\\assets\\images\\indus_solar_water_1794637624566.jpg",
+        "sizeKB": 910
+      },
+      {
+        "file": "src\\assets\\images\\khairpur_dates_mangoes_1794637623124.jpg",
+        "sizeKB": 922
+      },
+      {
+        "file": "src\\assets\\images\\sakrand_basmati_mizan_1794637623859.jpg",
+        "sizeKB": 834
+      },
+      {
+        "file": "src\\assets\\images\\sakrand_kashi_command_1794637623349.jpg",
+        "sizeKB": 1045
+      },
+      {
+        "file": "src\\assets\\images\\sindh_ajrak_artisan_1794737690544.jpg",
+        "sizeKB": 1007
+      },
+      {
+        "file": "src\\assets\\images\\sindh_hala_kashi_1794737692970.jpg",
+        "sizeKB": 1207
+      },
+      {
+        "file": "src\\assets\\images\\sindh_mandi_bazaar_1794737693302.jpg",
+        "sizeKB": 1102
+      },
+      {
+        "file": "src\\assets\\images\\sindh_otaq_majlis_1794737693647.jpg",
+        "sizeKB": 981
+      }
+    ],
+    "serverRoutesDefined": [
+      "POST /api/auth/login",
+      "GET /api/auth/me",
+      "POST /api/auth/logout",
+      "POST /api/ledger/entry",
+      "POST /api/ledger/sync",
+      "GET /api/ledger/summary",
+      "GET /api/ops/installments",
+      "POST /api/ops/installments",
+      "POST /api/ops/installments/:id/pay",
+      "GET /api/ops/staff",
+      "POST /api/ops/staff",
+      "POST /api/ops/staff/:id/update",
+      "GET /api/ops/inventory",
+      "POST /api/ops/inventory",
+      "POST /api/ops/inventory/:id/adjust",
+      "GET /api/ops/tax-summary.csv",
+      "POST /api/scam/analyze",
+      "POST /api/v2/analyze-scam",
+      "POST /api/ai/unified-process",
+      "GET /api/health",
+      "GET *",
+      "GET /api/tenant/session",
+      "POST /api/tenant/auth",
+      "GET /api/sovereign/deals",
+      "POST /api/sovereign/deals",
+      "POST /api/sovereign/mukasa/add",
+      "POST /api/sovereign/mukasa/clear",
+      "POST /api/sovereign/wages/add",
+      "POST /api/sovereign/reset",
+      "POST /api/ai/extract-voice",
+      "POST /api/ai/mizan-advisor",
+      "POST /api/merchants/register",
+      "POST /api/merchants/login"
+    ]
+  },
+  "issues": [
+    {
+      "severity": "CRITICAL",
+      "file": "src\\App.tsx",
+      "line": 76,
+      "category": "API_DEPENDENCY",
+      "message": "Frontend calls backend route \"/api/ledger/summary\""
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "src\\App.tsx",
+      "line": 165,
+      "category": "API_DEPENDENCY",
+      "message": "Frontend calls backend route \"/api/ai/unified-process\""
+    },
+    {
+      "severity": "WARNING",
+      "file": "src\\assets\\images\\indus_solar_water_1794637624566.jpg",
+      "line": 0,
+      "category": "HEAVY_IMAGE",
+      "message": "Large image (910 KB)"
+    },
+    {
+      "severity": "WARNING",
+      "file": "src\\assets\\images\\khairpur_dates_mangoes_1794637623124.jpg",
+      "line": 0,
+      "category": "HEAVY_IMAGE",
+      "message": "Large image (922 KB)"
+    },
+    {
+      "severity": "WARNING",
+      "file": "src\\assets\\images\\sakrand_basmati_mizan_1794637623859.jpg",
+      "line": 0,
+      "category": "HEAVY_IMAGE",
+      "message": "Large image (834 KB)"
+    },
+    {
+      "severity": "WARNING",
+      "file": "src\\assets\\images\\sakrand_kashi_command_1794637623349.jpg",
+      "line": 0,
+      "category": "HEAVY_IMAGE",
+      "message": "Large image (1045 KB)"
+    },
+    {
+      "severity": "WARNING",
+      "file": "src\\assets\\images\\sindh_ajrak_artisan_1794737690544.jpg",
+      "line": 0,
+      "category": "HEAVY_IMAGE",
+      "message": "Large image (1007 KB)"
+    },
+    {
+      "severity": "WARNING",
+      "file": "src\\assets\\images\\sindh_hala_kashi_1794737692970.jpg",
+      "line": 0,
+      "category": "HEAVY_IMAGE",
+      "message": "Large image (1207 KB)"
+    },
+    {
+      "severity": "WARNING",
+      "file": "src\\assets\\images\\sindh_mandi_bazaar_1794737693302.jpg",
+      "line": 0,
+      "category": "HEAVY_IMAGE",
+      "message": "Large image (1102 KB)"
+    },
+    {
+      "severity": "WARNING",
+      "file": "src\\assets\\images\\sindh_otaq_majlis_1794737693647.jpg",
+      "line": 0,
+      "category": "HEAVY_IMAGE",
+      "message": "Large image (981 KB)"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "src\\components\\IsefMasterDashboard.tsx",
+      "line": 55,
+      "category": "API_DEPENDENCY",
+      "message": "Frontend calls backend route \"/api/health\""
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "src\\components\\IsefMasterDashboard.tsx",
+      "line": 56,
+      "category": "API_DEPENDENCY",
+      "message": "Frontend calls backend route \"/api/ledger/summary\""
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "src\\components\\IsefMasterDashboard.tsx",
+      "line": 76,
+      "category": "API_DEPENDENCY",
+      "message": "Frontend calls backend route \"/api/ai/unified-process\""
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "src\\components\\IsefShieldPanel.tsx",
+      "line": 13,
+      "category": "API_DEPENDENCY",
+      "message": "Frontend calls backend route \"/api/ledger/sync\""
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "src\\components\\IsefShieldPanel.tsx",
+      "line": 30,
+      "category": "API_DEPENDENCY",
+      "message": "Frontend calls backend route \"/api/scam/analyze\""
+    },
+    {
+      "severity": "WARNING",
+      "file": "src\\components\\IslamicMizanTools.tsx",
+      "line": 202,
+      "category": "EXTERNAL_URL",
+      "message": "External URL found: https://wa.me{smsBody}"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "src\\components\\MerchantSuperDashboard.tsx",
+      "line": 59,
+      "category": "API_DEPENDENCY",
+      "message": "Frontend calls backend route \"/api/ledger/summary\""
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "src\\components\\MerchantSuperDashboard.tsx",
+      "line": 86,
+      "category": "API_DEPENDENCY",
+      "message": "Frontend calls backend route \"/api/ledger/entry\""
+    },
+    {
+      "severity": "WARNING",
+      "file": "src\\components\\MultiTenantKhataDesk.tsx",
+      "line": 96,
+      "category": "EXTERNAL_URL",
+      "message": "External URL found: https://wa.me/${phone}?text=${encodeURIComponent(message"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "src\\components\\MultiTenantKhataDesk.tsx",
+      "line": 124,
+      "category": "API_DEPENDENCY",
+      "message": "Frontend calls backend route \"/api/tenant/session\""
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "src\\components\\MultiTenantKhataDesk.tsx",
+      "line": 143,
+      "category": "API_DEPENDENCY",
+      "message": "Frontend calls backend route \"/api/tenant/auth\""
+    },
+    {
+      "severity": "WARNING",
+      "file": "src\\components\\SabziParchiAtelier.tsx",
+      "line": 134,
+      "category": "EXTERNAL_URL",
+      "message": "External URL found: https://wa.me/${intlWa"
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "src\\components\\SovereignAuthGate.tsx",
+      "line": 110,
+      "category": "API_DEPENDENCY",
+      "message": "Frontend calls backend route \"/api/auth/me\""
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "src\\components\\SovereignAuthGate.tsx",
+      "line": 153,
+      "category": "API_DEPENDENCY",
+      "message": "Frontend calls backend route \"/api/auth/login\""
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "src\\components\\SovereignDealVault.tsx",
+      "line": 66,
+      "category": "API_DEPENDENCY",
+      "message": "Frontend calls backend route \"/api/sovereign/deals\""
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "src\\components\\SovereignShields.tsx",
+      "line": 50,
+      "category": "API_DEPENDENCY",
+      "message": "Frontend calls backend route \"/api/scam/analyze\""
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "src\\components\\TreasuryOperations.tsx",
+      "line": 76,
+      "category": "API_DEPENDENCY",
+      "message": "Frontend calls backend route \"/api/sovereign/mukasa/add\""
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "src\\components\\TreasuryOperations.tsx",
+      "line": 99,
+      "category": "API_DEPENDENCY",
+      "message": "Frontend calls backend route \"/api/sovereign/mukasa/clear\""
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "src\\components\\TreasuryOperations.tsx",
+      "line": 112,
+      "category": "API_DEPENDENCY",
+      "message": "Frontend calls backend route \"/api/sovereign/wages/add\""
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "src\\components\\VeritasLedger.tsx",
+      "line": 31,
+      "category": "API_DEPENDENCY",
+      "message": "Frontend calls backend route \"/api/sovereign/reset\""
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "src\\components\\VoiceMizanWorkspace.tsx",
+      "line": 71,
+      "category": "API_DEPENDENCY",
+      "message": "Frontend calls backend route \"/api/ai/extract-voice\""
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "src\\components\\VoiceMizanWorkspace.tsx",
+      "line": 128,
+      "category": "API_DEPENDENCY",
+      "message": "Frontend calls backend route \"/api/ai/mizan-advisor\""
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "src\\utils\\offlineSyncQueue.ts",
+      "line": 53,
+      "category": "API_DEPENDENCY",
+      "message": "Frontend calls backend route \"/api/ledger/entry\""
+    },
+    {
+      "severity": "WARNING",
+      "file": "src\\utils\\whatsappParchi.ts",
+      "line": 14,
+      "category": "EXTERNAL_URL",
+      "message": "External URL found: https://bolmizan.app"
+    },
+    {
+      "severity": "WARNING",
+      "file": "src\\utils\\whatsappParchi.ts",
+      "line": 38,
+      "category": "EXTERNAL_URL",
+      "message": "External URL found: https://wa.me{formattedPhone}?text=${encodeURIComponent(message"
+    },
+    {
+      "severity": "WARNING",
+      "file": "index.html",
+      "line": 15,
+      "category": "EXTERNAL_URL",
+      "message": "External URL found: https://fonts.googleapis.com"
+    },
+    {
+      "severity": "WARNING",
+      "file": "index.html",
+      "line": 16,
+      "category": "EXTERNAL_URL",
+      "message": "External URL found: https://fonts.gstatic.com"
+    },
+    {
+      "severity": "WARNING",
+      "file": "index.html",
+      "line": 18,
+      "category": "EXTERNAL_URL",
+      "message": "External URL found: https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    },
+    {
+      "severity": "WARNING",
+      "file": "android\\app\\src\\main\\AndroidManifest.xml",
+      "line": 0,
+      "category": "ANDROID_PERMISSION",
+      "message": "Missing RECORD_AUDIO permission"
+    },
+    {
+      "severity": "WARNING",
+      "file": "android\\variables.gradle",
+      "line": 0,
+      "category": "ANDROID_SDK",
+      "message": "minSdkVersion is 24"
+    }
+  ]
+}

@@ -51,7 +51,7 @@ const definedRoutes = new Set();
 const routeDefRegex = /\.(get|post|put|delete|patch)\(\s*['"`](\/api\/[^'"`]+)['"`]/g;
 let match;
 while ((match = routeDefRegex.exec(backendCode)) !== null) {
-  definedRoutes.add(match.replace(/\/:[^/]+/g, '/:param'));
+  definedRoutes.add((match||match).replace(/\/:[^/]+/g, '/:param'));
 }
 
 const frontendFiles = walkFiles(path.join(ROOT, 'src'), /\.(tsx?|jsx?)$/);

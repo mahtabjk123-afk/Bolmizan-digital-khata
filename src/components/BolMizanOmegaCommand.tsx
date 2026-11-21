@@ -56,7 +56,6 @@ export const BolMizanOmegaCommand: React.FC = () => {
   const [lang, setLang] = useState<Lang>('EN');
   const [activeTab, setActiveTab] = useState<Tab>('PARCHI');
 
-  // Mandi Parchi & Ushr State
   const [cropName, setCropName] = useState('Sakrand Super Basmati');
   const [farmerName, setFarmerName] = useState('Haji Noor Muhammad');
   const [weightKg, setWeightKg] = useState(800);
@@ -64,11 +63,9 @@ export const BolMizanOmegaCommand: React.FC = () => {
   const [irrigation, setIrrigation] = useState<'NEHRI_IRRIGATED' | 'BARANI_RAINFED'>('NEHRI_IRRIGATED');
   const [externalRef, setExternalRef] = useState('RAAST-2026-88412');
 
-  // Ledger & Notification State
   const [receipts, setReceipts] = useState<SignedReceiptArtifact[]>([]);
   const [toast, setToast] = useState<{ msg: string; type: 'ok' | 'err' } | null>(null);
 
-  // Scam Scanner State
   const [smsInput, setSmsInput] = useState(
     '8171 Benazir BISP inaam 25000 manzoor, foran apna MPIN code bhejein'
   );
@@ -77,7 +74,6 @@ export const BolMizanOmegaCommand: React.FC = () => {
 
   const t = COPY[lang];
 
-  // Live Preview Calculation (updates instantly as user types)
   const liveCalc = (() => {
     try {
       const p = calculateMandiParchi({
@@ -173,7 +169,6 @@ export const BolMizanOmegaCommand: React.FC = () => {
       }}
     >
       <div style={{ maxWidth: '1140px', margin: '0 auto' }}>
-        {/* Top Executive Bar */}
         <header
           style={{
             display: 'flex',
@@ -211,7 +206,6 @@ export const BolMizanOmegaCommand: React.FC = () => {
             <p style={{ margin: 0, fontSize: '13px', color: '#94a3b8' }}>{t.subtitle}</p>
           </div>
 
-          {/* Language & Enclave Controls */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             {(['EN', 'UR', 'SD'] as Lang[]).map((code) => (
               <button
@@ -234,7 +228,6 @@ export const BolMizanOmegaCommand: React.FC = () => {
           </div>
         </header>
 
-        {/* 4 Executive KPI Cards */}
         <section
           style={{
             display: 'grid',
@@ -260,360 +253,299 @@ export const BolMizanOmegaCommand: React.FC = () => {
               }}
             >
               <div style={{ fontSize: '11px', fontWeight: 700, color: '#94a3b8', letterSpacing: '0.8px' }}>{kpi.label}</div>
-Use code with caution.
-<div style={{ fontSize: '22px', fontWeight: 800, color: kpi.accent, margin: '6px 0 2px 0' }}>{kpi.value}
-<div style={{ fontSize: '12px', color: '#64748b' }}>{kpi.sub}
+              <div style={{ fontSize: '22px', fontWeight: 800, color: kpi.accent, margin: '6px 0 2px 0' }}>{kpi.value}</div>
+              <div style={{ fontSize: '12px', color: '#64748b' }}>{kpi.sub}</div>
+            </div>
+          ))}
+        </section>
 
-))}
-{/* Alert Toast Banner */}
-{toast && (
-<div
-style={{
-display: 'flex',
-justifyContent: 'space-between',
-alignItems: 'center',
-padding: '12px 18px',
-borderRadius: '12px',
-marginBottom: '20px',
-backgroundColor: toast.type === 'err' ? 'rgba(127, 29, 29, 0.9)' : 'rgba(6, 78, 59, 0.9)',
-border: 1px solid ${toast.type === 'err' ? '#ef4444' : '#10b981'},
-fontSize: '13px',
-fontWeight: 600,
+        {toast && (
+          <div
+            style={{
+              display: 'flex',
+
+                justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '12px 18px',
+        borderRadius: '12px',
+        marginBottom: '20px',
+        backgroundColor: toast.type === 'err' ? 'rgba(127, 29, 29, 0.9)' : 'rgba(6, 78, 59, 0.9)',
+        border: `1px solid ${toast.type === 'err' ? '#ef4444' : '#10b981'}`,
+        fontSize: '13px',
+        fontWeight: 600,
 }}
 >
-{toast.msg}
-<button
-onClick={() => setToast(null)}
-style={{ background: 'transparent', border: 'none', color: '#cbd5e1', cursor: 'pointer', fontWeight: 700 }}
->
-✕
-
-
-)}
-{/* Navigation Tabs */}
-<nav
-style={{
-display: 'flex',
-gap: '8px',
-padding: '6px',
-borderRadius: '12px',
-backgroundColor: 'rgba(15, 23, 42, 0.85)',
-border: '1px solid rgba(148, 163, 184, 0.15)',
-marginBottom: '20px',
-}}
->
-{(
-[
-{ id: 'PARCHI', label: t.tab1 },
-{ id: 'SHIELD', label: t.tab2 },
-{ id: 'LEDGER', label: ${t.tab3} (${receipts.length}) },
-] as Array<{ id: Tab; label: string }>
+        {toast.msg}
+        <button
+          onClick={() => setToast(null)}
+          style={{ background: 'transparent', border: 'none', color: '#cbd5e1', cursor: 'pointer', fontWeight: 700 }}
+        >
+          ✕
+            </button>
+          </div>
+        )}
+          <nav
+            style={{
+              display: 'flex',
+              gap: '8px',
+              padding: '6px',
+              borderRadius: '12px',
+              backgroundColor: 'rgba(15, 23, 42, 0.85)',
+              border: '1px solid rgba(148, 163, 184, 0.15)',
+              marginBottom: '20px',
+            }}
+          >
+            {(
+              [
+                { id: 'PARCHI', label: t.tab1 },
+                { id: 'SHIELD', label: t.tab2 },
+                { id: 'LEDGER', label: `${t.tab3} (${receipts.length})` },
+            ] as Array<{ id: Tab; label: string }>
 ).map((tab) => (
-<button
-key={tab.id}
-onClick={() => setActiveTab(tab.id)}
-style={{
-flex: 1,
-padding: '10px 14px',
-borderRadius: '8px',
-border: 'none',
-fontSize: '13px',
-fontWeight: 700,
-cursor: 'pointer',
-transition: 'all 0.2s',
-backgroundColor: activeTab === tab.id ? '#2563eb' : 'transparent',
-color: activeTab === tab.id ? '#ffffff' : '#94a3b8',
-}}
->
-{tab.label}
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              style={{
+                flex: 1,
+                padding: '10px 14px',
+                borderRadius: '8px',
+                border: 'none',
+                fontSize: '13px',
+                fontWeight: 700,
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                backgroundColor: activeTab === tab.id ? '#2563eb' : 'transparent',
+                color: activeTab === tab.id ? '#ffffff' : '#94a3b8',
+              }}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </nav>
+              {activeTab === 'PARCHI' && (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '20px' }}>
+            <div
+              style={{
+                padding: '22px',
+                borderRadius: '16px',
+                backgroundColor: 'rgba(15, 23, 42, 0.85)',
+                border: '1px solid rgba(148, 163, 184, 0.16)',
+              }}
+            >
+              <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', color: '#e2e8f0' }}>Trade & Settlement Parameters</h3>
+              <div style={{ display: 'grid', gap: '12px' }}>
+                <label style={{ fontSize: '12px', color: '#94a3b8' }}>
+                  Grower / Counterparty Name
+                  <input type="text" value={farmerName} onChange={(e) => setFarmerName(e.target.value)} style={inputStyle} />
+                </label>
 
-))}
-{/* TAB 1: MANDI PARCHI STUDIO + LIVE RECEIPT PREVIEW /}
-{activeTab === 'PARCHI' && (
-<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '20px' }}>
-{/ Form Card */}
-<div
-style={{
-padding: '22px',
-borderRadius: '16px',
-backgroundColor: 'rgba(15, 23, 42, 0.85)',
-border: '1px solid rgba(148, 163, 184, 0.16)',
-}}
->
-<h3 style={{ margin: '0 0 16px 0', fontSize: '16px', color: '#e2e8f0' }}>Trade & Settlement Parameters
-<div style={{ display: 'grid', gap: '12px' }}>
-Grower / Counterparty Name
-Agricultural Commodity
-<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-Net Weight (Kg)
-Mandi Rate / 40Kg (PKR)
-<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-Shariah Ushr Category
-Raast / Wallet Ref ID
-<button
-onClick={handleIssueSovereignParchi}
-style={{
-marginTop: '8px',
-padding: '13px',
-borderRadius: '10px',
-border: 'none',
-background: 'linear-gradient(135deg, #10b981, #059669)',
-color: '#022c22',
-fontWeight: 800,
-fontSize: '14px',
-cursor: 'pointer',
-boxShadow: '0 8px 20px -6px rgba(16, 185, 129, 0.5)',
-}}
->
-{t.issueBtn}
+                <label style={{ fontSize: '12px', color: '#94a3b8' }}>
+                  Agricultural Commodity
+                  <input type="text" value={cropName} onChange={(e) => setCropName(e.target.value)} style={inputStyle} />
+                </label>
 
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                  <label style={{ fontSize: '12px', color: '#94a3b8' }}>
+                    Net Weight (Kg)
+                    <input type="number" min={1} value={weightKg} onChange={(e) => setWeightKg(Number(e.target.value))} style={inputStyle} />
+                  </label>
 
-{/* Live Digital Sabzi Parchi Preview Card */}
-<div
-style={{
-padding: '22px',
-borderRadius: '16px',
-background: 'linear-gradient(180deg, #1e293b 0%, #0f172a 100%)',
-border: '1px dashed rgba(56, 189, 248, 0.4)',
-display: 'flex',
-flexDirection: 'column',
-justifyContent: 'space-between',
-}}
->
+                  <label style={{ fontSize: '12px', color: '#94a3b8' }}>
+                    Mandi Rate / 40Kg (PKR)
+                    <input type="number" min={1} value={ratePerMannPkr} onChange={(e) => setRatePerMannPkr(Number(e.target.value))} style={inputStyle} />
+                  </label>
+                </div>
 
-<div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #334155', paddingBottom: '12px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                  <label style={{ fontSize: '12px', color: '#94a3b8' }}>
+                    Shariah Ushr Category
+                    <select value={irrigation} onChange={(e) => setIrrigation(e.target.value as 'NEHRI_IRRIGATED' | 'BARANI_RAINFED')} style={inputStyle}>
+                      <option value="NEHRI_IRRIGATED">Nehri / Irrigated (5%)</option>
+                      <option value="BARANI_RAINFED">Barani / Rainfed (10%)</option>
+                    </select>
+                  </label>
 
-<div style={{ fontSize: '11px', color: '#38bdf8', fontWeight: 700 }}>LIVE DIGITAL SABZI PARCHI
-<div style={{ fontSize: '16px', fontWeight: 800, marginTop: '2px' }}>{farmerName || 'Grower'}
+                  <label style={{ fontSize: '12px', color: '#94a3b8' }}>
+                    Raast / Wallet Ref ID
+                    <input type="text" value={externalRef} onChange={(e) => setExternalRef(e.target.value)} style={inputStyle} />
+                  </label>
+                </div>
 
-<div style={{ textAlign: 'right' }}>
-<div style={{ fontSize: '11px', color: '#94a3b8' }}>REF ID
-<div style={{ fontSize: '12px', fontFamily: 'monospace', color: '#f8fafc' }}>{externalRef}
+                <button
+                  onClick={handleIssueSovereignParchi}
+                  style={{
+                    marginTop: '8px',
+                    padding: '13px',
+                    borderRadius: '10px',
+                    border: 'none',
+                    background: 'linear-gradient(135deg, #10b981, #059669)',
+                    color: '#022c22',
+                    fontWeight: 800,
+                    fontSize: '14px',
+                    cursor: 'pointer',
+                    boxShadow: '0 8px 20px -6px rgba(16, 185, 129, 0.5)',
+                  }}
+                >
+                  {t.issueBtn}
+                </button>
+              </div>
+            </div>
 
-{liveCalc ? (
-<div style={{ marginTop: '14px', display: 'grid', gap: '10px', fontSize: '13px' }}>
+            <div
+              style={{
+                padding: '22px',
+                borderRadius: '16px',
+                background: 'linear-gradient(180deg, #1e293b 0%, #0f172a 100%)',
+                border: '1px dashed rgba(56, 189, 248, 0.4)',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+              }}
+            >
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #334155', paddingBottom: '12px' }}>
+                  <div>
+                    <div style={{ fontSize: '11px', color: '#38bdf8', fontWeight: 700 }}>LIVE DIGITAL SABZI PARCHI</div>
+                    <div style={{ fontSize: '16px', fontWeight: 800, marginTop: '2px' }}>{farmerName || 'Grower'}</div>
+                  </div>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ fontSize: '11px', color: '#94a3b8' }}>REF ID</div>
+                    <div style={{ fontSize: '12px', fontFamily: 'monospace', color: '#f8fafc' }}>{externalRef}</div>
+                  </div>
+                </div>
 
-<span style={{ color: '#94a3b8' }}>Gross Crop Value ({weightKg} kg):
-PKR {(liveCalc.p.grossValuePaisa / 100).toLocaleString()}
+                {liveCalc ? (
+                  <div style={{ marginTop: '14px', display: 'grid', gap: '10px', fontSize: '13px' }}>
+                    <div style={rowStyle}>
+                      <span style={{ color: '#94a3b8' }}>Gross Crop Value ({weightKg} kg):</span>
+                      <span>PKR {(liveCalc.p.grossValuePaisa / 100).toLocaleString()}</span>
+                    </div>
 
+                    <div style={rowStyle}>
+                      <span style={{ color: '#94a3b8' }}>Standard Karda (2.0%):</span>
+                      <span style={{ color: '#fca5a5' }}>- PKR {(liveCalc.p.kardaDeductionPaisa / 100).toLocaleString()}</span>
+                    </div>
 
-<span style={{ color: '#94a3b8' }}>Standard Karda (2.0%):
-<span style={{ color: '#fca5a5' }}>- PKR {(liveCalc.p.kardaDeductionPaisa / 100).toLocaleString()}
+                    <div style={rowStyle}>
+                      <span style={{ color: '#94a3b8' }}>Arhti Commission (3.0%):</span>
+                      <span style={{ color: '#fca5a5' }}>- PKR {(liveCalc.p.arhtiCommissionPaisa / 100).toLocaleString()}</span>
+                    </div>
 
+                    <div style={rowStyle}>
+                      <span style={{ color: '#94a3b8' }}>Hamali / Labor:</span>
+                      <span style={{ color: '#fca5a5' }}>- PKR {(liveCalc.p.laborHamaliPaisa / 100).toLocaleString()}</span>
+                    </div>
 
-<span style={{ color: '#94a3b8' }}>Arhti Commission (3.0%):
-<span style={{ color: '#fca5a5' }}>- PKR {(liveCalc.p.arhtiCommissionPaisa / 100).toLocaleString()}
+                    <div
+                      style={{
+                        ...rowStyle,
+                        marginTop: '6px',
+                        paddingTop: '12px',
+                        borderTop: '1px solid #334155',
+                        fontSize: '16px',
+                      }}
+                    >
+                      <span style={{ fontWeight: 700 }}>Net Farmer Payout:</span>
+                      <strong style={{ color: '#34d399' }}>PKR {(liveCalc.p.farmerNetPayoutPaisa / 100).toLocaleString()}</strong>
+                    </div>
 
+                    <div
+                      style={{
+                        padding: '10px 12px',
+                        borderRadius: '8px',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        border: '1px solid rgba(16, 185, 129, 0.25)',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        fontSize: '12px',
+                      }}
+                    >
+                      <span>Shariah Ushr Obligation ({liveCalc.u.ratePercent}%):</span>
+                      <strong style={{ color: '#6ee7b7' }}>PKR {(liveCalc.u.ushrAmountPaisa / 100).toLocaleString()}</strong>
+                    </div>
+                  </div>
+                ) : (
+                  <p style={{ color: '#fca5a5', fontSize: '13px' }}>Enter valid weight and rate to preview settlement.</p>
+                )}
+              </div>
 
-<span style={{ color: '#94a3b8' }}>Hamali / Labor:
-<span style={{ color: '#fca5a5' }}>- PKR {(liveCalc.p.laborHamaliPaisa / 100).toLocaleString()}
+              <div style={{ marginTop: '16px', fontSize: '11px', color: '#64748b', borderTop: '1px solid #1e293b', paddingTop: '10px' }}>
+                Protected by 8x8 QIM Luminance Steganography & BigInt Deterministic Arithmetic.
+              </div>
+            </div>
+          </div>
+        )}
 
-<div
-style={{
-...rowStyle,
-marginTop: '6px',
-paddingTop: '12px',
-borderTop: '1px solid #334155',
-fontSize: '16px',
-}}
->
-<span style={{ fontWeight: 700 }}>Net Farmer Payout:
-<strong style={{ color: '#34d399' }}>
-PKR {(liveCalc.p.farmerNetPayoutPaisa / 100).toLocaleString()}
+        {activeTab === 'SHIELD' && (
+          <div style={{ padding: '22px', borderRadius: '16px', backgroundColor: 'rgba(15, 23, 42, 0.85)', border: '1px solid rgba(148, 163, 184, 0.16)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px', marginBottom: '14px' }}>
+              <h3 style={{ margin: 0, fontSize: '16px' }}>Multi-Lingual SMS / WhatsApp Fraud Classifier</h3>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <button onClick={() => { setSmsSender('+923001234567'); setSmsInput('8171 Benazir BISP inaam 25000 manzoor, foran apna MPIN code bhejein'); }} style={pillBtnStyle}>Load BISP Scam Sample</button>
+                <button onClick={() => { setSmsSender('BOLMIZAN'); setSmsInput('Mandi Parchi settled: 20 Mann Basmati @ PKR 4200'); }} style={pillBtnStyle}>Load Genuine Receipt</button>
+              </div>
+            </div>
 
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '12px', marginBottom: '12px' }}>
+              <label style={{ fontSize: '12px', color: '#94a3b8' }}>
+                Sender ID / Phone Number
+                <input type="text" value={smsSender} onChange={(e) => setSmsSender(e.target.value)} style={inputStyle} />
+              </label>
+              <label style={{ fontSize: '12px', color: '#94a3b8' }}>
+                Message Content (Sindhi / Urdu / English)
+                <input type="text" value={smsInput} onChange={(e) => setSmsInput(e.target.value)} style={inputStyle} />
+              </label>
+            </div>
 
-<div
-style={{
-padding: '10px 12px',
-borderRadius: '8px',
-backgroundColor: 'rgba(16, 185, 129, 0.1)',
-border: '1px solid rgba(16, 185, 129, 0.25)',
-display: 'flex',
-justifyContent: 'space-between',
-fontSize: '12px',
-}}
->
-Shariah Ushr Obligation ({liveCalc.u.ratePercent}%):
-<strong style={{ color: '#6ee7b7' }}>
-PKR {(liveCalc.u.ushrAmountPaisa / 100).toLocaleString()}
+            <button onClick={() => setScamResult(analyzeMessageForScam(smsInput, smsSender))} style={{ padding: '11px 20px', borderRadius: '10px', border: 'none', backgroundColor: '#f59e0b', color: '#451a03', fontWeight: 800, cursor: 'pointer' }}>
+              Run Adversarial Threat Scan
+            </button>
 
+            {scamResult && (
+              <div style={{ marginTop: '16px', padding: '16px', borderRadius: '12px', backgroundColor: '#090d16', border: '1px solid ' + (scamResult.verdict === 'BLOCKED_SCAM' ? '#ef4444' : '#10b981') }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <strong style={{ fontSize: '15px', color: scamResult.verdict === 'BLOCKED_SCAM' ? '#f87171' : '#34d399' }}>VERDICT: {scamResult.verdict}</strong>
+                  <span style={{ fontSize: '13px', fontWeight: 700 }}>Threat Score: {scamResult.riskScore} / 100</span>
+                </div>
+                {scamResult.reasons?.length > 0 && (
+                  <div style={{ marginTop: '8px', fontSize: '12px', color: '#cbd5e1' }}>Signals: {scamResult.reasons.join(' ? ')}</div>
+                )}
+              </div>
+            )}
+          </div>
+        )}
 
-
-) : (
-<p style={{ color: '#fca5a5', fontSize: '13px' }}>Enter valid weight and rate to preview settlement.
-)}
-<div style={{ marginTop: '16px', fontSize: '11px', color: '#64748b', borderTop: '1px solid #1e293b', paddingTop: '10px' }}>
-Protected by 8x8 QIM Luminance Steganography & BigInt Deterministic Arithmetic.
-
-
-
-)}
-{/* TAB 2: ADVERSARIAL SCAM SHIELD */}
-{activeTab === 'SHIELD' && (
-<div
-style={{
-padding: '22px',
-borderRadius: '16px',
-backgroundColor: 'rgba(15, 23, 42, 0.85)',
-border: '1px solid rgba(148, 163, 184, 0.16)',
-}}
->
-<div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px', marginBottom: '14px' }}>
-<h3 style={{ margin: 0, fontSize: '16px' }}>Multi-Lingual SMS / WhatsApp Fraud Classifier
-<div style={{ display: 'flex', gap: '8px' }}>
-<button
-onClick={() => {
-setSmsSender('+923001234567');
-setSmsInput('8171 Benazir BISP inaam 25000 manzoor, foran apna MPIN code bhejein');
-}}
-style={pillBtnStyle}
->
-Load BISP Scam Sample
-
-<button
-onClick={() => {
-setSmsSender('BOLMIZAN');
-setSmsInput('Mandi Parchi settled: 20 Mann Basmati @ PKR 4200');
-}}
-style={pillBtnStyle}
->
-Load Genuine Receipt
-
-
-<div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '12px', marginBottom: '12px' }}>
-Sender ID / Phone Number
-Message Content (Sindhi / Urdu / English)
-<button
-onClick={() => setScamResult(analyzeMessageForScam(smsInput, smsSender))}
-style={{
-padding: '11px 20px',
-borderRadius: '10px',
-border: 'none',
-backgroundColor: '#f59e0b',
-color: '#451a03',
-fontWeight: 800,
-cursor: 'pointer',
-}}
->
-Run Adversarial Threat Scan
-{scamResult && (
-<div
-style={{
-marginTop: '16px',
-padding: '16px',
-borderRadius: '12px',
-backgroundColor: '#090d16',
-border: 1px solid ${scamResult.verdict === 'BLOCKED_SCAM' ? '#ef4444' : '#10b981'},
-}}
->
-<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-<strong style={{ fontSize: '15px', color: scamResult.verdict === 'BLOCKED_SCAM' ? '#f87171' : '#34d399' }}>
-VERDICT: {scamResult.verdict}
-
-<span style={{ fontSize: '13px', fontWeight: 700 }}>Threat Score: {scamResult.riskScore} / 100
-
-{scamResult.reasons.length > 0 && (
-<ul style={{ margin: '10px 0 0 18px', padding: 0, fontSize: '13px', color: '#cbd5e1' }}>
-{scamResult.reasons.map((r, i) => (
-{r}
-))}
-
-)}
-
-)}
-
-)}
-{/* TAB 3: IMMUTABLE CRDT VAULT */}
-{activeTab === 'LEDGER' && (
-<div
-style={{
-padding: '22px',
-borderRadius: '16px',
-backgroundColor: 'rgba(15, 23, 42, 0.85)',
-border: '1px solid rgba(148, 163, 184, 0.16)',
-}}
->
-<h3 style={{ margin: '0 0 14px 0', fontSize: '16px' }}>Cryptographically Chained Offline Ledger
-{receipts.length === 0 ? (
-<p style={{ color: '#94a3b8', fontSize: '13px' }}>
-No receipts committed yet. Switch to "{t.tab1}" to issue and cryptographically seal a transaction.
-
-) : (
-<div style={{ display: 'grid', gap: '10px' }}>
-{receipts.map((r) => (
-<div
-key={r.payload.receiptId}
-style={{
-display: 'flex',
-flexWrap: 'wrap',
-justifyContent: 'space-between',
-alignItems: 'center',
-gap: '12px',
-padding: '14px 16px',
-borderRadius: '12px',
-backgroundColor: '#090d16',
-border: '1px solid #1e293b',
-}}
->
-
-<div style={{ fontSize: '14px', fontWeight: 700 }}>
-{r.payload.receiptId} • <span style={{ color: '#e2e8f0' }}>{r.payload.counterparty}
-
-<div style={{ fontSize: '12px', color: '#34d399', fontWeight: 700, marginTop: '2px' }}>
-PKR {(r.payload.amountPaisa / 100).toLocaleString()} • Verify Code: {r.shortVerifyCode}
-
-<div style={{ fontSize: '11px', fontFamily: 'monospace', color: '#64748b', marginTop: '2px' }}>
-SHA-256 Leaf: {r.merkleLeafHash.slice(0, 32)}...
-
-<div style={{ display: 'flex', gap: '8px' }}>
-<button
-onClick={() => handleVerifyArtifact(r, false)}
-style={{ padding: '8px 12px', borderRadius: '8px', border: 'none', backgroundColor: '#2563eb', color: '#fff', fontWeight: 700, fontSize: '12px', cursor: 'pointer' }}
->
-Verify Integrity
-
-<button
-onClick={() => handleVerifyArtifact(r, true)}
-style={{ padding: '8px 12px', borderRadius: '8px', border: 'none', backgroundColor: '#dc2626', color: '#fff', fontWeight: 700, fontSize: '12px', cursor: 'pointer' }}
->
-Simulate Tamper
-
-
-
-))}
-
-)}
-
-)}
-
-
-);
+        {activeTab === 'LEDGER' && (
+          <div style={{ padding: '22px', borderRadius: '16px', backgroundColor: 'rgba(15, 23, 42, 0.85)', border: '1px solid rgba(148, 163, 184, 0.16)' }}>
+            <h3 style={{ margin: '0 0 14px 0', fontSize: '16px' }}>Cryptographic Audit Trail (HMAC-SHA256 Hash Chain)</h3>
+            {receipts.length === 0 ? (
+              <p style={{ color: '#94a3b8', fontSize: '13px' }}>No receipts committed yet. Switch to "{t.tab1}" to issue and cryptographically seal a transaction.</p>
+            ) : (
+              <div style={{ display: 'grid', gap: '10px' }}>
+                {receipts.map((r) => (
+                  <div key={r.payload.receiptId} style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '12px', padding: '14px 16px', borderRadius: '12px', backgroundColor: '#090d16', border: '1px solid #1e293b' }}>
+                    <div>
+                      <div style={{ fontSize: '14px', fontWeight: 700 }}>{r.payload.receiptId} ? <span style={{ color: '#e2e8f0' }}>{r.payload.counterparty}</span></div>
+                      <div style={{ fontSize: '12px', color: '#34d399', fontWeight: 700, marginTop: '2px' }}>PKR {(r.payload.amountPaisa / 100).toLocaleString()} ? Verify Code: {r.shortVerifyCode}</div>
+                      <div style={{ fontSize: '11px', fontFamily: 'monospace', color: '#64748b', marginTop: '2px' }}>SHA-256 Leaf: {r.merkleLeafHash.slice(0, 32)}...</div>
+                    </div>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <button onClick={() => handleVerifyArtifact(r, false)} style={{ padding: '8px 12px', borderRadius: '8px', border: 'none', backgroundColor: '#2563eb', color: '#fff', fontWeight: 700, fontSize: '12px', cursor: 'pointer' }}>Verify Integrity</button>
+                      <button onClick={() => handleVerifyArtifact(r, true)} style={{ padding: '8px 12px', borderRadius: '8px', border: 'none', backgroundColor: '#dc2626', color: '#fff', fontWeight: 700, fontSize: '12px', cursor: 'pointer' }}>Simulate Tamper</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
-const inputStyle: React.CSSProperties = {
-display: 'block',
-width: '100%',
-marginTop: '6px',
-padding: '10px 12px',
-borderRadius: '8px',
-border: '1px solid #334155',
-backgroundColor: '#090d16',
-color: '#f8fafc',
-fontSize: '13px',
-boxSizing: 'border-box',
-};
-const rowStyle: React.CSSProperties = {
-display: 'flex',
-justifyContent: 'space-between',
-alignItems: 'center',
-};
-const pillBtnStyle: React.CSSProperties = {
-padding: '6px 10px',
-borderRadius: '6px',
-border: '1px solid #334155',
-backgroundColor: '#090d16',
-color: '#cbd5e1',
-fontSize: '11px',
-fontWeight: 600,
-cursor: 'pointer',
-};
+
+const inputStyle: React.CSSProperties = { display: 'block', width: '100%', marginTop: '6px', padding: '10px 12px', borderRadius: '8px', border: '1px solid #334155', backgroundColor: '#090d16', color: '#f8fafc', fontSize: '13px', boxSizing: 'border-box' };
+const rowStyle: React.CSSProperties = { display: 'flex', justifyContent: 'space-between', alignItems: 'center' };
+const pillBtnStyle: React.CSSProperties = { padding: '6px 10px', borderRadius: '6px', border: '1px solid #334155', backgroundColor: '#090d16', color: '#cbd5e1', fontSize: '11px', fontWeight: 600, cursor: 'pointer' };
+
 export default BolMizanOmegaCommand;

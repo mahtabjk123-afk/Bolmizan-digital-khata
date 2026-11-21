@@ -1,65 +1,39 @@
-﻿export interface ParchiLineItem {
-  name: string;
-  weightKg: number;
-  ratePerKg: number;
-}
-
-export interface SabziParchiPayload {
-  parchiId: string;
-  mandiName: string;
-  traderName: string;
+﻿export interface ParchiPayload {
+  merchantName: string;
   customerName: string;
-  customerPhone?: string;
-  items: ParchiLineItem[];
-  mznHashTag?: string;
-  isPaid: boolean;
+  itemsSummary: string;
+  totalAmountPKR: number;
+  isRibaFree: boolean;
+  stegoSignatureHash: string;
+  timestamp: string;
 }
 
-export function buildWhatsAppParchiMessage(payload: SabziParchiPayload): string {
-  const dateStr = new Date().toLocaleDateString('en-PK', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-  });
+export function generateViralWhatsAppLink(
+  customerPhone: string,
+  payload: ParchiPayload,
+  appBaseUrl: string = "https://bolmizan.app"
+): string {
+  const cleanPhone = customerPhone.replace(/[^0-9]/g, "");
+  const formattedPhone = cleanPhone.startsWith("0")
+    ? "92" + cleanPhone.slice(1)
+    : cleanPhone;
 
-  let grandTotal = 0;
-  const itemLines = payload.items.map((item, idx) => {
-    const lineTotal = Math.round(item.weightKg * item.ratePerKg);
-    grandTotal += lineTotal;
-    return `${idx + 1}. *${item.name}* — ${item.weightKg} kg × Rs.${item.ratePerKg} = *Rs.${lineTotal.toLocaleString()}*`;
-  });
+  const verifyUrl = `${appBaseUrl}/?verify=${encodeURIComponent(payload.stegoSignatureHash)}`;
 
-  const statusText = payload.isPaid ? '✅ ADA SHUDA (PAID)' : '⏳ UDHAAR KHATA (PENDING)';
-  const tagLine = payload.mznHashTag ? `\n🔐 *HaqProof Seal:* ${payload.mznHashTag}` : '';
+  const message = [
+    `⚖️ *BOLMIZAN VERIFIED DIGITAL PARCHI*`,
+    `━━━━━━━━━━━━━━━━━━━━`,
+    `🏪 *Tajir:* ${payload.merchantName}`,
+    `👤 *Gahak:* ${payload.customerName}`,
+    `📦 *Tafseel:* ${payload.itemsSummary}`,
+    `💰 *Kul Raqam:* Rs. ${payload.totalAmountPKR.toLocaleString()}`,
+    `🕌 *Status:* ${payload.isRibaFree ? "100% Riba-Free (Halal)" : "Standard"}`,
+    `🔐 *Stego-Hash:* \`${payload.stegoSignatureHash.slice(0, 12)}...\``,
+    `━━━━━━━━━━━━━━━━━━━━`,
+    `🛡️ *Tamper-Proof Verification:*`,
+    `Is parchi ki asliyat check karne ya apna *Free Halal Voice Khata* kholne ke liye neeche click karein:`,
+    `👉 ${verifyUrl}`,
+  ].join("\n");
 
-  return [
-    `🥬 *BOLMIZAN DIGITAL SABZI PARCHI*`,
-    `📍 *Mandi:* ${payload.mandiName}`,
-    `🧾 *Parchi #:* ${payload.parchiId} | 📅 ${dateStr}`,
-    `👤 *Aarhti/Shop:* ${payload.traderName}`,
-    `🤝 *Customer/Kisan:* ${payload.customerName}`,
-    `--------------------------------`,
-    ...itemLines,
-    `--------------------------------`,
-    `💰 *KUL RAQAM (TOTAL): Rs.${grandTotal.toLocaleString()}*`,
-    `📌 *Status:* ${statusText}${tagLine}`,
-    `_Verified by BolMizan Sovereign OS_`,
-  ].join('\n');
-}
-
-export function openWhatsAppParchiShare(payload: SabziParchiPayload): void {
-  const message = buildWhatsAppParchiMessage(payload);
-  const encodedText = encodeURIComponent(message);
-
-  // Clean Pakistani phone number format (e.g., 03001234567 -> 923001234567)
-  let cleanPhone = (payload.customerPhone || '').replace(/\D/g, '');
-  if (cleanPhone.startsWith('03') && cleanPhone.length === 11) {
-    cleanPhone = '92' + cleanPhone.slice(1);
-  }
-
-  const waUrl = cleanPhone
-    ? `https://wa.me{cleanPhone}?text=${encodedText}`
-    : `https://wa.me{encodedText}`;
-
-  window.open(waUrl, '_blank', 'noopener,noreferrer');
+  return `https://wa.me{formattedPhone}?text=${encodeURIComponent(message)}`;
 }

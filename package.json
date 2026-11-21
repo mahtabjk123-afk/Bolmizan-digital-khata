@@ -7,6 +7,8 @@
     "dev": "tsx server.ts",
     "start": "node ./scripts/validate-prod-env.mjs && NODE_ENV=production tsx server.ts",
     "build": "vite build",
+    "android:sync": "npm run build && npx cap sync android",
+    "android:apk": "npm run android:sync && cd android && ./gradlew assembleDebug",
     "preview": "vite preview",
     "lint": "tsc --noEmit",
     "test": "tsx --test tests/*.test.ts",
@@ -16,6 +18,9 @@
   "dependencies": {
     "@capacitor/android": "^8.6.2",
     "@capacitor/core": "^8.6.2",
+    "@capacitor/filesystem": "^8.1.5",
+    "@capacitor/preferences": "^8.0.1",
+    "@capacitor/share": "^8.0.3",
     "@google/genai": "^3.3.0",
     "@tailwindcss/vite": "^4.3.3",
     "@types/d3": "^7.4.3",

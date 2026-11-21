@@ -17,20 +17,22 @@ export interface SettlementReceipt {
     cryptographicProof: string;
 }
 
-// 1. Pluggable Payment Adapter (Runs in Safe Sandbox for ISEF, Ready for Licensed Bank API)
+// 1. Pluggable Non-Custodial Ledger Adapter (Sandbox Simulation + Licensed PSO/EMI Partner Hook)
 export async function executeSettlementAdapter(
     instruction: SettlementInstruction,
     partnerApiKey?: string
 ): Promise<SettlementReceipt> {
     const clearingTimestamp = new Date().toISOString();
 
-    // Verify HMAC signature for bank-grade security
-    const secret = partnerApiKey || 'BOLMIZAN_ISEF_SANDBOX_KEY';
+    const secret =
+        partnerApiKey ||
+        process.env.BOLMIZAN_SANDBOX_SIGNING_KEY ||
+        'BOLMIZAN_NON_CUSTODIAL_SANDBOX_KEY';
+
     const payload = `${instruction.e2eId}|${instruction.payerAccountAlias}|${instruction.payeeAccountAlias}|${instruction.amountPaisa}|${clearingTimestamp}`;
     const cryptographicProof = crypto.createHmac('sha256', secret).update(payload).digest('hex');
 
     if (!partnerApiKey) {
-        // Safe non-custodial simulation mode (Zero legal/SBP barrier)
         return {
             e2eId: instruction.e2eId,
             status: 'SETTLED_SANDBOX',
@@ -39,7 +41,6 @@ export async function executeSettlementAdapter(
         };
     }
 
-    // Future licensed partner hook (Drop-in ready when regulatory partner is attached)
     return {
         e2eId: instruction.e2eId,
         status: 'QUEUED_FOR_PARTNER',
@@ -48,16 +49,25 @@ export async function executeSettlementAdapter(
     };
 }
 
-// 2. Incoming Bank Webhook HMAC Signature Verifier (Prevents Fake Payment Callbacks)
+// 2. Incoming Partner Webhook HMAC Signature Verifier (Constant-Time Comparison)
 export function verifyIncomingWebhookSignature(
     rawBody: string,
     receivedSignatureHeader: string,
     webhookSecret: string
 ): boolean {
-    const expected = crypto.createHmac('sha256', webhookSecret).update(rawBody).digest('hex');
-    try {
-        return crypto.timingSafeEqual(Buffer.from(expected, 'hex'), Buffer.from(receivedSignatureHeader, 'hex'));
-    } catch {
+    if (!rawBody || !receivedSignatureHeader || !webhookSecret) {
         return false;
     }
+
+    const expectedHex = crypto.createHmac('sha256', webhookSecret).update(rawBody).digest('hex');
+    const cleanReceived = receivedSignatureHeader.trim().toLowerCase();
+
+    if (expectedHex.length !== cleanReceived.length || !/^[0-9a-f]+$/.test(cleanReceived)) {
+        return false;
+    }
+
+    return crypto.timingSafeEqual(
+        Buffer.from(expectedHex, 'hex'),
+        Buffer.from(cleanReceived, 'hex')
+    );
 }

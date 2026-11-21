@@ -181,7 +181,7 @@ describe('sovereign core invariants', () => {
     it('parses only explicit PKR/currency amounts instead of guessing from quantities', () => {
         assert.equal(parseExplicitPkrAmount('Rice, 80 kg, price PKR 18,500'), 18_500);
         assert.equal(parseExplicitPkrAmount('Rs. 700 received'), 700);
-        assert.equal(parseExplicitPkrAmount('روپے ۴۵٬۰۰۰ وصول ہوئے'), 45_000);
+        assert.equal(parseExplicitPkrAmount('\u0631\u0648\u067e\u06d2 \u06f4\u06f5\u066c\u06f0\u06f0\u06f0 \u0648\u0635\u0648\u0644 \u06c1\u0648\u0626\u06d2'), 45_000);
         assert.equal(parseExplicitPkrAmount('85 bags of rice'), null);
         assert.equal(parseExplicitPkrAmount('Rs. 12.50'), null);
     });

@@ -29,18 +29,18 @@ const HERITAGE_FRAMES: HeritageFrame[] = [
     id: 'ajrak-craft',
     city: 'Bhitshah & Matiari',
     title: 'Ajrak Woodblock Craft',
-    sindhiLine: 'Ø§Ø¬Ø±Úª Ø³Ù†ÚŒ Ø¬ÙŠ Ø¹Ø²ØªØŒ Ø³ÚƒØ§Ú»Ù¾ Û½ Ù…Ø­Ù†Øª Ø¬Ùˆ Ø±Ù†Ú¯ Ø¢Ù‡ÙŠ',
+    sindhiLine: 'اجرڪ سنڌ جي عزت، سڃاڻپ ۽ محنت جو رنگ آهي',
     colorName: 'Kirmizi Crimson & Nil Indigo',
     accentHex: '#9B1C2E',
     caption:
-      'Every carved acacia stamp presses centuries of patience and precision into breathable cotton â€” inspiring BolMizanâ€™s immutable SHA-256 contract seals.',
+      'Every carved acacia stamp presses centuries of patience and precision into breathable cotton — inspiring BolMizan’s immutable SHA-256 contract seals.',
     image: ajrakArtisanImg,
   },
   {
     id: 'hala-kashi',
     city: 'Hala Sharif, Sindh',
     title: 'Hala Kashi Glazed Geometry',
-    sindhiLine: 'Ù‡Ø§Ù„Ø§ Ø¬ÙŠ ÚªØ§Ø´ÙŠØ¡ÙŽ Ø¬Ú¾Ú™ÙŠ Ù…Ø¶Ø¨ÙˆØ· Û½ Ú†Ù…ÚªÙ†Ø¯Ú™ Ø§Ù…Ø§Ù†ØªØ¯Ø§Ø±ÙŠ',
+    sindhiLine: 'هالا جي ڪاشيءَ جھڙي مضبوط ۽ چمڪندڙ امانتداري',
     colorName: 'Ferozi Turquoise & Lajward Blue',
     accentHex: '#0F766E',
     caption:
@@ -51,7 +51,7 @@ const HERITAGE_FRAMES: HeritageFrame[] = [
     id: 'otaq-majlis',
     city: 'Sakrand Otaq Courtyard',
     title: 'Otaq Majlis Witnessing',
-    sindhiLine: 'Ø§ÙˆØ·Ø§Ù‚ Û¾ Ø¨Ø²Ø±Ú¯Ù† Ø¬ÙŠ Ù…ÙˆØ¬ÙˆØ¯Ú¯ÙŠ Ø³Ú€ Ú©Ø§Ù† ÙˆÚÙŠ Ø¶Ù…Ø§Ù†Øª Ø¢Ù‡ÙŠ',
+    sindhiLine: 'اوطاق ۾ بزرگن جي موجودگي سڀ کان وڏي ضمانت آهي',
     colorName: 'Ralli Vermilion & Lantern Gold',
     accentHex: '#F59E0B',
     caption:
@@ -62,11 +62,11 @@ const HERITAGE_FRAMES: HeritageFrame[] = [
     id: 'mandi-mizan',
     city: 'Sakrand & Khairpur Bazaars',
     title: 'Brass Mizan Dawn Trade',
-    sindhiLine: 'Ù¾ÙˆØ±Ùˆ ØªÙˆØ±ØŒ Ø³Ú†ÙŠ Ú³Ø§Ù„Ù‡Ù‡ Û½ Ø­Ù„Ø§Ù„ Ø±Ø²Ù‚ Û¾ Ø¨Ø±ÚªØª',
+    sindhiLine: 'پورو تور، سچي ڳالهه ۽ حلال رزق ۾ برڪت',
     colorName: 'Sonehri Harvest Gold',
     accentHex: '#D97706',
     caption:
-      'At sunrise across Sindhâ€™s orchards and sabzi mandis, honest measure on a balanced Mizan scale builds generational trust between farmer and buyer.',
+      'At sunrise across Sindh’s orchards and sabzi mandis, honest measure on a balanced Mizan scale builds generational trust between farmer and buyer.',
     image: mandiBazaarImg,
   },
 ];
@@ -85,9 +85,9 @@ export const SindhCultureGallery: React.FC<{ script: LocaleScript }> = ({ script
 
   const sectionHeading =
     script === 'ur'
-      ? 'Ø³Ù†Ø¯Ú¾ Ú©ÛŒ Ø«Ù‚Ø§ÙØªØŒ Ø§Ø¬Ø±Ú© Ú©Û’ Ø±Ù†Ú¯ Ø§ÙˆØ± Ø¨Ø§Ø²Ø§Ø± Ú©ÛŒ Ø±ÙˆØ­'
+      ? 'سندھ کی ثقافت، اجرک کے رنگ اور بازار کی روح'
       : script === 'sd'
-        ? 'Ø³Ù†ÚŒ Ø¬ÙŠ Ø«Ù‚Ø§ÙØªØŒ Ø§Ø¬Ø±Úª Ø¬Ø§ Ø±Ù†Ú¯ Û½ Ù…Ù†ÚŠÙŠØ¡ÙŽ Ø¬Ùˆ Ø±ÙˆØ­'
+        ? 'سنڌ جي ثقافت، اجرڪ جا رنگ ۽ منڊيءَ جو روح'
         : 'Living Heritage of Sindh: Ajrak, Kashi Craft & Bazaar Soul';
 
   return (
@@ -101,7 +101,7 @@ export const SindhCultureGallery: React.FC<{ script: LocaleScript }> = ({ script
           <div className="space-y-1.5">
             <div className="inline-flex items-center gap-2 text-xs font-semibold text-[#FDE68A]">
               <Sparkles className="w-3.5 h-3.5 text-[#F59E0B]" />
-              <span>Visual Soul of Sindh Â· Click any portrait to open story</span>
+              <span>Visual Soul of Sindh · Click any portrait to open story</span>
             </div>
             <h2
               dir={script === 'en' ? 'ltr' : 'rtl'}
@@ -148,7 +148,7 @@ export const SindhCultureGallery: React.FC<{ script: LocaleScript }> = ({ script
                 >
                   <ResilientImage
                     src={heroFrame.image}
-                    alt={`${heroFrame.title} â€” ${heroFrame.city}`}
+                    alt={`${heroFrame.title} — ${heroFrame.city}`}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </motion.div>
@@ -197,7 +197,7 @@ export const SindhCultureGallery: React.FC<{ script: LocaleScript }> = ({ script
                   >
                     <ResilientImage
                       src={frame.image}
-                      alt={`${frame.title} â€” ${frame.city}`}
+                      alt={`${frame.title} — ${frame.city}`}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   </motion.div>

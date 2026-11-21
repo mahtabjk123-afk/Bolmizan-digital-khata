@@ -47,7 +47,7 @@ const CORRIDOR_NODES = [
     ry: 0.62,
     color: '#F59E0B',
     commodity: 'Morning Produce & Basmati Mizan',
-    metric: '142 Growers Â· Otaq Witnessed',
+    metric: '142 Growers · Otaq Witnessed',
     image: mandiBazaarImg,
   },
   {
@@ -57,7 +57,7 @@ const CORRIDOR_NODES = [
     ry: 0.40,
     color: '#14B8A6',
     commodity: 'Ajrak Block Print & Hala Kashi Tiles',
-    metric: 'Artisan Co-Op Â· 0% Fee Raast',
+    metric: 'Artisan Co-Op · 0% Fee Raast',
     image: halaKashiImg,
   },
   {
@@ -104,9 +104,9 @@ const HERO_COPY: Record<
   }
 > = {
   en: {
-    kicker: 'Built in Sakrand Â· Sindhi Ajrak & Hala Kashi-inspired interface Â· merchant-ledger pilot',
-    greeting: 'Ú€Ù„ÙŠ ÚªØ±ÙŠ Ø¢ÙŠØ§ â€” Ø¬ØªÙŠ Ù…Ø­Ù†ØªØŒ Ø§ÙŠÙ…Ø§Ù† Û½ Ø³Ú†Ø§Ø¦ÙŠ Ø¬Ùˆ Ù…ÙŠØ²Ø§Ù† Ù‡Úª Ù¿Ø¦ÙŠ',
-    headline: 'Where Every Farmerâ€™s Sweat & Every Shopkeeperâ€™s Trust Become Unbreakable',
+    kicker: 'Built in Sakrand · Sindhi Ajrak & Hala Kashi-inspired interface · merchant-ledger pilot',
+    greeting: 'ڀلي ڪري آيا — جتي محنت، ايمان ۽ سچائي جو ميزان هڪ ٿئي',
+    headline: 'Where Every Farmer’s Sweat & Every Shopkeeper’s Trust Become Unbreakable',
     sabziSub:
       'Use the local parchi draft and server-backed shop ledger. Drafts are not payments; scam-text review is advisory and does not block calls or transfers.',
     enterpriseSub:
@@ -114,23 +114,23 @@ const HERO_COPY: Record<
     dir: 'ltr',
   },
   ur: {
-    kicker: 'Ø³Ú©Ø±Ù†Úˆ Ø³Û’ Â· Ø§Ø¬Ø±Ú© Ø§ÙˆØ± ÛØ§Ù„Û Ú©Ø§Ø´ÛŒ Ø³Û’ Ù…ØªØ§Ø«Ø± Ø§Ù†Ù¹Ø±ÙÛŒØ³ Â· Ø¯Ú©Ø§Ù†Ø¯Ø§Ø± Ú©Ú¾Ø§ØªÛ Ù¾Ø§Ø¦Ù„Ù¹',
-    greeting: 'Ø®ÙˆØ´ Ø¢Ù…Ø¯ÛŒØ¯ â€” Ø¬ÛØ§Úº Ù…Ø­Ù†ØªØŒ Ø§Ù…Ø§Ù†Øª Ø§ÙˆØ± Ø³Ú†Ø§Ø¦ÛŒ Ú©Ø§ Ù…ÛŒØ²Ø§Ù† Ø§ÛŒÚ© ÛÙˆ',
-    headline: 'Ø¬ÛØ§Úº ÛØ± Ú©Ø³Ø§Ù† Ú©ÛŒ Ù…Ø­Ù†Øª Ø§ÙˆØ± ÛØ± Ø¯Ú©Ø§Ù†Ø¯Ø§Ø± Ú©Ø§ Ø¨Ú¾Ø±ÙˆØ³Û ØºÛŒØ± Ù…ØªØ²Ù„Ø²Ù„ Ø¨Ù†Û’',
+    kicker: 'سکرنڈ سے · اجرک اور ہالہ کاشی سے متاثر انٹرفیس · دکاندار کھاتہ پائلٹ',
+    greeting: 'خوش آمدید — جہاں محنت، امانت اور سچائی کا میزان ایک ہو',
+    headline: 'جہاں ہر کسان کی محنت اور ہر دکاندار کا بھروسہ غیر متزلزل بنے',
     sabziSub:
-      'Ù…Ù‚Ø§Ù…ÛŒ Ù¾Ø±Ú†ÛŒ Ú©Ø§ Ù…Ø³ÙˆØ¯Û Ø¨Ù†Ø§Ø¦ÛŒÚº Ø§ÙˆØ± Ø³Ø±ÙˆØ± Ù¾Ø± Ú©Ú¾Ø§ØªÛ Ø¯Ø±Ø¬ Ú©Ø±ÛŒÚºÛ” Ù…Ø³ÙˆØ¯Û Ø§Ø¯Ø§Ø¦ÛŒÚ¯ÛŒ Ù†ÛÛŒÚºØ› ÙØ±Ø§Úˆ Ù…ØªÙ† Ú©ÛŒ Ø¬Ø§Ù†Ú† Ù…Ø´ÙˆØ±Û ÛÛ’ØŒ Ú©Ø§Ù„ ÛŒØ§ Ø±Ù‚Ù… Ú©ÛŒ Ù…Ù†ØªÙ‚Ù„ÛŒ Ù†ÛÛŒÚº Ø±ÙˆÚ©ØªÛŒÛ”',
+      'مقامی پرچی کا مسودہ بنائیں اور سرور پر کھاتہ درج کریں۔ مسودہ ادائیگی نہیں؛ فراڈ متن کی جانچ مشورہ ہے، کال یا رقم کی منتقلی نہیں روکتی۔',
     enterpriseSub:
-      'Ø³Ù†Ø¯Ú¾ Ú©ÛŒ Ù…Ù†ÚˆÛŒ Ú©Û’ Ú©Ø§Ù… Ø³Û’ Ù…ØªØ§Ø«Ø± Ø¯Ú©Ø§Ù†Ø¯Ø§Ø± Ú©Ú¾Ø§ØªÛ Ù¾Ø§Ø¦Ù„Ù¹Û” Ø¨Ø±Ø¢Ù…Ø¯ÛŒ ØªØµÙÛŒÛØŒ Ø¨ÛŒÙ†Ú© Ø±ÛŒÙ„ØŒ Ù‚Ø§Ù†ÙˆÙ†ÛŒ Ú¯ÙˆØ§ÛÛŒ ÛŒØ§ Ø§Ø¯Ø§Ø¦ÛŒÚ¯ÛŒ Ú©ÛŒ Ø¨Ø±Ø§ÛÙ Ø±Ø§Ø³Øª Ø­ÙØ§Ø¸Øª Ù…Ù†Ø³Ù„Ú© Ù†ÛÛŒÚºÛ”',
+      'سندھ کی منڈی کے کام سے متاثر دکاندار کھاتہ پائلٹ۔ برآمدی تصفیہ، بینک ریل، قانونی گواہی یا ادائیگی کی براہِ راست حفاظت منسلک نہیں۔',
     dir: 'rtl',
   },
   sd: {
-    kicker: 'Ø³ÚªØ±Ù†ÚŠ Ú©Ø§Ù† Â· Ø§Ø¬Ø±Úª Û½ Ù‡Ø§Ù„Ø§ ÚªØ§Ø´ÙŠ Ú©Ø§Ù† Ù…ØªØ§Ø«Ø± Ø§Ù†Ù½Ø±ÙÙŠØ³ Â· Ø¯ÚªØ§Ù†Ø¯Ø§Ø± Ú©Ø§ØªÙŠ Ø¬Ùˆ Ù¾Ø§Ø¦Ù„Ù½',
-    greeting: 'Ú€Ù„ÙŠ ÚªØ±ÙŠ Ø¢ÙŠØ§ â€” Ø¬ØªÙŠ Ù…Ø­Ù†ØªØŒ Ø§ÙŠÙ…Ø§Ù† Û½ Ø³Ú†Ø§Ø¦ÙŠ Ø¬Ùˆ Ù…ÙŠØ²Ø§Ù† Ù‡Úª Ù¿Ø¦ÙŠ',
-    headline: 'Ø¬ØªÙŠ Ù‡Ø± Ù‡Ø§Ø±ÙŠØ¡ÙŽ Ø¬Ùˆ Ù¾Ú¯Ù‡Ø± Û½ Ù‡Ø± Ø¯ÚªØ§Ù†Ø¯Ø§Ø± Ø¬Ùˆ Ú€Ø±ÙˆØ³Ùˆ Ø§Ù½ÙˆÙ½ Ø¨Ú»Ø¬ÙŠ ÙˆÚƒÙŠ',
+    kicker: 'سڪرنڊ کان · اجرڪ ۽ هالا ڪاشي کان متاثر انٽرفيس · دڪاندار کاتي جو پائلٽ',
+    greeting: 'ڀلي ڪري آيا — جتي محنت، ايمان ۽ سچائي جو ميزان هڪ ٿئي',
+    headline: 'جتي هر هاريءَ جو پگهر ۽ هر دڪاندار جو ڀروسو اٽوٽ بڻجي وڃي',
     sabziSub:
-      'Ù…Ù‚Ø§Ù…ÙŠ Ù¾Ø±Ú†ÙŠ Ø¬Ùˆ Ù…Ø³ÙˆØ¯Ùˆ ÙºØ§Ù‡ÙŠÙˆ Û½ Ø³Ø±ÙˆØ± ÙˆØ§Ø±ÙŠ Ú©Ø§ØªÙŠ Û¾ Ø¯Ø§Ø®Ù„Ø§ ÚªØ±ÙŠÙˆ. Ù…Ø³ÙˆØ¯Ùˆ Ø§Ø¯Ø§Ø¦ÙŠÚ¯ÙŠ Ù†Ø§Ù‡ÙŠØ› ÙºÚ³ÙŠ Ù…ØªÙ† Ø¬ÙŠ Ø¬Ø§Ú† ØµÙ„Ø§Ø­ Ø¢Ù‡ÙŠØŒ ÚªØ§Ù„ ÙŠØ§ Ø±Ù‚Ù… Ø¬ÙŠ Ù…Ù†ØªÙ‚Ù„ÙŠ Ù†Ù¿ÙŠ Ø±ÙˆÚªÙŠ.',
+      'مقامي پرچي جو مسودو ٺاهيو ۽ سرور واري کاتي ۾ داخلا ڪريو. مسودو ادائيگي ناهي؛ ٺڳي متن جي جاچ صلاح آهي، ڪال يا رقم جي منتقلي نٿي روڪي.',
     enterpriseSub:
-      'Ø³Ù†ÚŒ Ø¬ÙŠ Ù…Ù†ÚŠÙŠ Ø¬ÙŠ ÚªÙ… Ú©Ø§Ù† Ù…ØªØ§Ø«Ø± Ø¯ÚªØ§Ù†Ø¯Ø§Ø± Ú©Ø§ØªÙŠ Ø¬Ùˆ Ù¾Ø§Ø¦Ù„Ù½. Ø¨Ø±Ø¢Ù…Ø¯ÙŠ Ø³ÙŠÙ½Ù„Ù…ÙŠÙ†Ù½ØŒ Ø¨Ø¦Ù†Úª Ø±ÙŠÙ„ØŒ Ù‚Ø§Ù†ÙˆÙ†ÙŠ Ø´Ø§Ù‡Ø¯ÙŠ ÙŠØ§ Ø§Ø¯Ø§Ø¦ÙŠÚ¯ÙŠ Ø¬ÙŠ Ø³ÚŒÙŠ Ø­ÙØ§Ø¸Øª Ú³Ù†ÚÙŠÙ„ Ù†Ø§Ù‡ÙŠ.',
+      'سنڌ جي منڊي جي ڪم کان متاثر دڪاندار کاتي جو پائلٽ. برآمدي سيٽلمينٽ، بئنڪ ريل، قانوني شاهدي يا ادائيگي جي سڌي حفاظت ڳنڍيل ناهي.',
     dir: 'rtl',
   },
 };
@@ -328,7 +328,7 @@ export const AjrakLivingStage: React.FC<AjrakLivingStageProps> = ({
                 type="text"
                 value={universalInput}
                 onChange={(e) => setUniversalInput(e.target.value)}
-                placeholder="Type a command with an explicit amount: 'Haji Bilal 2 mann chawal PKR 18500' Â· '8171 OTP check' Â· 'Hedge gold'"
+                placeholder="Type a command with an explicit amount: 'Haji Bilal 2 mann chawal PKR 18500' · '8171 OTP check' · 'Hedge gold'"
                 className="flex-1 rounded-xl border border-[#F59E0B]/35 bg-[#041219]/90 px-4 py-2.5 text-xs sm:text-sm text-white placeholder:text-[#F8F7F3]/45 focus:outline-none focus:border-[#F59E0B]"
               />
               <button
@@ -418,8 +418,8 @@ export const AjrakLivingStage: React.FC<AjrakLivingStageProps> = ({
                 >
                   {([
                     { id: 'en', label: 'EN' },
-                    { id: 'ur', label: 'Ø§Ø±Ø¯Ùˆ' },
-                    { id: 'sd', label: 'Ø³Ù†ÚŒÙŠ' },
+                    { id: 'ur', label: 'اردو' },
+                    { id: 'sd', label: 'سنڌي' },
                   ] as const).map((item) => (
                     <button
                       key={item.id}
@@ -505,7 +505,7 @@ export const AjrakLivingStage: React.FC<AjrakLivingStageProps> = ({
               >
                 <ResilientImage
                   src={activeNode.image}
-                  alt={`${activeNode.label} â€” ${activeNode.commodity}`}
+                  alt={`${activeNode.label} — ${activeNode.commodity}`}
                   className="w-full h-full object-cover"
                 />
               </motion.div>

@@ -31,6 +31,9 @@ export function createLedgerBlock(
 export function verifyLedgerChain(chain: LedgerBlock[]): { isValid: boolean; tamperedBlockIndex: number | null; reason?: string } {
   for (let i = 0; i < chain.length; i++) {
     const current = chain[i];
+    if (current.index !== i) {
+      return { isValid: false, tamperedBlockIndex: current.index, reason: `Sequence gap detected at position #${i}` };
+    }
     const payload = `${current.index}|${current.timestamp}|${current.merchantId}|${current.customerName}|${current.amount}|${current.type}|${current.signatureHash}|${current.previousHash}`;
     const recomputedHash = crypto.createHash('sha256').update(payload).digest('hex');
     if (current.blockHash !== recomputedHash) {
@@ -70,17 +73,29 @@ export function solveMukasaCircularDebt(edges: DebtEdge[]) {
   let initialVolume = 0;
 
   for (const edge of edges) {
-    initialVolume += edge.amount;
-    netBalance[edge.from] = (netBalance[edge.from] || 0) - edge.amount;
-    netBalance[edge.to] = (netBalance[edge.to] || 0) + edge.amount;
+    const amt = Math.round(Number(edge.amount));
+    if (!edge.from || !edge.to || edge.from === edge.to || !Number.isFinite(amt) || amt <= 0) {
+      continue;
+    }
+    initialVolume += amt;
+    netBalance[edge.from] = (netBalance[edge.from] || 0) - amt;
+    netBalance[edge.to] = (netBalance[edge.to] || 0) + amt;
   }
 
-  const debtors = Object.entries(netBalance).filter(([, b]) => b < 0).map(([id, b]) => ({ id, amount: -b })).sort((a, b) => b.amount - a.amount);
-  const creditors = Object.entries(netBalance).filter(([, b]) => b > 0).map(([id, b]) => ({ id, amount: b })).sort((a, b) => b.amount - a.amount);
+  const debtors = Object.entries(netBalance)
+    .filter(([, b]) => b < 0)
+    .map(([id, b]) => ({ id, amount: -b }))
+    .sort((a, b) => b.amount - a.amount);
+
+  const creditors = Object.entries(netBalance)
+    .filter(([, b]) => b > 0)
+    .map(([id, b]) => ({ id, amount: b }))
+    .sort((a, b) => b.amount - a.amount);
 
   const settledEdges: DebtEdge[] = [];
   let finalVolume = 0;
-  let i = 0, j = 0;
+  let i = 0;
+  let j = 0;
 
   while (i < debtors.length && j < creditors.length) {
     const settleAmount = Math.min(debtors[i].amount, creditors[j].amount);
@@ -90,8 +105,8 @@ export function solveMukasaCircularDebt(edges: DebtEdge[]) {
     }
     debtors[i].amount -= settleAmount;
     creditors[j].amount -= settleAmount;
-    if (debtors[i].amount === 0) i++;
-    if (creditors[j].amount === 0) j++;
+    if (debtors[i].amount <= 0) i++;
+    if (creditors[j].amount <= 0) j++;
   }
 
   const executionTimeMs = Number((performance.now() - startTime).toFixed(3));

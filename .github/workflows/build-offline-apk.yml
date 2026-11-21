@@ -1,0 +1,67 @@
+﻿name: Build BolMizan 100% Offline Android APK
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-android-apk:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Setup Java 21 for Capacitor 8 / Gradle
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Bundle Google Fonts Locally for 100% Offline Support
+        run: |
+          mkdir -p public/fonts
+          curl -sL "https://gstatic.com" -o public/fonts/fraunces-600.ttf
+          curl -sL "https://gstatic.com" -o public/fonts/jetbrains-400.ttf
+          curl -sL "https://gstatic.com" -o public/fonts/arabic-400.ttf
+          curl -sL "https://gstatic.com" -o public/fonts/urdu-400.ttf
+          curl -sL "https://gstatic.com" -o public/fonts/jakarta-400.ttf
+          cat << 'EOF' > public/fonts/offline-fonts.css
+          @font-face { font-family: 'Fraunces'; font-weight: 600; src: url('/fonts/fraunces-600.ttf') format('truetype'); }
+          @font-face { font-family: 'JetBrains Mono'; font-weight: 400; src: url('/fonts/jetbrains-400.ttf') format('truetype'); }
+          @font-face { font-family: 'Noto Naskh Arabic'; font-weight: 400; src: url('/fonts/arabic-400.ttf') format('truetype'); }
+          @font-face { font-family: 'Noto Nastaliq Urdu'; font-weight: 400; src: url('/fonts/urdu-400.ttf') format('truetype'); }
+          @font-face { font-family: 'Plus Jakarta Sans'; font-weight: 400; src: url('/fonts/jakarta-400.ttf') format('truetype'); }
+          EOF
+
+      - name: Install Dependencies
+        run: npm ci || npm install
+
+      - name: Build Offline Web Bundle & Sync Capacitor Android
+        run: |
+          npm run build
+          npx cap sync android
+
+      - name: Make Gradle Wrapper Executable
+        run: chmod +x android/gradlew
+
+      - name: Compile Universal Offline Android APK
+        working-directory: android
+        run: ./gradlew assembleDebug --no-daemon
+
+      - name: Upload Ready-to-Install APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: BolMizan-Offline-Android-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 30

@@ -1,361 +1,508 @@
-﻿import React, { useState } from 'react';
-import { createSovereignReceipt, verifySovereignReceipt, SignedReceiptArtifact } from './utils/bolmizanOmegaCrypto';
-import { HybridLogicalClock, SovereignCrdtLedger } from './utils/bolmizanCrdtMesh';
-import { analyzeMessageForScam, detectAmountAnomaly, ThreatAssessment } from './utils/bolmizanAdversarialShield';
-import { calculateMandiParchi, calculateHarvestUshr } from './utils/bolmizanMizanCore';
-import { renderWatermarkedReceiptPng, verifyUploadedReceiptImage } from './utils/bolmizanReceiptCanvas';
+﻿import BolMizanOmegaCommand from './components/BolMizanOmegaCommand';
+import { JuryCommandCenter } from './components/JuryCommandCenter';
+import { SovereignAuthGate } from './components/SovereignAuthGate';
+import { IsefMasterDashboard } from './components/IsefMasterDashboard';
+import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
+import { motion } from 'motion/react';
+import { ArrowLeft, Award, RefreshCw } from 'lucide-react';
+import { AjrakLivingStage } from './components/AjrakLivingStage';
+import { AmbientAjrakCanvas } from './components/AmbientAjrakCanvas';
+import { DignityImpactRibbon } from './components/DignityImpactRibbon';
+import { IndusCulturalWave } from './components/IndusCulturalWave';
+import { JudgePassportModal } from './components/JudgePassportModal';
+import { SindhCultureGallery } from './components/SindhCultureGallery';
+import {
+  AjrakBlockBorder,
+  AjrakClothPattern,
+  AjrakLoomDivider,
+  HalaKashiCornerOrnament,
+} from './components/SovereignArt';
+const SovereignShields = lazy(() => import('./components/SovereignShields').then((module) => ({ default: module.SovereignShields })));
+const TreasuryOperations = lazy(() => import('./components/TreasuryOperations').then((module) => ({ default: module.TreasuryOperations })));
+const VeritasLedger = lazy(() => import('./components/VeritasLedger').then((module) => ({ default: module.VeritasLedger })));
+const VoiceMizanWorkspace = lazy(() => import('./components/VoiceMizanWorkspace').then((module) => ({ default: module.VoiceMizanWorkspace })));
+const HaqProofWorkbench = lazy(() => import('./components/HaqProofWorkbench').then((module) => ({ default: module.HaqProofWorkbench })));
+import type {
+  AjrakDyeTheme,
+  AudienceMode,
+  FXUnit,
+  LocaleScript,
+  QuickCommandDraft,
+  SovereignSystemState,
+} from './types/sovereign';
+import { triggerApexHaptic } from './utils/haptics';
+import { parseExplicitPkrAmount } from './utils/receiptIntegrity';
 
-import sakrandBasmatiImg from './assets/images/sakrand_basmati_mizan_1794637623859.jpg';
-import sindhMandiImg from './assets/images/sindh_mandi_bazaar_1794737693302.jpg';
-import ajrakArtisanImg from './assets/images/sindh_ajrak_artisan_1794737690544.jpg';
-import khairpurDatesImg from './assets/images/khairpur_dates_mangoes_1794637623124.jpg';
+type OsTab = 'treasury' | 'shields' | 'voice' | 'ledger' | 'haqproof';
 
-const shopClock = new HybridLogicalClock('NODE-SAKRAND-MAIN');
-const crdtLedger = new SovereignCrdtLedger();
-const MERCHANT_SECRET = 'bolmizan-sovereign-hardware-enclave-2026';
+const TAB_CONTEXT: Record<Exclude<OsTab, 'treasury'>, { title: string; subtitle: string }> = {
+  shields: {
+    title: 'Scam-Text Pattern Review',
+    subtitle: 'Review text for configured scam patterns. This heuristic cannot authenticate callers, verify documents, determine religious compliance, or freeze bank/payment accounts.',
+  },
+  voice: {
+    title: 'Voice Notes & Drafting Tools',
+    subtitle: 'Speech or AI extraction may help prepare a draft. A shopkeeper must check every field; this is not biometric identity verification and does not save ledger entries by itself.',
+  },
+  ledger: {
+    title: 'Ledger Integrity Checks',
+    subtitle: 'Inspect the pilot ledger hash chain. A valid hash chain is tamper-evident, not an independent audit, legal witness, or proof of payment.',
+  },
+  haqproof: {
+    title: 'HaqProof Local Prototype',
+    subtitle: 'Create and verify self-signed offline proof envelopes and inspect image recompression differences locally. These tools do not prove identity, payment, or image authenticity.',
+  },
+};
 
-export function App() {
-  const [tab, setTab] = useState<'OVERVIEW' | 'PARCHI' | 'SHIELD' | 'VAULT'>('OVERVIEW');
-  const [lang, setLang] = useState<'EN' | 'UR' | 'SD'>('EN');
-  const [farmer, setFarmer] = useState('Haji Noor Muhammad');
-  const [crop, setCrop] = useState('Sakrand Super Basmati');
-  const [weight, setWeight] = useState(800);
-  const [rate, setRate] = useState(4200);
-  const [irrigation, setIrrigation] = useState<'NEHRI_IRRIGATED' | 'BARANI_RAINFED'>('NEHRI_IRRIGATED');
-  const [refId, setRefId] = useState('RAAST-2026-88412');
-  const [receipts, setReceipts] = useState<SignedReceiptArtifact[]>([]);
-  const [pngUrl, setPngUrl] = useState<string | null>(null);
-  const [msg, setMsg] = useState<{ t: 'ok' | 'err'; text: string } | null>(null);
-  const [sender, setSender] = useState('+923001234567');
-  const [sms, setSms] = useState('8171 Benazir BISP inaam 25000 manzoor, foran apna MPIN code bhejein');
-  const [scam, setScam] = useState<ThreatAssessment | null>(null);
-  const [stegoHex, setStegoHex] = useState<string | null>(null);
+function App() {
+  const [juryMode, setJuryMode] = useState(false);
+  const localHaqProofMode = new URLSearchParams(window.location.search).get('mode') === 'haqproof';
+  const [state, setState] = useState<SovereignSystemState | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<OsTab>('shields');
+  const [audienceMode, setAudienceMode] = useState<AudienceMode>('enterprise');
+  const [script, setScript] = useState<LocaleScript>('en');
+  const [dyeTheme, setDyeTheme] = useState<AjrakDyeTheme>('indigo');
+  const [fxUnit, setFxUnit] = useState<FXUnit>('PKR');
+  const [commandDraft, setCommandDraft] = useState<QuickCommandDraft | null>(null);
+  const [commandFeedback, setCommandFeedback] = useState<string | null>(null);
 
-  const calc = (() => {
+  const [directorOpen, setDirectorOpen] = useState(false);
+  const [passportOpen, setPassportOpen] = useState(false);
+
+  const refreshState = useCallback(async () => {
     try {
-      const p = calculateMandiParchi({
-        cropName: crop,
-        weightKg: Math.max(1, weight),
-        ratePer40KgPaisa: Math.max(100, Math.round(rate * 100)),
-        kardaBasisPoints: 200,
-        arhtiCommissionBps: 300,
-        laborHamaliPaisa: 50000,
-      });
-      const u = calculateHarvestUshr({
-        harvestWeightKg: Math.max(1, weight),
-        netHarvestValuePaisa: p.farmerNetPayoutPaisa,
-        irrigationType: irrigation,
-      });
-      return { p, u };
-    } catch {
-      return null;
-    }
-  })();
-
-  const issue = async () => {
-    if (!calc) return;
-    try {
-      const anomaly = detectAmountAnomaly(calc.p.farmerNetPayoutPaisa, receipts.map((r) => r.payload.amountPaisa));
-      if (anomaly.verdict === 'SUSPICIOUS') {
-        setMsg({ t: 'err', text: anomaly.reasons.join(' ') });
-        return;
-      }
-      const prev = receipts.length ? receipts.merkleLeafHash : '0'.repeat(64);
-      const signed = await createSovereignReceipt(
-        {
-          receiptId: 'BMZ-' + Date.now().toString().slice(-6),
-          tenantId: 'SAKRAND-01',
-          merchantName: 'Al-Mizan Traders Sakrand',
-          counterparty: farmer + ' â€¢ ' + crop + ' (' + weight + 'kg)',
-          amountPaisa: calc.p.farmerNetPayoutPaisa,
-          txType: 'SABZI_PARCHI',
-          externalRefId: refId || undefined,
-          timestampMs: Date.now(),
+      const res = await fetch('/api/ledger/summary', { credentials: 'same-origin' });
+      if (!res.ok) throw new Error(`Server returned HTTP ${res.status}`);
+      const summary = await res.json() as { terminalId: string; totalCreditPaisa: number; totalReceivedPaisa: number; netReceivablePaisa: number; entryCount: number; hashChainIntegrity: string; recentEntries?: unknown[] };
+      const data: SovereignSystemState = {
+        version: 'live-ledger-1',
+        headquarters: 'Sakrand, Sindh',
+        killSwitch: {
+          active: false,
+          agentTokensRevoked: false,
+          activeAgentTokenCount: 0,
+          failedAttempts: 0,
+          maxAttempts: 10,
+          lockoutUntil: null,
+          lastToggledAt: null,
+          rails: [],
         },
-        prev,
-        MERCHANT_SECRET
-      );
-      crdtLedger.upsert({
-        entryId: signed.payload.receiptId,
-        tenantId: 'SAKRAND-01',
-        accountId: 'POOL',
-        deltaPaisa: signed.payload.amountPaisa,
-        note: signed.payload.counterparty,
-        hlc: shopClock.now(),
-        receiptHash: signed.merkleLeafHash,
-      });
-      const res = await renderWatermarkedReceiptPng(signed, calc.u.ushrAmountPaisa / 100);
-      setPngUrl(res.dataUrl);
-      setReceipts([signed, ...receipts]);
-      setRefId('RAAST-2026-' + Math.floor(10000 + Math.random() * 90000));
-      setMsg({ t: 'ok', text: 'SEALED: ' + signed.payload.receiptId + ' â€¢ Verify Code: ' + signed.shortVerifyCode });
-    } catch (e: any) {
-      setMsg({ t: 'err', text: e.message });
+        deals: [],
+        mukasaEdges: [],
+        lastMukasaReport: null,
+        maalGuard: [],
+        wages: [],
+        recentIntentSeals: [],
+        totals: {
+          activeDealsPkr: summary.totalCreditPaisa,
+          sadaqahReservePkr: 0,
+          wagesPaidPkr: summary.totalReceivedPaisa,
+          mukasaClearedTotalPkr: summary.netReceivablePaisa,
+          goldEquivalentGrams: 0,
+        },
+      };
+      setState(data);
+      setError(null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to connect to BolMizan backend');
+    } finally {
+      setLoading(false);
     }
+  }, []);
+
+  useEffect(() => {
+    if (!localHaqProofMode) void refreshState();
+  }, [localHaqProofMode, refreshState]);
+
+  const handleModeChange = (nextMode: AudienceMode) => {
+    setAudienceMode(nextMode);
+    triggerApexHaptic('tap', `Switched to ${nextMode}`);
   };
 
-  const verify = async (r: SignedReceiptArtifact, hack: boolean) => {
-    const target = hack ? { ...r, payload: { ...r.payload, amountPaisa: r.payload.amountPaisa + 500000 } } : r;
-    const res = await verifySovereignReceipt(target, MERCHANT_SECRET);
-    setMsg({ t: res.valid ? 'ok' : 'err', text: res.valid ? 'AUTHENTIC: ' + r.payload.receiptId + ' intact.' : String(res.reason) });
+  const handleScriptChange = (nextScript: LocaleScript) => {
+    setScript(nextScript);
+    triggerApexHaptic('tap', `Language switched to ${nextScript}`);
   };
 
-  const poolPkr = crdtLedger.getAccountBalancePaisa('SAKRAND-01', 'POOL') / 100;
-  const inp: React.CSSProperties = { padding: '10px 12px', borderRadius: '8px', border: '1px solid #334155', backgroundColor: '#06080d', color: '#fff', fontSize: '13px', width: '100%', boxSizing: 'border-box' };
+  const handleDyeThemeChange = (nextDye: AjrakDyeTheme) => {
+    setDyeTheme(nextDye);
+    triggerApexHaptic('seal_minted', `Ajrak weave switched to ${nextDye}`);
+  };
 
-  return React.createElement(
-    'div',
-    { dir: lang === 'EN' ? 'ltr' : 'rtl', style: { minHeight: '100vh', backgroundColor: '#06080d', color: '#f8fafc', fontFamily: 'system-ui, sans-serif' } },
-    React.createElement('div', { style: { height: '5px', background: 'repeating-linear-gradient(90deg, #be123c 0px, #be123c 20px, #1e3a8a 20px, #1e3a8a 40px, #f59e0b 40px, #f59e0b 46px)' } }),
-    React.createElement(
-      'header',
-      { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 24px', backgroundColor: '#0b0f19', borderBottom: '1px solid #1e293b', flexWrap: 'wrap', gap: '10px' } },
-      React.createElement(
-        'div',
-        null,
-        React.createElement('strong', { style: { fontSize: '18px', letterSpacing: '0.5px' } }, 'BOLMIZAN OMEGA OS '),
-        React.createElement('span', { style: { color: '#34d399', fontSize: '12px', fontWeight: 700 } }, 'â— Sakrand Node Live')
-      ),
-      React.createElement(
-        'div',
-        { style: { display: 'flex', gap: '6px' } },
-        (['EN', 'UR', 'SD'] as const).map((c) =>
-          React.createElement(
-            'button',
-            { key: c, onClick: () => setLang(c), style: { padding: '6px 12px', borderRadius: '6px', border: 'none', backgroundColor: lang === c ? '#e11d48' : '#1e293b', color: '#fff', cursor: 'pointer', fontWeight: 700, fontSize: '12px' } },
-            c === 'EN' ? 'English' : c === 'UR' ? 'Ø§Ø±Ø¯Ùˆ' : 'Ø³Ù†ÚŒÙŠ'
-          )
-        )
-      )
-    ),
-    React.createElement(
-      'div',
-      { style: { maxWidth: '1160px', margin: '0 auto', padding: '24px 16px' } },
-      msg
-        ? React.createElement(
-            'div',
-            { style: { padding: '12px 16px', borderRadius: '10px', marginBottom: '18px', backgroundColor: msg.t === 'err' ? '#7f1d1d' : '#064e3b', border: '1px solid ' + (msg.t === 'err' ? '#ef4444' : '#10b981'), fontWeight: 600, fontSize: '13px' } },
-            msg.text
-          )
-        : null,
-      React.createElement(
-        'div',
-        { style: { display: 'flex', gap: '8px', marginBottom: '22px', flexWrap: 'wrap' } },
-        ([
-          ['OVERVIEW', 'Command Center'],
-          ['PARCHI', 'Mandi Parchi Studio'],
-          ['SHIELD', 'Fraud & Pixel Shield'],
-          ['VAULT', 'CRDT Audit Vault (' + receipts.length + ')'],
-        ] as const).map(([id, lbl]) =>
-          React.createElement(
-            'button',
-            { key: id, onClick: () => setTab(id), style: { padding: '10px 18px', borderRadius: '10px', border: 'none', backgroundColor: tab === id ? '#e11d48' : '#1e293b', color: '#fff', fontWeight: 700, cursor: 'pointer', fontSize: '13px' } },
-            lbl
-          )
-        )
-      ),
-      tab === 'OVERVIEW'
-        ? React.createElement(
-            'div',
-            { style: { display: 'grid', gap: '22px' } },
-            React.createElement(
-              'div',
-              { style: { position: 'relative', borderRadius: '18px', overflow: 'hidden', border: '1px solid #334155', backgroundColor: '#0f172a' } },
-              React.createElement('img', { src: sindhMandiImg, alt: 'Sindh Mandi', style: { width: '100%', height: '220px', objectFit: 'cover', opacity: 0.35, display: 'block' } }),
-              React.createElement(
-                'div',
-                { style: { position: 'absolute', inset: 0, padding: '28px', background: 'linear-gradient(90deg, #06080d 35%, transparent)', display: 'flex', flexDirection: 'column', justifyContent: 'center' } },
-                React.createElement('span', { style: { fontSize: '11px', fontWeight: 800, color: '#fbbf24', letterSpacing: '1.2px' } }, 'SINDH RURAL FINTECH & ANTI-FRAUD OS'),
-                React.createElement('h1', { style: { margin: '6px 0 8px 0', fontSize: '28px', fontWeight: 800 } }, 'Sovereign Offline Financial OS'),
-                React.createElement('p', { style: { margin: '0 0 16px 0', color: '#cbd5e1', fontSize: '13px', maxWidth: '560px' } }, '11,801 tx/s Cryptographic Ledger â€¢ 100% WhatsApp QIM Stego Survival â€¢ Zero Paisa Drift'),
-                React.createElement(
-                  'button',
-                  { onClick: () => setTab('PARCHI'), style: { width: 'fit-content', padding: '11px 20px', borderRadius: '10px', border: 'none', backgroundColor: '#e11d48', color: '#fff', fontWeight: 700, cursor: 'pointer', fontSize: '13px' } },
-                  'Issue Tamper-Proof Parchi â†’'
-                )
-              )
-            ),
-            React.createElement(
-              'div',
-              { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '14px' } },
-              [
-                ['CRDT POOL BALANCE', 'PKR ' + poolPkr.toLocaleString(), '#34d399'],
-                ['QIM STEGO SURVIVAL', '100.0%', '#38bdf8'],
-                ['CRYPTO THROUGHPUT', '11,801 tx/s', '#fbbf24'],
-                ['SYNC CONFLICTS', '0.00%', '#f43f5e'],
+  const handleFxUnitChange = (nextFx: FXUnit) => {
+    setFxUnit(nextFx);
+    triggerApexHaptic('tap', `Currency switched to ${nextFx}`);
+  };
 
-].map(([k, v, col], i) =>
-React.createElement(
-'div',
-{ key: i, style: { padding: '20px', borderRadius: '14px', backgroundColor: '#0f172a', border: '1px solid #1e293b' } },
-React.createElement('div', { style: { fontSize: '11px', color: '#94a3b8', fontWeight: 700 } }, k),
-React.createElement('div', { style: { fontSize: '24px', fontWeight: 800, color: col, marginTop: '6px' } }, v)
-)
-)
-),
-React.createElement(
-'div',
-{ style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '16px' } },
-[
-[sakrandBasmatiImg, 'Sakrand Basmati Mandi', 'Automated Karda & 5% Nehri Ushr settlement'],
-[khairpurDatesImg, 'Khairpur Dates & Mangoes', 'Tamper-proof harvest forward contracts'],
-[ajrakArtisanImg, 'Hala Ajrak Artisans', 'Cryptographic authenticity receipts'],
-].map(([img, t, d], i) =>
-React.createElement(
-'div',
-{ key: i, style: { borderRadius: '14px', overflow: 'hidden', backgroundColor: '#0f172a', border: '1px solid #1e293b' } },
-React.createElement('img', { src: img, alt: t, style: { width: '100%', height: '130px', objectFit: 'cover', display: 'block' } }),
-React.createElement(
-'div',
-{ style: { padding: '14px' } },
-React.createElement('strong', { style: { fontSize: '14px' } }, t),
-React.createElement('p', { style: { margin: '4px 0 0', fontSize: '12px', color: '#94a3b8' } }, d)
-)
-)
-)
-)
-)
-: null,
-tab === 'PARCHI'
-? React.createElement(
-'div',
-{ style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px', alignItems: 'start' } },
-React.createElement(
-'div',
-{ style: { padding: '22px', borderRadius: '16px', backgroundColor: '#0f172a', border: '1px solid #1e293b', display: 'grid', gap: '12px' } },
-React.createElement('h3', { style: { margin: 0, fontSize: '17px' } }, 'Mandi Settlement & Ushr Calculator'),
-React.createElement('input', { value: farmer, onChange: (e: any) => setFarmer(e.target.value), placeholder: 'Farmer Name', style: inp }),
-React.createElement('input', { value: crop, onChange: (e: any) => setCrop(e.target.value), placeholder: 'Crop', style: inp }),
-React.createElement('input', { type: 'number', value: weight, onChange: (e: any) => setWeight(Number(e.target.value)), placeholder: 'Weight Kg', style: inp }),
-React.createElement('input', { type: 'number', value: rate, onChange: (e: any) => setRate(Number(e.target.value)), placeholder: 'Rate per 40Kg', style: inp }),
-React.createElement(
-'select',
-{ value: irrigation, onChange: (e: any) => setIrrigation(e.target.value), style: inp },
-React.createElement('option', { value: 'NEHRI_IRRIGATED' }, 'Nehri / Canal (5% Ushr)'),
-React.createElement('option', { value: 'BARANI_RAINFED' }, 'Barani / Rain-Fed (10% Ushr)')
-),
-React.createElement('input', { value: refId, onChange: (e: any) => setRefId(e.target.value), placeholder: 'Raast Ref ID', style: inp }),
-React.createElement(
-'button',
-{ onClick: issue, style: { padding: '13px', borderRadius: '10px', border: 'none', backgroundColor: '#e11d48', color: '#fff', fontWeight: 800, cursor: 'pointer', fontSize: '14px' } },
-'Sign & Seal Sovereign Parchi'
-)
-),
-React.createElement(
-'div',
-{ style: { backgroundColor: '#f8fafc', color: '#0f172a', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.6)' } },
-React.createElement(
-'div',
-{ style: { background: 'linear-gradient(135deg, #1e1b4b, #31102f)', color: '#fff', padding: '18px 22px', borderBottom: '4px solid #f59e0b' } },
-React.createElement('div', { style: { fontSize: '11px', color: '#fbbf24', fontWeight: 700 } }, 'VERIFIED SABZI PARCHI'),
-React.createElement('strong', { style: { fontSize: '18px' } }, farmer)
-),
-calc
-? React.createElement(
-'div',
-{ style: { padding: '20px 22px', display: 'grid', gap: '10px', fontSize: '14px' } },
-React.createElement('div', null, 'Gross Value: PKR ' + (calc.p.grossValuePaisa / 100).toLocaleString()),
-React.createElement('div', { style: { color: '#dc2626' } }, 'Karda (2%) + Arhti (3%) + Labor Deducted'),
-React.createElement(
-'div',
-{ style: { padding: '14px', borderRadius: '10px', backgroundColor: '#ecfdf5', border: '1px solid #6ee7b7', fontWeight: 800, fontSize: '18px', color: '#064e3b' } },
-'Net Payout: PKR ' + (calc.p.farmerNetPayoutPaisa / 100).toLocaleString()
-),
-React.createElement('div', { style: { fontSize: '12px', color: '#047857', fontWeight: 600 } }, 'Shariah Ushr (' + calc.u.ratePercent + '%): PKR ' + (calc.u.ushrAmountPaisa / 100).toLocaleString()),
-pngUrl
-? React.createElement(
-'a',
-{ href: pngUrl, download: 'BolMizan-Parchi.png', style: { display: 'block', marginTop: '8px', padding: '11px 14px', borderRadius: '8px', backgroundColor: '#0f172a', color: '#fff', textDecoration: 'none', fontWeight: 700, textAlign: 'center', fontSize: '13px' } },
-'Download QIM-Sealed PNG'
-)
-: null
-)
-: null
-)
-)
-: null,
-tab === 'SHIELD'
-? React.createElement(
-'div',
-{ style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px' } },
-React.createElement(
-'div',
-{ style: { padding: '22px', borderRadius: '16px', backgroundColor: '#0f172a', border: '1px solid #1e293b', display: 'grid', gap: '12px' } },
-React.createElement('h3', { style: { margin: 0 } }, 'SMS & WhatsApp Fraud Classifier'),
-React.createElement('input', { value: sender, onChange: (e: any) => setSender(e.target.value), style: inp }),
-React.createElement('textarea', { rows: 3, value: sms, onChange: (e: any) => setSms(e.target.value), style: inp }),
-React.createElement(
-'button',
-{ onClick: () => setScam(analyzeMessageForScam(sms, sender)), style: { padding: '12px', borderRadius: '10px', border: 'none', backgroundColor: '#f59e0b', color: '#451a03', fontWeight: 800, cursor: 'pointer' } },
-'Scan Message'
-),
-scam
-? React.createElement(
-'div',
-{ style: { padding: '12px', borderRadius: '8px', backgroundColor: '#06080d', border: '1px solid #ef4444', fontSize: '13px' } },
-scam.verdict + ' (' + scam.riskScore + '/100): ' + scam.reasons.join(', ')
-)
-: null
-),
-React.createElement(
-'div',
-{ style: { padding: '22px', borderRadius: '16px', backgroundColor: '#0f172a', border: '1px solid #1e293b' } },
-React.createElement('h3', { style: { margin: '0 0 8px 0' } }, 'QIM Image Steganography Verifier'),
-React.createElement('p', { style: { fontSize: '12px', color: '#94a3b8', marginBottom: '12px' } }, 'Upload any downloaded Parchi PNG to verify its hidden 64-bit cryptographic signature.'),
-React.createElement('input', {
-type: 'file',
-accept: 'image/*',
-onChange: async (e: any) => {
-const f = e.target.files?.item(0);
-if (f) setStegoHex(await verifyUploadedReceiptImage(f));
-},
-}),
-stegoHex
-? React.createElement(
-'div',
-{ style: { marginTop: '14px', padding: '12px', borderRadius: '8px', backgroundColor: '#06080d', color: '#38bdf8', fontFamily: 'monospace', fontWeight: 800 } },
-'Decoded QIM Hash: ' + stegoHex
-)
-: null
-)
-)
-: null,
-tab === 'VAULT'
-? React.createElement(
-'div',
-{ style: { padding: '22px', borderRadius: '16px', backgroundColor: '#0f172a', border: '1px solid #1e293b', display: 'grid', gap: '12px' } },
-React.createElement('h3', { style: { margin: 0 } }, 'Immutable CRDT Audit Vault'),
-receipts.length === 0
-? React.createElement('p', { style: { color: '#94a3b8', fontSize: '13px' } }, 'No receipts yet. Issue a Parchi first.')
-: receipts.map((r) =>
-React.createElement(
-'div',
-{ key: r.payload.receiptId, style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px', borderRadius: '10px', backgroundColor: '#06080d', border: '1px solid #1e293b' } },
-React.createElement(
-'div',
-null,
-React.createElement('strong', null, r.payload.receiptId + ' â€¢ ' + r.payload.counterparty),
-React.createElement('div', { style: { color: '#34d399', fontSize: '12px', marginTop: '2px' } }, 'PKR ' + (r.payload.amountPaisa / 100).toLocaleString())
-),
-React.createElement(
-'div',
-{ style: { display: 'flex', gap: '8px' } },
-React.createElement(
-'button',
-{ onClick: () => verify(r, false), style: { padding: '7px 14px', borderRadius: '6px', border: 'none', backgroundColor: '#2563eb', color: '#fff', fontWeight: 700, cursor: 'pointer', fontSize: '12px' } },
-'Verify'
-),
-React.createElement(
-'button',
-{ onClick: () => verify(r, true), style: { padding: '7px 14px', borderRadius: '6px', border: 'none', backgroundColor: '#dc2626', color: '#fff', fontWeight: 700, cursor: 'pointer', fontSize: '12px' } },
-'Simulate Hack'
-)
-)
-)
-)
-)
-: null
-)
-);
+  const handleSendToParchi = (draft: Omit<QuickCommandDraft, 'id'>) => {
+    if (!Number.isSafeInteger(draft.amountPkr) || draft.amountPkr < 50) {
+      setActiveTab('treasury');
+      setCommandFeedback('Enter a valid PKR amount of at least 50 before preparing a parchi draft.');
+      return;
+    }
+    setCommandDraft({ ...draft, id: Date.now() });
+    setActiveTab('treasury');
+    setCommandFeedback('Parchi draft prepared for review. It has not been saved to the SQLite ledger.');
+    triggerApexHaptic('tap', 'Parchi draft prepared');
+    setTimeout(() => {
+      document.getElementById('treasury-studio')?.scrollIntoView({ behavior: 'smooth' });
+    }, 80);
+  };
+
+  const handleUniversalCommand = async (raw: string) => {
+    const lower = raw.toLowerCase();
+    setCommandFeedback(null);
+
+    if (lower.includes('8171') || lower.includes('otp') || lower.includes('scam') || lower.includes('pin')) {
+      setActiveTab('shields');
+      triggerApexHaptic('security_violation', 'Routed to Cognitive Firewall');
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/ai/unified-process', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin',
+        body: JSON.stringify({ text: raw }),
+      });
+      if (res.ok) {
+        const parsed = await res.json() as { ledgerDraft?: { urduConfirmation?: string; customerName?: string; amountPaisa?: number; entryType?: string }; scamAnalysis?: { urduWarning?: string; verdict?: string } };
+        if (parsed.ledgerDraft?.amountPaisa && parsed.ledgerDraft.customerName) {
+          const amountPkr = Math.round(parsed.ledgerDraft.amountPaisa / 100);
+          handleSendToParchi({
+            customer: parsed.ledgerDraft.customerName,
+            item: parsed.ledgerDraft.entryType || 'Ledger draft',
+            amountPkr,
+            entryType: parsed.ledgerDraft.entryType === 'PAYMENT_RECEIVED' ? 'Wasooli (Paid)' : 'Udhaar (Credit)',
+          });
+          return;
+        }
+        if (parsed.scamAnalysis?.urduWarning) {
+          setCommandFeedback(parsed.scamAnalysis.urduWarning);
+          triggerApexHaptic('security_violation', parsed.scamAnalysis.verdict || 'Risk flagged');
+          return;
+        }
+      }
+    } catch {
+      // Fallback local parse
+    }
+    const amt = parseExplicitPkrAmount(raw);
+    if (amt === null || amt < 50) {
+      setActiveTab('treasury');
+      setCommandFeedback('No explicit valid PKR amount was found. Enter one manually; no draft was created.');
+      return;
+    }
+    handleSendToParchi({
+      customer: raw.split(/\s+/).slice(0, 2).join(' ') || 'Walk-in Buyer',
+      item: raw,
+      amountPkr: amt,
+      entryType: 'Udhaar (Credit)',
+    });
+  };
+
+  const handleTabChange = (tab: OsTab) => {
+    setActiveTab(tab);
+    triggerApexHaptic('tap', `Navigated to ${tab}`);
+  };
+
+  const mizanTilt = state
+    ? state.killSwitch.active
+      ? -12
+      : Math.min(8, Math.max(-8, state.deals.length - 3))
+    : 0;
+
+  if (localHaqProofMode) {
+    return (
+      <main className="min-h-screen bg-[#041016] px-4 py-6 text-white sm:px-6">
+        <div className="mx-auto max-w-6xl space-y-5">
+          <a href="/" className="inline-flex rounded-lg border border-white/20 px-3 py-2 text-xs font-semibold text-slate-200 hover:bg-white/10">
+            Back to BolMizan sign-in
+          </a>
+          <Suspense fallback={<p role="status" className="p-8 text-center text-sm text-slate-200">Loading local prototypeâ€¦</p>}>
+            <HaqProofWorkbench />
+          </Suspense>
+        </div>
+      </main>
+    );
+  }
+
+  return (
+    <SovereignAuthGate>
+      <div
+        className={`min-h-screen relative flex flex-col ajrak-canvas-bg ajrak-dye-${dyeTheme} text-[#F8F7F3] ${audienceMode === 'sabzi-wala' ? 'ajrak-crimson-mode' : ''
+          }`}
+      >
+        {/* Living Atmospheric Layers */}
+        <AmbientAjrakCanvas crimson={audienceMode === 'sabzi-wala'} dyeTheme={dyeTheme} />
+        <JuryCommandCenter />
+
+        {/* Clean Single-Row 3-Zone Editorial Header */}
+        <header className="sticky top-0 z-40 border-b border-[#F59E0B]/20 bg-[#041016]/95">
+          <div className="ajrak-mosaic-band" />
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-8">
+            {/* Zone 1: Single Brand Wordmark */}
+            <button
+              type="button"
+              onClick={() => handleTabChange('treasury')}
+              className="font-display text-lg sm:text-xl font-bold tracking-tight text-white whitespace-nowrap shrink-0 hover:text-[#FDE68A] transition-colors"
+            >
+              BolMizan
+            </button>
+
+            {/* Zone 2: Clean Single-Line Nav Links */}
+            <nav
+              aria-label="Primary Workspace Navigation"
+              className="flex items-center gap-5 sm:gap-7 overflow-x-auto text-xs sm:text-sm font-medium"
+            >
+              <button
+                type="button"
+                onClick={() => handleTabChange('treasury')}
+                className={`whitespace-nowrap shrink-0 py-1 border-b-2 transition-colors ${activeTab === 'treasury'
+                  ? 'border-[#F59E0B] text-white font-semibold'
+                  : 'border-transparent text-slate-300 hover:text-white'
+                  }`}
+              >
+                Khata &amp; Treasury
+              </button>
+              <button
+                type="button"
+                onClick={() => handleTabChange('shields')}
+                className={`whitespace-nowrap shrink-0 py-1 border-b-2 transition-colors ${activeTab === 'shields'
+                  ? 'border-[#9B1C2E] text-white font-semibold'
+                  : 'border-transparent text-slate-300 hover:text-white'
+                  }`}
+              >
+                Shields &amp; Switchboard
+              </button>
+              <button
+                type="button"
+                onClick={() => handleTabChange('voice')}
+                className={`whitespace-nowrap shrink-0 py-1 border-b-2 transition-colors ${activeTab === 'voice'
+                  ? 'border-[#14B8A6] text-white font-semibold'
+                  : 'border-transparent text-slate-300 hover:text-white'
+                  }`}
+              >
+                Voice Notes
+              </button>
+              <button
+                type="button"
+                onClick={() => handleTabChange('ledger')}
+                className={`whitespace-nowrap shrink-0 py-1 border-b-2 transition-colors ${activeTab === 'ledger'
+                  ? 'border-[#F59E0B] text-white font-semibold'
+                  : 'border-transparent text-slate-300 hover:text-white'
+                  }`}
+              >
+                Audit Ledger
+              </button>
+              <button
+                type="button"
+                onClick={() => handleTabChange('haqproof')}
+                className={`whitespace-nowrap shrink-0 py-1 border-b-2 transition-colors ${activeTab === 'haqproof'
+                  ? 'border-[#14B8A6] text-white font-semibold'
+                  : 'border-transparent text-slate-300 hover:text-white'
+                  }`}
+              >
+                HaqProof Lab
+              </button>
+            </nav>
+
+            {/* Zone 3: Single Primary Action */}
+            <div className="no-print shrink-0">
+              <button
+                type="button"
+                onClick={() => setPassportOpen(true)}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#0F766E] hover:bg-[#14B8A6] text-xs font-semibold text-white whitespace-nowrap shrink-0 transition-colors"
+              >
+                <Award className="w-3.5 h-3.5" />
+                <span>Judge Passport</span>
+              </button>
+            </div>
+          </div>
+        </header>
+
+        {/* Main Content */}
+        <main className="relative z-20 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8 space-y-8">
+          <aside role="note" className="rounded-xl border border-amber-400/30 bg-amber-950/25 px-4 py-3 text-xs leading-5 text-amber-100/90">
+            Pilot software, not a licensed financial service. No bank or wallet is connected; no payment is initiated, confirmed, or settled. Illustrative screens are not real merchant activity.
+          </aside>
+          {loading && !state ? (
+            <div className="rounded-2xl border border-[#F59E0B]/25 ajrak-moving-glass p-10 text-center">
+              <div className="inline-flex items-center gap-2 text-sm font-semibold text-[#FDE68A]">
+                <RefreshCw className="w-4 h-4 animate-spin" />
+                <span>Loading BolMizan Sovereign Workspace...</span>
+              </div>
+            </div>
+          ) : !state ? (
+            <div className="rounded-2xl border border-rose-500/40 bg-rose-950/30 p-8 text-center space-y-3">
+              <p className="text-sm font-semibold text-rose-200">
+                {error || 'Unable to load workspace state.'}
+              </p>
+              <button
+                type="button"
+                onClick={() => void refreshState()}
+                className="inline-flex items-center gap-1.5 rounded-lg bg-[#0F766E] px-4 py-2 text-xs font-bold text-white"
+              >
+                <RefreshCw className="w-3.5 h-3.5" /> Retry Connection
+              </button>
+            </div>
+          ) : (
+            <>
+              {activeTab === 'treasury' ? (
+                <>
+                  {/* Living Cultural Hero Command Stage with Universal Prompt & Multi-Currency */}
+                  <AjrakLivingStage
+                    state={state}
+                    mode={audienceMode}
+                    onModeChange={handleModeChange}
+                    script={script}
+                    onScriptChange={handleScriptChange}
+                    dyeTheme={dyeTheme}
+                    onDyeThemeChange={handleDyeThemeChange}
+                    fxUnit={fxUnit}
+                    onFxUnitChange={handleFxUnitChange}
+                    onUniversalCommand={handleUniversalCommand}
+                    mizanTilt={mizanTilt}
+                    onReplayWelcome={() => triggerApexHaptic('authenticate', 'Ajrak Welcome Replayed')}
+                    onOpenDirector={() => setDirectorOpen(true)}
+                  />
+
+                  {commandFeedback && (
+                    <div className="rounded-xl border border-[#14B8A6]/45 bg-[#04151B] px-5 py-3.5 text-xs sm:text-sm text-[#FDE68A] flex items-center justify-between gap-3">
+                      <span>{commandFeedback}</span>
+                      <button
+                        type="button"
+                        onClick={() => setCommandFeedback(null)}
+                        className="text-xs font-semibold text-[#5EEAD4] hover:underline shrink-0"
+                      >
+                        Dismiss
+                      </button>
+                    </div>
+                  )}
+
+                  <section className="rounded-2xl border border-amber-400/25 bg-[#091A20] p-4 sm:p-5" aria-label="Pilot product boundaries">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <h2 className="font-semibold text-white">BolMizan merchant-ledger pilot</h2>
+                      <span className="rounded-full border border-amber-300/30 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-amber-200">No money movement</span>
+                    </div>
+                    <div className="mt-3 grid gap-3 text-xs leading-5 text-[#F8F7F3]/70 sm:grid-cols-3">
+                      <p>Records shop entries after server confirmation; hash checks do not replace independent audit.</p>
+                      <p>Payment QR, bank settlement, wallet balances, and account freezing are not provided here.</p>
+                      <p>Scam text checks are heuristic prompts only; verify with your bank or provider through official channels.</p>
+                    </div>
+                  </section>
+
+                  {/* Sindhi cultural interface and illustrative market stories */}
+                  <IndusCulturalWave
+                    onJumpToTab={handleTabChange}
+                    totalSadaqahPkr={state.totals.sadaqahReservePkr}
+                    activeDealsCount={state.deals.length}
+                    script={script}
+                  />
+
+                  {/* Living Sindhi Heritage & Color Pigment Photographic Gallery */}
+                  <SindhCultureGallery script={script} />
+
+                  {/* Human Meaning & Empathy Impact Translation */}
+                  <DignityImpactRibbon state={state} mode={audienceMode} script={script} />
+                </>
+              ) : (
+                /* Focused Ajrak-Woven Workspace Banner on Specialized Tabs */
+                <section className="relative rounded-2xl overflow-hidden border border-[#F59E0B]/30 ajrak-moving-glass shadow-lg">
+                  <AjrakBlockBorder />
+                  <AjrakClothPattern
+                    accentHex={activeTab === 'shields' ? '#9B1C2E' : activeTab === 'voice' ? '#14B8A6' : '#F59E0B'}
+                    opacityClass="opacity-[0.1]"
+                  />
+                  <HalaKashiCornerOrnament className="absolute top-3 left-2 opacity-65" />
+                  <div className="relative z-10 px-6 py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div className="space-y-1 pl-3">
+                      <div className="text-[11px] font-mono-tabular uppercase tracking-wider text-[#5EEAD4]">
+                        Ajrak Sovereign Module Â· Sakrand 0% Riba Standard
+                      </div>
+                      <h1 className="font-display text-xl sm:text-2xl font-bold text-white">
+                        {TAB_CONTEXT[activeTab].title}
+                      </h1>
+                      <p className="text-xs text-[#F8F7F3]/80 max-w-2xl">
+                        {TAB_CONTEXT[activeTab].subtitle}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleTabChange('treasury')}
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-[#F59E0B]/35 bg-[#041219]/80 text-xs font-semibold text-[#FDE68A] hover:bg-[#F59E0B]/15 whitespace-nowrap shrink-0"
+                    >
+                      <ArrowLeft className="w-3.5 h-3.5" />
+                      <span>Command Home</span>
+                    </button>
+                  </div>
+                </section>
+              )}
+
+              {/* Active Workspace Tab */}
+              <Suspense fallback={<div role="status" className="rounded-2xl border border-[#F59E0B]/25 bg-[#041016]/80 p-8 text-center text-sm text-[#FDE68A]">Loading selected workspaceâ€¦</div>}>
+                <motion.div
+                  key={activeTab}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {activeTab === 'treasury' && (
+                    <TreasuryOperations
+                      state={state}
+                      mode={audienceMode}
+                      script={script}
+                      fxUnit={fxUnit}
+                      externalDraft={commandDraft}
+                      onStateRefresh={refreshState}
+                    />
+                  )}
+                  {activeTab === 'shields' && (
+                    <SovereignShields />
+                  )}
+                  {activeTab === 'voice' && (
+                    <VoiceMizanWorkspace onSendToParchi={handleSendToParchi} />
+                  )}
+                  {activeTab === 'ledger' && (
+                    <VeritasLedger state={state} onStateRefresh={refreshState} />
+                  )}
+                  {activeTab === 'haqproof' && <HaqProofWorkbench />}
+                </motion.div>
+              </Suspense>
+            </>
+          )}
+        </main>
+
+        <footer className="relative z-20 border-t border-[#F59E0B]/20 bg-[#030B10]/95">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-4 pb-5 space-y-2 text-center">
+            <AjrakLoomDivider label="Ajrak Craft Â· Zero-Riba Sovereign Standard" />
+            <div dir="rtl" className="text-sm font-semibold text-[#FDE68A]/90">
+              Ø³Ø§Ø¦ÙŠÙ†Ù… Ø³Ø¯Ø§Ø¦ÙŠÙ† ÚªØ±ÙŠÙ† Ù…Ù¿ÙŠ Ø³Ù†ÚŒ Ø³ÚªØ§Ø± â€” Ø´Ø§Ù‡Ù‡ Ø¹Ø¨Ø¯Ø§Ù„Ù„Ø·ÙŠÙ Ú€Ù½Ø§Ø¦ÙŠ
+            </div>
+            <p className="text-xs text-[#F8F7F3]/70">
+              BolMizan Â· Sakrand, Shaheed Benazirabad, Sindh Â· Honest Weight, Otaq Witness &amp; 0% Fee Raast Trade
+            </p>
+          </div>
+          <AjrakBlockBorder />
+        </footer>
+
+        {/* Overlays */}
+        {state && (
+          <JudgePassportModal
+            open={passportOpen}
+            onClose={() => setPassportOpen(false)}
+            state={state}
+          />
+        )}
+        <IsefMasterDashboard />
+      </div>
+    </SovereignAuthGate>
+  );
 }
+
 export default App;
+
+
+

@@ -1,0 +1,336 @@
+# BolMizan Extreme Full-Repo X-Ray & Audit Report
+
+- **Generated:** 2026-11-20T07:48:55.868Z
+- **Total Files Scanned:** 235 (114 code files)
+- **Backend API Routes:** POST /api/auth/login, GET /api/auth/me, POST /api/auth/logout, POST /api/ledger/entry, POST /api/ledger/sync, GET /api/ledger/summary, GET /api/ops/installments, POST /api/ops/installments, POST /api/ops/installments/:id/pay, GET /api/ops/staff, POST /api/ops/staff, POST /api/ops/staff/:id/update, GET /api/ops/inventory, POST /api/ops/inventory, POST /api/ops/inventory/:id/adjust, GET /api/ops/tax-summary.csv, POST /api/scam/analyze, POST /api/v2/analyze-scam, POST /api/ai/unified-process, GET /api/health, GET *
+- **Frontend API Calls:** /api/auth/me, /api/auth/login, /api/health, /api/ledger/summary, /api/ai/unified-process, /api/scam/analyze, /api/tenant/session, /api/tenant/auth, /api/tenant/${encodeURIComponent(e.tenant.id)}/ledger, /api/tenant/${encodeURIComponent(e.tenant.id)}/reconciliation/preview, /api/sovereign/deals, /api/sovereign/deals/${e}/attest, /api/sovereign/mukasa/add, /api/sovereign/mukasa/clear, /api/sovereign/wages/add, /api/sovereign/wages/${e}/settle, /api/sovereign/maal-guard/${e}/rescue, /api/sovereign/reset, /api/ai/extract-voice, /api/ai/mizan-advisor, /api/ledger/entry, /api/tenant/${encodeURIComponent(session.tenant.id)}/ledger, /api/tenant/${encodeURIComponent(session.tenant.id)}/reconciliation/preview, /api/sovereign/deals/${dealId}/attest, /api/sovereign/wages/${id}/settle, /api/sovereign/maal-guard/${id}/rescue
+- **Health Score:** 0 / 100
+
+## 1. Summary of Findings
+| Severity | Count |
+| :--- | :--- |
+| CRITICAL | 24 |
+| HIGH | 5 |
+| MEDIUM | 11 |
+| LOW | 1 |
+
+## 2. Detailed Issue & Improvement Log
+- **[MEDIUM] (Silent Failure)** `android/app/src/main/assets/public/assets/HaqProofWorkbench-CZ8etua_.js:1` — Empty catch {} block hides runtime errors.
+  - *Recommended Fix:* Log error or show offline fallback alert.
+- **[CRITICAL] (SBP Compliance)** `android/app/src/main/assets/public/assets/index-BRK5VZ0q.js:2` — Potential prohibited financial/banking claim detected.
+  - *Recommended Fix:* Keep non-custodial pilot disclaimer.
+- **[MEDIUM] (Silent Failure)** `android/app/src/main/assets/public/assets/index-BRK5VZ0q.js:2` — Empty catch {} block hides runtime errors.
+  - *Recommended Fix:* Log error or show offline fallback alert.
+- **[MEDIUM] (Silent Failure)** `android/app/src/main/assets/public/assets/motion-ui-CqKW-qwN.js:1` — Empty catch {} block hides runtime errors.
+  - *Recommended Fix:* Log error or show offline fallback alert.
+- **[MEDIUM] (Silent Failure)** `android/app/src/main/assets/public/assets/react-vendor-DctBZRDK.js:1` — Empty catch {} block hides runtime errors.
+  - *Recommended Fix:* Log error or show offline fallback alert.
+- **[MEDIUM] (Silent Failure)** `android/app/src/main/assets/public/assets/react-vendor-DctBZRDK.js:8` — Empty catch {} block hides runtime errors.
+  - *Recommended Fix:* Log error or show offline fallback alert.
+- **[MEDIUM] (Silent Failure)** `android/app/src/main/assets/public/assets/react-vendor-DctBZRDK.js:9` — Empty catch {} block hides runtime errors.
+  - *Recommended Fix:* Log error or show offline fallback alert.
+- **[HIGH] (Dead/Empty File)** `android/app/src/main/assets/public/cordova.js:1` — File is completely empty (0 bytes).
+  - *Recommended Fix:* Delete file or restore intended code.
+- **[HIGH] (Dead/Empty File)** `android/app/src/main/assets/public/cordova_plugins.js:1` — File is completely empty (0 bytes).
+  - *Recommended Fix:* Delete file or restore intended code.
+- **[CRITICAL] (Broken Import)** `fix-project.mjs:1` — Broken relative import: "./components/IsefMasterDashboard"
+  - *Recommended Fix:* Fix path or create missing module.
+- **[CRITICAL] (Broken Import)** `fix-project.mjs:1` — Broken relative import: "./components/IsefMasterDashboard"
+  - *Recommended Fix:* Fix path or create missing module.
+- **[HIGH] (Code Corruption Risk)** `fix-project.mjs:27` — Regex strips lines starting with // which can break URLs/strings.
+  - *Recommended Fix:* Remove legacy patch script.
+- **[CRITICAL] (SBP Compliance)** `scripts/full-repo-xray.mjs:110` — Potential prohibited financial/banking claim detected.
+  - *Recommended Fix:* Keep non-custodial pilot disclaimer.
+- **[MEDIUM] (Silent Failure)** `scripts/full-repo-xray.mjs:116` — Empty catch {} block hides runtime errors.
+  - *Recommended Fix:* Log error or show offline fallback alert.
+- **[CRITICAL] (SBP Compliance)** `server/paymentRailAdapter.ts:20` — Potential prohibited financial/banking claim detected.
+  - *Recommended Fix:* Keep non-custodial pilot disclaimer.
+- **[LOW] (Type Safety)** `src/components/BolMizanOmegaCommand.tsx:140` — Explicit "any" type reduces TypeScript safety.
+  - *Recommended Fix:* Replace with strict interface or unknown.
+- **[HIGH] (Dead/Empty File)** `tests/src/utils/src/utils/bolmizanMizanCore.ts:1` — File is completely empty (0 bytes).
+  - *Recommended Fix:* Delete file or restore intended code.
+- **[HIGH] (Dead/Empty File)** `tests/src/utils/src/utils/server/sovereignEngine.ts:1` — File is completely empty (0 bytes).
+  - *Recommended Fix:* Delete file or restore intended code.
+- **[CRITICAL] (API Mismatch)** `Frontend <-> server.ts:0` — Frontend calls "/api/tenant/session" but backend has no matching route!
+  - *Recommended Fix:* Add route to server.ts or fix URL.
+- **[CRITICAL] (API Mismatch)** `Frontend <-> server.ts:0` — Frontend calls "/api/tenant/auth" but backend has no matching route!
+  - *Recommended Fix:* Add route to server.ts or fix URL.
+- **[CRITICAL] (API Mismatch)** `Frontend <-> server.ts:0` — Frontend calls "/api/tenant/${encodeURIComponent(e.tenant.id)}/ledger" but backend has no matching route!
+  - *Recommended Fix:* Add route to server.ts or fix URL.
+- **[CRITICAL] (API Mismatch)** `Frontend <-> server.ts:0` — Frontend calls "/api/tenant/${encodeURIComponent(e.tenant.id)}/reconciliation/preview" but backend has no matching route!
+  - *Recommended Fix:* Add route to server.ts or fix URL.
+- **[CRITICAL] (API Mismatch)** `Frontend <-> server.ts:0` — Frontend calls "/api/sovereign/deals" but backend has no matching route!
+  - *Recommended Fix:* Add route to server.ts or fix URL.
+- **[CRITICAL] (API Mismatch)** `Frontend <-> server.ts:0` — Frontend calls "/api/sovereign/deals/${e}/attest" but backend has no matching route!
+  - *Recommended Fix:* Add route to server.ts or fix URL.
+- **[CRITICAL] (API Mismatch)** `Frontend <-> server.ts:0` — Frontend calls "/api/sovereign/mukasa/add" but backend has no matching route!
+  - *Recommended Fix:* Add route to server.ts or fix URL.
+- **[CRITICAL] (API Mismatch)** `Frontend <-> server.ts:0` — Frontend calls "/api/sovereign/mukasa/clear" but backend has no matching route!
+  - *Recommended Fix:* Add route to server.ts or fix URL.
+- **[CRITICAL] (API Mismatch)** `Frontend <-> server.ts:0` — Frontend calls "/api/sovereign/wages/add" but backend has no matching route!
+  - *Recommended Fix:* Add route to server.ts or fix URL.
+- **[CRITICAL] (API Mismatch)** `Frontend <-> server.ts:0` — Frontend calls "/api/sovereign/wages/${e}/settle" but backend has no matching route!
+  - *Recommended Fix:* Add route to server.ts or fix URL.
+- **[CRITICAL] (API Mismatch)** `Frontend <-> server.ts:0` — Frontend calls "/api/sovereign/maal-guard/${e}/rescue" but backend has no matching route!
+  - *Recommended Fix:* Add route to server.ts or fix URL.
+- **[CRITICAL] (API Mismatch)** `Frontend <-> server.ts:0` — Frontend calls "/api/sovereign/reset" but backend has no matching route!
+  - *Recommended Fix:* Add route to server.ts or fix URL.
+- **[CRITICAL] (API Mismatch)** `Frontend <-> server.ts:0` — Frontend calls "/api/ai/extract-voice" but backend has no matching route!
+  - *Recommended Fix:* Add route to server.ts or fix URL.
+- **[CRITICAL] (API Mismatch)** `Frontend <-> server.ts:0` — Frontend calls "/api/ai/mizan-advisor" but backend has no matching route!
+  - *Recommended Fix:* Add route to server.ts or fix URL.
+- **[CRITICAL] (API Mismatch)** `Frontend <-> server.ts:0` — Frontend calls "/api/tenant/${encodeURIComponent(session.tenant.id)}/ledger" but backend has no matching route!
+  - *Recommended Fix:* Add route to server.ts or fix URL.
+- **[CRITICAL] (API Mismatch)** `Frontend <-> server.ts:0` — Frontend calls "/api/tenant/${encodeURIComponent(session.tenant.id)}/reconciliation/preview" but backend has no matching route!
+  - *Recommended Fix:* Add route to server.ts or fix URL.
+- **[CRITICAL] (API Mismatch)** `Frontend <-> server.ts:0` — Frontend calls "/api/sovereign/deals/${dealId}/attest" but backend has no matching route!
+  - *Recommended Fix:* Add route to server.ts or fix URL.
+- **[CRITICAL] (API Mismatch)** `Frontend <-> server.ts:0` — Frontend calls "/api/sovereign/wages/${id}/settle" but backend has no matching route!
+  - *Recommended Fix:* Add route to server.ts or fix URL.
+- **[CRITICAL] (API Mismatch)** `Frontend <-> server.ts:0` — Frontend calls "/api/sovereign/maal-guard/${id}/rescue" but backend has no matching route!
+  - *Recommended Fix:* Add route to server.ts or fix URL.
+- **[MEDIUM] (Bundle Bloat)** `package.json:1` — Dependency "@capacitor/android" appears unused in source files.
+  - *Recommended Fix:* Run "npm uninstall @capacitor/android" to speed up mobile load.
+- **[MEDIUM] (Bundle Bloat)** `package.json:1` — Dependency "@capacitor/core" appears unused in source files.
+  - *Recommended Fix:* Run "npm uninstall @capacitor/core" to speed up mobile load.
+- **[MEDIUM] (Bundle Bloat)** `package.json:1` — Dependency "@types/d3" appears unused in source files.
+  - *Recommended Fix:* Run "npm uninstall @types/d3" to speed up mobile load.
+- **[MEDIUM] (Bundle Bloat)** `package.json:1` — Dependency "@types/qrcode" appears unused in source files.
+  - *Recommended Fix:* Run "npm uninstall @types/qrcode" to speed up mobile load.
+
+## 3. Complete Project File Map
+- `.dockerignore` (0.1 KB)
+- `.env` (0.1 KB)
+- `.github/copilot-instructions.md` (0.6 KB)
+- `.gitignore` (0.1 KB)
+- `.vscode/tasks.json` (0.6 KB)
+- `android/.gitignore` (1.8 KB)
+- `android/app/.gitignore` (0.0 KB)
+- `android/app/build.gradle` (2.1 KB)
+- `android/app/capacitor.build.gradle` (0.4 KB)
+- `android/app/proguard-rules.pro` (0.7 KB)
+- `android/app/src/androidTest/java/com/getcapacitor/myapp/ExampleInstrumentedTest.java` (0.8 KB)
+- `android/app/src/main/AndroidManifest.xml` (1.5 KB)
+- `android/app/src/main/assets/capacitor.config.json` (0.1 KB)
+- `android/app/src/main/assets/capacitor.plugins.json` (0.0 KB)
+- `android/app/src/main/assets/public/assets/d3-charts-D2FueGuI.js` (54.8 KB)
+- `android/app/src/main/assets/public/assets/HaqProofWorkbench-CZ8etua_.js` (49.2 KB)
+- `android/app/src/main/assets/public/assets/index-BPrZCle4.css` (83.7 KB)
+- `android/app/src/main/assets/public/assets/index-BRK5VZ0q.js` (92.5 KB)
+- `android/app/src/main/assets/public/assets/indus_solar_water_1794637624566-DnlW39SD.jpg` (909.5 KB)
+- `android/app/src/main/assets/public/assets/khairpur_dates_mangoes_1794637623124-D30pUL-4.jpg` (921.9 KB)
+- `android/app/src/main/assets/public/assets/motion-ui-CqKW-qwN.js` (156.9 KB)
+- `android/app/src/main/assets/public/assets/react-vendor-DctBZRDK.js` (213.6 KB)
+- `android/app/src/main/assets/public/assets/rolldown-runtime-WkwZ5CU-.js` (0.6 KB)
+- `android/app/src/main/assets/public/assets/sakrand_basmati_mizan_1794637623859-Dh3LfAWm.jpg` (834.3 KB)
+- `android/app/src/main/assets/public/assets/sakrand_kashi_command_1794637623349-yFMeoeTF.jpg` (1044.8 KB)
+- `android/app/src/main/assets/public/assets/sindh_ajrak_artisan_1794737690544-9FiTPKbr.jpg` (1007.5 KB)
+- `android/app/src/main/assets/public/assets/sindh_hala_kashi_1794737692970-CM4Sl3Z-.jpg` (1207.1 KB)
+- `android/app/src/main/assets/public/assets/sindh_mandi_bazaar_1794737693302-D-hn_Hw8.jpg` (1102.3 KB)
+- `android/app/src/main/assets/public/assets/sindh_otaq_majlis_1794737693647-BL-sa7XM.jpg` (981.1 KB)
+- `android/app/src/main/assets/public/assets/SovereignShields-B6JWjjmN.js` (14.7 KB)
+- `android/app/src/main/assets/public/assets/TreasuryOperations-n1uonr2V.js` (75.9 KB)
+- `android/app/src/main/assets/public/assets/vendor-CXHAcuVq.js` (22.9 KB)
+- `android/app/src/main/assets/public/assets/VeritasLedger-s7UJHugp.js` (5.8 KB)
+- `android/app/src/main/assets/public/assets/VoiceMizanWorkspace-BszSyxoK.js` (19.1 KB)
+- `android/app/src/main/assets/public/cordova.js` (0.0 KB)
+- `android/app/src/main/assets/public/cordova_plugins.js` (0.0 KB)
+- `android/app/src/main/assets/public/icon.svg` (0.7 KB)
+- `android/app/src/main/assets/public/index.html` (1.7 KB)
+- `android/app/src/main/assets/public/manifest.json` (0.5 KB)
+- `android/app/src/main/assets/public/sw.js` (2.3 KB)
+- `android/app/src/main/java/pk/sindh/bolmizan/MainActivity.java` (0.1 KB)
+- `android/app/src/main/res/drawable/ic_launcher_background.xml` (5.5 KB)
+- `android/app/src/main/res/drawable/splash.png` (3.9 KB)
+- `android/app/src/main/res/drawable-land-hdpi/splash.png` (7.5 KB)
+- `android/app/src/main/res/drawable-land-mdpi/splash.png` (3.9 KB)
+- `android/app/src/main/res/drawable-land-xhdpi/splash.png` (9.0 KB)
+- `android/app/src/main/res/drawable-land-xxhdpi/splash.png` (13.7 KB)
+- `android/app/src/main/res/drawable-land-xxxhdpi/splash.png` (17.3 KB)
+- `android/app/src/main/res/drawable-port-hdpi/splash.png` (7.7 KB)
+- `android/app/src/main/res/drawable-port-mdpi/splash.png` (4.0 KB)
+- `android/app/src/main/res/drawable-port-xhdpi/splash.png` (9.6 KB)
+- `android/app/src/main/res/drawable-port-xxhdpi/splash.png` (13.0 KB)
+- `android/app/src/main/res/drawable-port-xxxhdpi/splash.png` (17.1 KB)
+- `android/app/src/main/res/drawable-v24/ic_launcher_foreground.xml` (1.8 KB)
+- `android/app/src/main/res/layout/activity_main.xml` (0.5 KB)
+- `android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml` (0.3 KB)
+- `android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml` (0.3 KB)
+- `android/app/src/main/res/mipmap-hdpi/ic_launcher.png` (2.7 KB)
+- `android/app/src/main/res/mipmap-hdpi/ic_launcher_foreground.png` (3.4 KB)
+- `android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png` (4.2 KB)
+- `android/app/src/main/res/mipmap-mdpi/ic_launcher.png` (1.8 KB)
+- `android/app/src/main/res/mipmap-mdpi/ic_launcher_foreground.png` (2.1 KB)
+- `android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png` (2.7 KB)
+- `android/app/src/main/res/mipmap-xhdpi/ic_launcher.png` (3.9 KB)
+- `android/app/src/main/res/mipmap-xhdpi/ic_launcher_foreground.png` (4.9 KB)
+- `android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png` (6.4 KB)
+- `android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png` (6.5 KB)
+- `android/app/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png` (9.6 KB)
+- `android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png` (10.2 KB)
+- `android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png` (9.2 KB)
+- `android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png` (15.2 KB)
+- `android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png` (15.5 KB)
+- `android/app/src/main/res/values/ic_launcher_background.xml` (0.1 KB)
+- `android/app/src/main/res/values/strings.xml` (0.3 KB)
+- `android/app/src/main/res/values/styles.xml` (0.8 KB)
+- `android/app/src/main/res/xml/config.xml` (0.2 KB)
+- `android/app/src/main/res/xml/file_paths.xml` (0.2 KB)
+- `android/app/src/test/java/com/getcapacitor/myapp/ExampleUnitTest.java` (0.4 KB)
+- `android/build.gradle` (0.6 KB)
+- `android/capacitor-cordova-android-plugins/build.gradle` (1.6 KB)
+- `android/capacitor-cordova-android-plugins/cordova.variables.gradle` (0.3 KB)
+- `android/capacitor-cordova-android-plugins/src/main/AndroidManifest.xml` (0.2 KB)
+- `android/capacitor-cordova-android-plugins/src/main/java/.gitkeep` (0.0 KB)
+- `android/capacitor-cordova-android-plugins/src/main/res/.gitkeep` (0.0 KB)
+- `android/capacitor.settings.gradle` (0.2 KB)
+- `android/gradle/wrapper/gradle-wrapper.jar` (42.7 KB)
+- `android/gradle/wrapper/gradle-wrapper.properties` (0.2 KB)
+- `android/gradle.properties` (1.0 KB)
+- `android/gradlew` (8.5 KB)
+- `android/gradlew.bat` (2.9 KB)
+- `android/settings.gradle` (0.2 KB)
+- `android/variables.gradle` (0.5 KB)
+- `build-sovereign-os.mjs` (0.4 KB)
+- `capacitor.config.ts` (0.2 KB)
+- `data/autonomous-100k-audit-report.json` (0.2 KB)
+- `data/bolmizan_production.db-shm` (32.0 KB)
+- `data/bolmizan_production.db-wal` (60.4 KB)
+- `data/bolmizan_sovereign.sqlite` (48.0 KB)
+- `data/bolmizan_sovereign.sqlite-shm` (32.0 KB)
+- `data/bolmizan_sovereign.sqlite-wal` (20.1 KB)
+- `data/isef-final/complete-isef-report.json` (2.2 KB)
+- `data/isef-final/ISEF_Complete_Submission_Packet.html` (4.2 KB)
+- `data/isef-final/scam-accuracy-chart.svg` (2.0 KB)
+- `data/mukasa-isef-benchmarks.csv` (0.3 KB)
+- `data/omega-verified-benchmarks.json` (0.4 KB)
+- `data/scam-isef-metrics.csv` (0.2 KB)
+- `data/sovereign-ledger.demo-backup.json` (14.5 KB)
+- `data/sovereign-ledger.json` (14.5 KB)
+- `data/tenants.sqlite` (16.0 KB)
+- `deploy/ecosystem.config.cjs` (0.5 KB)
+- `DEPLOYMENT_RUNBOOK.md` (4.3 KB)
+- `Dockerfile` (0.4 KB)
+- `FINAL_JURY_DOSSIER.md` (10.4 KB)
+- `fix-project.mjs` (1.8 KB)
+- `index.html` (1.4 KB)
+- `ISEF_QUAD_CHART.html` (4.1 KB)
+- `LICENSE` (1.0 KB)
+- `metadata.json` (0.3 KB)
+- `package-lock.json` (213.6 KB)
+- `package.json` (1.3 KB)
+- `public/icon.svg` (0.7 KB)
+- `public/manifest.json` (0.5 KB)
+- `public/sw.js` (2.3 KB)
+- `README.md` (1.8 KB)
+- `render.yaml` (0.5 KB)
+- `scripts/backup-db.mjs` (1.7 KB)
+- `scripts/full-repo-xray.mjs` (8.3 KB)
+- `scripts/generate-isef-charts.ts` (2.9 KB)
+- `scripts/generate-submission-kit.ts` (4.1 KB)
+- `scripts/master-forensic-audit.mjs` (6.6 KB)
+- `scripts/run-isef-benchmarks.ts` (5.0 KB)
+- `scripts/run-omega-benchmarks.mjs` (2.2 KB)
+- `scripts/system-audit.mjs` (6.1 KB)
+- `scripts/validate-prod-env.mjs` (1.7 KB)
+- `scripts/verify-live-preview.mjs` (0.7 KB)
+- `server/apexFrontierCore.ts` (11.4 KB)
+- `server/bolmizanFinalCore.ts` (3.9 KB)
+- `server/edgeResilienceGuard.ts` (3.6 KB)
+- `server/enterpriseHardening.ts` (2.5 KB)
+- `server/fintechStandards.ts` (3.2 KB)
+- `server/ledgerIntegrity.ts` (0.9 KB)
+- `server/master300Hardening.ts` (3.4 KB)
+- `server/merchantAccounts.ts` (2.2 KB)
+- `server/paymentRailAdapter.ts` (2.1 KB)
+- `server/realGateways.ts` (3.9 KB)
+- `server/scalabilityEngine.ts` (1.2 KB)
+- `server/scamClassifier.ts` (3.1 KB)
+- `server/sovereignEngine.ts` (33.0 KB)
+- `server/tenantSession.ts` (5.5 KB)
+- `server/unifiedBridgeRoutes.ts` (7.0 KB)
+- `server/universalBridgeConnectors.ts` (2.4 KB)
+- `server/voiceAndAi.ts` (10.3 KB)
+- `server.ts` (27.9 KB)
+- `src/App.tsx` (23.4 KB)
+- `src/assets/images/indus_solar_water_1794637624566.jpg` (909.5 KB)
+- `src/assets/images/khairpur_dates_mangoes_1794637623124.jpg` (921.9 KB)
+- `src/assets/images/sakrand_basmati_mizan_1794637623859.jpg` (834.3 KB)
+- `src/assets/images/sakrand_kashi_command_1794637623349.jpg` (1044.8 KB)
+- `src/assets/images/sindh_ajrak_artisan_1794737690544.jpg` (1007.5 KB)
+- `src/assets/images/sindh_hala_kashi_1794737692970.jpg` (1207.1 KB)
+- `src/assets/images/sindh_mandi_bazaar_1794737693302.jpg` (1102.3 KB)
+- `src/assets/images/sindh_otaq_majlis_1794737693647.jpg` (981.1 KB)
+- `src/components/AjrakAudioWaveform.tsx` (0.9 KB)
+- `src/components/AjrakLivingStage.tsx` (23.6 KB)
+- `src/components/AmbientAjrakCanvas.tsx` (3.3 KB)
+- `src/components/ApexFrontierCommandStrip.tsx` (6.5 KB)
+- `src/components/ApexHapticControlCard.tsx` (6.1 KB)
+- `src/components/BolMizanOmegaCommand.tsx` (24.9 KB)
+- `src/components/BolMizanSpreadChart.tsx` (5.1 KB)
+- `src/components/CompetitorParitySuite.tsx` (9.0 KB)
+- `src/components/CustomerSignaturePad.tsx` (4.3 KB)
+- `src/components/DignityImpactRibbon.tsx` (3.1 KB)
+- `src/components/FINAL_JURY_DOSSIER.md` (10.4 KB)
+- `src/components/HaqProofWorkbench.tsx` (54.2 KB)
+- `src/components/IndusCulturalWave.tsx` (11.8 KB)
+- `src/components/IsefLiveDemoPanel.tsx` (9.0 KB)
+- `src/components/IsefMasterDashboard.tsx` (11.2 KB)
+- `src/components/IsefShieldPanel.tsx` (3.7 KB)
+- `src/components/IsefSubmissionHub.tsx` (7.3 KB)
+- `src/components/ISEF_QUAD_CHART.html` (4.7 KB)
+- `src/components/IslamicMizanTools.tsx` (10.3 KB)
+- `src/components/JudgePassportModal.tsx` (4.7 KB)
+- `src/components/JuryCommandCenter.tsx` (8.2 KB)
+- `src/components/MerchantOperationsSuite.tsx` (0.8 KB)
+- `src/components/MerchantSuperDashboard.tsx` (9.7 KB)
+- `src/components/MultiTenantKhataDesk.tsx` (24.9 KB)
+- `src/components/SabziParchiAtelier.tsx` (19.3 KB)
+- `src/components/SindhCultureGallery.tsx` (13.3 KB)
+- `src/components/SovereignArt.tsx` (9.0 KB)
+- `src/components/SovereignAuthGate.tsx` (14.7 KB)
+- `src/components/SovereignDealVault.tsx` (19.3 KB)
+- `src/components/SovereignShields.tsx` (13.2 KB)
+- `src/components/TreasuryOperations.tsx` (22.0 KB)
+- `src/components/TreasurySpreadGoldChart.tsx` (5.3 KB)
+- `src/components/UniversalWealthEngine.tsx` (13.3 KB)
+- `src/components/VeritasLedger.tsx` (8.0 KB)
+- `src/components/VoiceBiometricChallenge.tsx` (8.3 KB)
+- `src/components/VoiceMizanWorkspace.tsx` (15.3 KB)
+- `src/index.css` (3.6 KB)
+- `src/main.tsx` (0.5 KB)
+- `src/scripts/data/sakrand-field-trial.csv` (0.6 KB)
+- `src/scripts/data/scripts/test-real-image-stego.mjs` (3.9 KB)
+- `src/scripts/FINAL_JURY_DOSSIER.md` (3.5 KB)
+- `src/scripts/run-omega-benchmarks.mjs` (3.9 KB)
+- `src/types/sovereign.ts` (4.4 KB)
+- `src/utils/advancedLimitationsSolver.ts` (4.0 KB)
+- `src/utils/androidQrFallback.ts` (1.3 KB)
+- `src/utils/bolmizanAdversarialShield.ts` (2.4 KB)
+- `src/utils/bolmizanCrdtMesh.ts` (3.5 KB)
+- `src/utils/bolmizanMizanCore.ts` (2.1 KB)
+- `src/utils/bolmizanOmegaCrypto.ts` (6.1 KB)
+- `src/utils/bolmizanReceiptCanvas.ts` (4.0 KB)
+- `src/utils/haptics.ts` (8.1 KB)
+- `src/utils/haqContractReview.ts` (1.7 KB)
+- `src/utils/haqCrypto.ts` (10.4 KB)
+- `src/utils/haqStego.ts` (4.1 KB)
+- `src/utils/haqStorage.ts` (10.6 KB)
+- `src/utils/i18nSovereign.ts` (7.5 KB)
+- `src/utils/mandiVoiceParser.ts` (2.9 KB)
+- `src/utils/offlineSyncEngine.ts` (4.0 KB)
+- `src/utils/offlineSyncQueue.ts` (2.8 KB)
+- `src/utils/pakistanPaymentQr.ts` (3.0 KB)
+- `src/utils/receiptIntegrity.ts` (1.4 KB)
+- `src/utils/serviceWorker.ts` (0.9 KB)
+- `src/utils/whatsappParchi.ts` (2.2 KB)
+- `SUBMISSION_SUMMARY.md` (6.5 KB)
+- `tests/fullSystemIntegration.test.ts` (2.0 KB)
+- `tests/haqProofUtils.test.ts` (3.3 KB)
+- `tests/isefFinalCore.test.ts` (1.7 KB)
+- `tests/sovereignCore.test.ts` (17.7 KB)
+- `tests/src/utils/mandiVoiceParser.ts` (1.5 KB)
+- `tests/src/utils/src/utils/bolmizanMizanCore.ts` (0.0 KB)
+- `tests/src/utils/src/utils/server/sovereignEngine.ts` (0.0 KB)
+- `tsconfig.json` (0.6 KB)
+- `vite.config.ts` (1.5 KB)
