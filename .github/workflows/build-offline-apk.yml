@@ -25,9 +25,6 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
       - name: Bundle Google Fonts Locally for 100% Offline Support
         run: |
           mkdir -p public/fonts
@@ -45,7 +42,7 @@ jobs:
           EOF
 
       - name: Install Dependencies
-        run: npm ci || npm install
+        run: npm install
 
       - name: Build Offline Web Bundle & Sync Capacitor Android
         run: |
