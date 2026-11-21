@@ -1,4 +1,4 @@
-﻿name: Build BolMizan 100% Offline Android APK
+﻿name: Build BolMizan 100% Free Signed Release APK
 
 on:
   push:
@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 jobs:
-  build-android-apk:
+  build-signed-apk:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,6 +27,15 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
+
+      - name: Generate 2048-bit RSA Signing Keystore in Cloud
+        run: |
+          keytool -genkeypair -v -keystore android/app/bolmizan-release.jks \
+            -keyalg RSA -keysize 2048 -validity 10000 \
+            -alias bolmizan-key \
+            -storepass "BolMizanSovereign2026!" \
+            -keypass "BolMizanSovereign2026!" \
+            -dname "CN=BolMizan Sovereign OS, OU=Sindh AgriTech, O=BolMizan Protocol, L=Sakrand, ST=Sindh, C=PK"
 
       - name: Bundle Google Fonts Locally for 100% Offline Support
         run: |
@@ -55,20 +64,21 @@ jobs:
       - name: Make Gradle Wrapper Executable
         run: chmod +x android/gradlew
 
-      - name: Compile Universal Offline Android APK
+      - name: Compile Signed Release APK
         working-directory: android
-        run: ./gradlew assembleDebug --no-daemon
+        run: ./gradlew assembleRelease --no-daemon
 
-      - name: Upload Ready-to-Install APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: BolMizan-Offline-Android-APK
-          path: android/app/build/outputs/apk/debug/app-debug.apk
-          retention-days: 30
+      - name: Rename Signed APK for Distribution
+        run: cp android/app/build/outputs/apk/release/app-release.apk BolMizan-v1.0-Signed-Release.apk
 
-      - name: Publish Fast CDN Release APK
+      - name: Publish Free Direct-Download Release APK
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0-offline-apk
-          name: BolMizan 100% Offline Android APK
-          files: android/app/build/outputs/apk/debug/app-debug.apk
+          tag_name: v1.0-signed-release
+          name: BolMizan v1.0 Signed Offline Android APK (100% Free)
+          body: |
+            Official cryptographically signed offline Android application for BolMizan Protocol.
+            - 100% Offline Sovereign Khata, Mandi Voice Parser & Anti-Scam Shield
+            - Zero internet required after installation
+            - Built for Sakrand & Sindh merchants and ISEF evaluation
+          files: BolMizan-v1.0-Signed-Release.apk
