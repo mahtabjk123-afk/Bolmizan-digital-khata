@@ -1,3 +1,5 @@
+import { SovereignErrorBoundary, installBlackScreenGuard } from './utils/SovereignErrorBoundary';
+installBlackScreenGuard();
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
@@ -8,7 +10,7 @@ installOfflineAndroidBridge();
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <App />
+        <SovereignErrorBoundary><App /></SovereignErrorBoundary>
     </StrictMode>
 );
 
