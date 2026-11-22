@@ -1,0 +1,30 @@
+name: Autonomous 15-Minute AI Growth & Trend Orchestrator
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  autonomous-growth-pulse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scripts/sovereign-autonomous-growth.mjs
+      - name: Broadcast to Optional External Webhook (Make/Zapier/Telegram)
+        if: ${{ secrets.GROWTH_WEBHOOK_URL != '' }}
+        run: |
+          curl -X POST -H "Content-Type: application/json" -d @data/autonomous-viral-feed.json "${{ secrets.GROWTH_WEBHOOK_URL }}" || true
+      - name: Commit Fresh 15-Min Viral Content & Stream
+        run: |
+          git config user.name "BolMizan Autonomous Growth AI"
+          git config user.email "mahtabjk123@gmail.com"
+          git add data/autonomous-viral-feed.json public/VIRAL_SOCIAL_STREAM.html
+          git diff --staged --quiet || git commit -m "chore(ai-growth): autonomous 15-min local/national/global trend & viral content cycle"
+          git push
