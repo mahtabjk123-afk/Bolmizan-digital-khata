@@ -165,7 +165,6 @@ export const SovereignRockingChatbot: React.FC = () => {
           messages.map((m) =>
             React.createElement(
               'div',
-Use code with caution.
 { key: m.id, style: { alignSelf: m.sender === 'USER' ? 'flex-end' : 'flex-start', maxWidth: '85%', background: m.sender === 'USER' ? '#059669' : '#1e293b', color: '#fff', padding: '8px 10px', borderRadius: '12px', fontSize: '12px', lineHeight: 1.4 } },
 m.text
 )
