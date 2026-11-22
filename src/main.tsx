@@ -1,3 +1,4 @@
+import { SovereignAamAadmiMode } from './utils/SovereignAamAadmiMode';
 import './utils/SovereignPrecisionFinance';
 import { installViralGrowthInterceptor } from './utils/SovereignViralLoopInterceptor';
 installViralGrowthInterceptor();
@@ -15,7 +16,7 @@ installOfflineAndroidBridge();
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <SovereignErrorBoundary><><App /><SovereignBackupDrawer /><SovereignViralShare /></></SovereignErrorBoundary>
+        <SovereignErrorBoundary><><App /><SovereignBackupDrawer /></></SovereignErrorBoundary>
     </StrictMode>
 );
 
