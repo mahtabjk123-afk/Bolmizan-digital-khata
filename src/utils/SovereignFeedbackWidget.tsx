@@ -85,7 +85,6 @@ return (
 <div style={{ display: 'flex', gap: '5px', marginBottom: '8px' }}>
 {Array.from({length: 5}, (_, i) => i + 1).map((star) => (
 <button key={star} onClick={() => setRating(star)} style={{ flex: 1, padding: '5px 0', borderRadius: '6px', border: star <= rating ? '1px solid #fbbf24' : '1px solid #334155', background: star <= rating ? 'rgba(245,158,11,0.2)' : '#1e293b', color: star <= rating ? '#fbbf24' : '#64748b', fontWeight: 800, fontSize: '12px', cursor: 'pointer' }}>{star}
-))}
 
 <select value={userRole} onChange={(e) => setUserRole(e.target.value)} style={{ width: '100%', padding: '7px', borderRadius: '8px', background: '#1e293b', color: '#f8fafc', border: '1px solid #475569', fontSize: '11px', marginBottom: '6px' }}>
 Dukandar / Arthiya

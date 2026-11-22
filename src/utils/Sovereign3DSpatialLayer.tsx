@@ -67,8 +67,6 @@ return (
 <button key={t} onClick={() => { setTypeFilter(t); runDbFilter(searchText, t); }} style={{ padding: '6px 4px', borderRadius: '7px', border: 'none', fontSize: '10px', fontWeight: 800, cursor: 'pointer', background: typeFilter === t ? '#10b981' : '#1e293b', color: typeFilter === t ? '#052e16' : '#cbd5e1' }}>
 {t === 'ALL' ? 'All' : t === 'CASH_SALE' ? 'Cash In' : 'Udhaar'}
 
-))}
-
 {results.slice(0, 15).map((r, idx) => (
 <div key={String(r.id || idx)} style={{ background: '#1e293b', padding: '8px', borderRadius: '8px', marginBottom: '6px', borderLeft: String(r.type) === 'CREDIT' ? '3px solid #ef4444' : '3px solid #10b981' }}>
 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', fontWeight: 800 }}>
@@ -76,8 +74,6 @@ return (
 <span style={{ color: '#34d399' }}>Rs. {Number(r.amount || 0).toLocaleString()}
 
 <div style={{ fontSize: '10px', color: '#94a3b8' }}>{String(r.item || 'Entry')}
-
-))}
 
 )}
 </>
