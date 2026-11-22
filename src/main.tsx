@@ -1,3 +1,5 @@
+import './utils/sovereignSoundEngine';
+import { SovereignBrandIdentity } from './utils/SovereignBrandIdentity';
 import { SovereignAamAadmiMode } from './utils/SovereignAamAadmiMode';
 import './utils/SovereignPrecisionFinance';
 import { installViralGrowthInterceptor } from './utils/SovereignViralLoopInterceptor';

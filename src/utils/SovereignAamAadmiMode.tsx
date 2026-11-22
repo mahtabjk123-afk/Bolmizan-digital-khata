@@ -1,3 +1,4 @@
+import { sovereignSound } from './sovereignSoundEngine';
 import React, { useState } from 'react';
 import { Preferences } from '@capacitor/preferences';
 
@@ -73,7 +74,7 @@ export const SovereignAamAadmiMode: React.FC = () => {
       await Preferences.set({ key, value: json });
     } catch {}
 
-    speakFeedback(`${cleanParty} ke ${num} rupay save ho gaye`);
+    sovereignSound.playSuccessChime(); speakFeedback(`${cleanParty} ke ${num} rupay save ho gaye`);
     setMsg(`Save ho gaya! (${cleanParty}: Rs. ${num})`);
 
     if (sendWhatsApp) {
