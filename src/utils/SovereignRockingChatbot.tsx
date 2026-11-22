@@ -202,7 +202,6 @@ export const SovereignRockingChatbot: React.FC = () => {
         ),
         React.createElement(
           'div',
-Use code with caution.
 { style: { display: 'flex', gap: '4px', padding: '6px 8px', background: '#0f172a', overflowX: 'auto' } },
 React.createElement('button', { onClick: () => handleSend('Ahmed 5000 jama likho'), style: { whiteSpace: 'nowrap', background: '#1e293b', color: '#38bdf8', border: 'none', borderRadius: '999px', padding: '4px 8px', fontSize: '10px', cursor: 'pointer' } }, '+5000 Jama'),
 React.createElement('button', { onClick: () => handleSend('Khata balance'), style: { whiteSpace: 'nowrap', background: '#1e293b', color: '#38bdf8', border: 'none', borderRadius: '999px', padding: '4px 8px', fontSize: '10px', cursor: 'pointer' } }, 'Khata Balance'),
