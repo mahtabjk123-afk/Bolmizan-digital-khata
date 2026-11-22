@@ -1,3 +1,4 @@
+import { SovereignFeedbackWidget } from './utils/SovereignFeedbackWidget';
 import './utils/sovereignSoundEngine';
 import { SovereignBrandIdentity } from './utils/SovereignBrandIdentity';
 import { SovereignAamAadmiMode } from './utils/SovereignAamAadmiMode';
