@@ -1,36 +1,37 @@
-import { SovereignAiBoardroom } from './utils/SovereignAiBoardroom';
-import './utils/sovereignIndexedDbVault';nimport { Sovereign3DSpatialLayer } from './utils/Sovereign3DSpatialLayer';nimport './utils/SovereignCenturyEngine';
-import './utils/SovereignZeroLoopholeShield';
-import { SovereignFeedbackWidget } from './utils/SovereignFeedbackWidget';
-import './utils/sovereignSoundEngine';
-import { SovereignBrandIdentity } from './utils/SovereignBrandIdentity';
-import { SovereignAamAadmiMode } from './utils/SovereignAamAadmiMode';
-import './utils/SovereignPrecisionFinance';
-import { installViralGrowthInterceptor } from './utils/SovereignViralLoopInterceptor';
-installViralGrowthInterceptor();
-import { SovereignViralShare } from './utils/SovereignViralShare';
-import { SovereignBackupDrawer } from './utils/SovereignBackupDrawer';
-import { SovereignErrorBoundary, installBlackScreenGuard } from './utils/SovereignErrorBoundary';
-installBlackScreenGuard();
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
-import { installOfflineAndroidBridge } from './utils/offlineAndroidBridge';
+import './utils/sovereignSoundEngine';
+import './utils/sovereignIndexedDbVault';
+import './utils/SovereignZeroLoopholeShield';
+import './utils/SovereignPrecisionFinance';
+import './utils/SovereignCenturyEngine';
+import { installViralGrowthInterceptor } from './utils/SovereignViralLoopInterceptor';
+import { SovereignErrorBoundary } from './utils/SovereignErrorBoundary';
+import { SovereignBrandIdentity } from './utils/SovereignBrandIdentity';
+import { SovereignAamAadmiMode } from './utils/SovereignAamAadmiMode';
+import { Sovereign3DSpatialLayer } from './utils/Sovereign3DSpatialLayer';
+import { SovereignAiBoardroom } from './utils/SovereignAiBoardroom';
+import { SovereignFeedbackWidget } from './utils/SovereignFeedbackWidget';
+import { SovereignBackupDrawer } from './utils/SovereignBackupDrawer';
+import { SovereignFounderHub } from './utils/SovereignFounderHub';
+import { SovereignViralShare } from './utils/SovereignViralShare';
 
-installOfflineAndroidBridge();
+installViralGrowthInterceptor();
 
-createRoot(document.getElementById('root')!).render(
-    <StrictMode>
-        <SovereignErrorBoundary><><App /><SovereignBackupDrawer /></></SovereignErrorBoundary>
-    </StrictMode>
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <SovereignErrorBoundary>
+      
+      <App />
+      <SovereignAamAadmiMode />
+      <Sovereign3DSpatialLayer />
+      <SovereignAiBoardroom />
+      <SovereignFeedbackWidget />
+      <SovereignBackupDrawer />
+      <SovereignFounderHub />
+      <SovereignViralShare />
+    </SovereignErrorBoundary>
+  </React.StrictMode>
 );
-
-
-if ('serviceWorker' in navigator && import.meta.env.PROD) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {
-            // Service worker registration skipped if unsupported
-        });
-    });
-}
