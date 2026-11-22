@@ -198,7 +198,6 @@ export const SovereignRockingChatbot: React.FC = () => {
   };
 
   const handleSend = async (customText?: string) => {
-Use code with caution.
 const text = (customText !== undefined ? customText : input).trim();
 if (!text) return;
 const timeStr = new Date().toLocaleTimeString('en-PK', { hour: '2-digit', minute: '2-digit' });
