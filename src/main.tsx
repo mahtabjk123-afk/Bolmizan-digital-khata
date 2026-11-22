@@ -1,3 +1,4 @@
+import { SovereignMasterControl } from './utils/SovereignMasterControl';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
@@ -29,7 +30,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <SovereignAamAadmiMode />
       <Sovereign3DSpatialLayer />
       <SovereignAiBoardroom />
-      <SovereignSecurityAndTerms />
+      <SovereignSecurityAndTerms /><SovereignMasterControl />
       <SovereignFeedbackWidget />
       <SovereignBackupDrawer />
       <SovereignFounderHub />
