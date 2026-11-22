@@ -102,7 +102,7 @@ Sindhi / Urdu Voice Improvement
 <button onClick={handleSendToAiOrchestrator} style={{ background: '#6366f1', color: '#ffffff', fontWeight: 800, border: 'none', borderRadius: '8px', padding: '8px', fontSize: '11px', cursor: 'pointer' }}>Send to AI Agent
 <button onClick={handleSendWhatsApp} style={{ background: '#25D366', color: '#052e16', fontWeight: 800, border: 'none', borderRadius: '8px', padding: '8px', fontSize: '11px', cursor: 'pointer' }}>WhatsApp Founder
 
-{status && <div style={{ marginTop: '8px', fontSize: '11px', color: '#34d399', fontWeight: 600 }}>{status}}
+{status && <div style={{ marginTop: '8px', fontSize: '11px', color: '#34d399', fontWeight: 600 }}>{status}</div>}
 </>
 ) : (
 
