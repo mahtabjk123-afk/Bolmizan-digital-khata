@@ -223,7 +223,6 @@ export const SovereignAiBoardroom: React.FC = () => {
               <div style={{ fontSize: '10px', color: '#94a3b8' }}>CEO: Mahtab • 100-Yr Experience Simulation • Cycle #{trainingTicks}</div>
             </div>
             <button
-Use code with caution.
 onClick={() => { sovereignSound.playSuccessChime(); run247TrainingAndAudit(); }}
 style={{ background: '#10b981', color: '#052e16', border: 'none', borderRadius: '8px', padding: '5px 9px', fontSize: '10px', fontWeight: 900, cursor: 'pointer' }}
 >
