@@ -1,3 +1,4 @@
+import { SovereignHabitEngine } from './utils/SovereignHabitEngine';
 import { SovereignRockingChatbot } from './utils/SovereignRockingChatbot';
 import './utils/SovereignAntiCloneGuard';
 import { SovereignMasterControl } from './utils/SovereignMasterControl';
