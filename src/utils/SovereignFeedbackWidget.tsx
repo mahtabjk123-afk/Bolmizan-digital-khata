@@ -67,7 +67,6 @@ export const SovereignFeedbackWidget: React.FC = () => {
   };
 
   const handleSendWhatsApp = () => {
-Use code with caution.
 const text = 'BOLMIZAN FEEDBACK (' + rating + '/5)\nRole: ' + userRole + '\nType: ' + category + '\nMessage: ' + (message.trim() || 'App zabardast hai!');
 window.open('wa.me' + encodeURIComponent(text), '_blank');
 };
