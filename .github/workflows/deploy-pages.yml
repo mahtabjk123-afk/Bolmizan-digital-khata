@@ -1,15 +1,9 @@
-name: Deploy BolMizan Live Web App (GitHub Pages)
-
+name: Deploy Full App to Surge CDN
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:
-
-permissions:
-  contents: write
-
 jobs:
-  deploy-live-web:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,9 +11,5 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-      - run: npx vite build --base=/final/
-      - uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          publish_branch: gh-pages
+      - run: npx vite build --base=./
+      - run: npx surge ./dist bolmizan-sakrand.surge.sh --token ${{ secrets.SURGE_TOKEN }}
