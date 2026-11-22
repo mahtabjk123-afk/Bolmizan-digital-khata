@@ -1,0 +1,34 @@
+name: BolMizan Autonomous AI Consensus & Self-Evolution
+on:
+schedule:
+- cron: '0 0 * * *'
+issues:
+types: [opened, labeled]
+workflow_dispatch:
+permissions:
+contents: write
+pull-requests: write
+issues: write
+jobs:
+evaluate-30day-consensus:
+runs-on: ubuntu-latest
+steps:
+- name: Checkout Repository
+uses: actions/checkout@v4
+- name: Setup Node.js 22
+uses: actions/setup-node@v4
+with:
+node-version: '22'
+- name: Run 30-Day Consensus & Telemetry Orchestrator
+run: node scripts/ai-consensus-orchestrator.mjs
+- name: Verify Build & Zero-Error Safety Gate
+run: |
+npm install
+npm run build
+- name: Commit Updated AI Evolution Manifest
+run: |
+git config user.name "BolMizan-AI-Orchestrator"
+git config user.email "ai-orchestrator@bolmizan.local"
+git add data/ai-evolution-manifest.json
+git diff --staged --quiet || git commit -m "chore(ai-orchestrator): update 30-day feature consensus manifest"
+git push
