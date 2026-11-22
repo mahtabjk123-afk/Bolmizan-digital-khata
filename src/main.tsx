@@ -1,3 +1,4 @@
+import { SovereignRockingChatbot } from './utils/SovereignRockingChatbot';
 import './utils/SovereignAntiCloneGuard';
 import { SovereignMasterControl } from './utils/SovereignMasterControl';
 import React from 'react';
@@ -31,7 +32,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <SovereignAamAadmiMode />
       <Sovereign3DSpatialLayer />
       <SovereignAiBoardroom />
-      <SovereignSecurityAndTerms /><SovereignMasterControl />
+      <SovereignSecurityAndTerms />
       <SovereignFeedbackWidget />
       <SovereignBackupDrawer />
       <SovereignFounderHub />
