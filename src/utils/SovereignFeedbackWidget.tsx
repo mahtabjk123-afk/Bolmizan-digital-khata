@@ -83,7 +83,7 @@ return (
 {tab === 'FEEDBACK' ? (
 <>
 <div style={{ display: 'flex', gap: '5px', marginBottom: '8px' }}>
-{.map((star) => (
+{Array.from({length: 5}, (_, i) => i + 1).map((star) => (
 <button key={star} onClick={() => setRating(star)} style={{ flex: 1, padding: '5px 0', borderRadius: '6px', border: star <= rating ? '1px solid #fbbf24' : '1px solid #334155', background: star <= rating ? 'rgba(245,158,11,0.2)' : '#1e293b', color: star <= rating ? '#fbbf24' : '#64748b', fontWeight: 800, fontSize: '12px', cursor: 'pointer' }}>{star}
 ))}
 
