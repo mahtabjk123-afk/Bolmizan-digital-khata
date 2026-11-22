@@ -1,4 +1,4 @@
-﻿name: Build BolMizan 100% Free Signed Release APK
+name: Build BolMizan 100% Free Signed Release APK
 
 on:
   push:
@@ -69,16 +69,16 @@ jobs:
         run: ./gradlew assembleRelease --no-daemon
 
       - name: Rename Signed APK for Distribution
-        run: cp android/app/build/outputs/apk/release/app-release.apk BolMizan-v1.0-Signed-Release.apk
+        run: cp android/app/build/outputs/apk/release/app-release.apk BolMizan-v1.0.${{ github.run_number }}-signed.apk
 
       - name: Publish Free Direct-Download Release APK
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0-signed-release
-          name: BolMizan v1.0 Signed Offline Android APK (100% Free)
+          tag_name: v1.0.${{ github.run_number }}-signed
+          name: BolMizan v1.0.${{ github.run_number }} Signed Offline APK
           body: |
             Official cryptographically signed offline Android application for BolMizan Protocol.
             - 100% Offline Sovereign Khata, Mandi Voice Parser & Anti-Scam Shield
             - Zero internet required after installation
             - Built for Sakrand & Sindh merchants and ISEF evaluation
-          files: BolMizan-v1.0-Signed-Release.apk
+          files: BolMizan-v1.0.${{ github.run_number }}-signed.apk
