@@ -217,7 +217,6 @@ export const SovereignAiBoardroom: React.FC = () => {
           <div style={{ display: 'flex', gap: '4px', overflowX: 'auto', paddingBottom: '6px', marginBottom: '8px' }}>
             <button
               onClick={() => setSelectedDomain('ALL')}
-Use code with caution.
 style={{ whiteSpace: 'nowrap', padding: '4px 8px', borderRadius: '6px', border: 'none', fontSize: '10px', fontWeight: 800, cursor: 'pointer', background: selectedDomain === 'ALL' ? '#f59e0b' : '#1e293b', color: selectedDomain === 'ALL' ? '#090d16' : '#cbd5e1' }}
 >
 All 10 Domains ({totalRoles})
