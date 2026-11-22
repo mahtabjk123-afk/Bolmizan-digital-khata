@@ -1,7 +1,3 @@
-import { SovereignHabitEngine } from './utils/SovereignHabitEngine';
-import { SovereignRockingChatbot } from './utils/SovereignRockingChatbot';
-import './utils/SovereignAntiCloneGuard';
-import { SovereignMasterControl } from './utils/SovereignMasterControl';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
@@ -11,33 +7,28 @@ import './utils/sovereignIndexedDbVault';
 import './utils/SovereignZeroLoopholeShield';
 import './utils/SovereignPrecisionFinance';
 import './utils/SovereignCenturyEngine';
+import './utils/SovereignAntiCloneGuard';
 import { installViralGrowthInterceptor } from './utils/SovereignViralLoopInterceptor';
 import { SovereignErrorBoundary } from './utils/SovereignErrorBoundary';
 import { SovereignBrandIdentity } from './utils/SovereignBrandIdentity';
 import { SovereignAamAadmiMode } from './utils/SovereignAamAadmiMode';
-import { Sovereign3DSpatialLayer } from './utils/Sovereign3DSpatialLayer';
-import { SovereignAiBoardroom } from './utils/SovereignAiBoardroom';
-import { SovereignSecurityAndTerms } from './utils/SovereignSecurityAndTerms';
-import { SovereignFeedbackWidget } from './utils/SovereignFeedbackWidget';
-import { SovereignBackupDrawer } from './utils/SovereignBackupDrawer';
-import { SovereignFounderHub } from './utils/SovereignFounderHub';
-import { SovereignViralShare } from './utils/SovereignViralShare';
+import { SovereignRockingChatbot } from './utils/SovereignRockingChatbot';
+import { SovereignUnifiedDock } from './utils/SovereignUnifiedDock';
 
 installViralGrowthInterceptor();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <SovereignErrorBoundary>
-      
-      <App />
-      <SovereignAamAadmiMode />
-      <Sovereign3DSpatialLayer />
-      <SovereignAiBoardroom />
-      <SovereignSecurityAndTerms />
-      <SovereignFeedbackWidget />
-      <SovereignBackupDrawer />
-      <SovereignFounderHub />
-      <SovereignViralShare />
-    </SovereignErrorBoundary>
-  </React.StrictMode>
+  React.createElement(
+    React.StrictMode,
+    null,
+    React.createElement(
+      SovereignErrorBoundary,
+      null,
+      React.createElement(SovereignBrandIdentity),
+      React.createElement(App),
+      React.createElement(SovereignAamAadmiMode),
+      React.createElement(SovereignRockingChatbot),
+      React.createElement(SovereignUnifiedDock)
+    )
+  )
 );
