@@ -10,6 +10,44 @@ interface ChatMsg {
   time: string;
 }
 
+const LANG_CONFIG: Record<string, { label: string; speechCode: string; greet: string }> = {
+  SINDHI: {
+    label: 'سنڌي',
+    speechCode: 'ur-PK',
+    greet: 'Assalam-o-Alaikum! Aaon BolMizan Sindhi Voice AI aahyan (Sakrand Edition). Bina internet Khata likhan, Zakat/Ushr hisab ya 8171 scam check lai bolo ya likho!'
+  },
+  URDU: {
+    label: 'اردو',
+    speechCode: 'ur-PK',
+    greet: 'Assalam-o-Alaikum! Main BolMizan Urdu Voice AI hoon. Bina internet Khata likhne, Zakat/Ushr hisab, ya 8171 scam check ke liye poochein!'
+  },
+  ARABIC: {
+    label: 'العربية',
+    speechCode: 'ar-SA',
+    greet: 'As-Salamu Alaykum! Ana BolMizan AI lil-hisabat al-Islamiyah wa al-Zakat bidun Internet.'
+  },
+  HINDI: {
+    label: 'हिन्दी',
+    speechCode: 'hi-IN',
+    greet: 'Namaste! Main BolMizan Mandi AI hoon. Bina internet Khata entry, hisab aur fraud check ke liye likhein!'
+  },
+  BENGALI: {
+    label: 'বাংলা',
+    speechCode: 'bn-BD',
+    greet: 'Assalamu Alaikum! Ami BolMizan Offline Krishi O Khata AI. Internet charai hisab rakhun!'
+  },
+  SWAHILI: {
+    label: 'Kiswahili',
+    speechCode: 'sw-KE',
+    greet: 'Habari! Mimi ni BolMizan AI ya biashara na kilimo bila intaneti.'
+  },
+  ENGLISH: {
+    label: 'English',
+    speechCode: 'en-US',
+    greet: 'Assalam-o-Alaikum! BolMizan Global Edge AI ready offline & online for Khata, Zakat/Ushr, and Scam Shield.'
+  }
+};
+
 export const SovereignRockingChatbot: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState('');
@@ -18,19 +56,13 @@ export const SovereignRockingChatbot: React.FC = () => {
   const [voiceOn, setVoiceOn] = useState(true);
   const [messages, setMessages] = useState<ChatMsg[]>([]);
 
-  const makeGreeting = (t: string, honor: string) => {
-    const h = honor.trim() || 'Saeen';
-    if (t === 'SINDHI') return 'Assalam-o-Alaikum ' + h + '! Aaon BolMizan Sindhi Voice AI aahyan (Sakrand Edition). Bina internet Khata likhan, Zakat/Ushr hisab ya 8171 scam check lai likho ya bolo!';
-    if (t === 'URDU') return 'Assalam-o-Alaikum ' + h + '! Main BolMizan Urdu Voice AI hoon. Bina internet Khata likhne, Zakat/Ushr hisab, ya 8171 scam check ke liye poochein!';
-    return 'Assalam-o-Alaikum ' + h + '! BolMizan Regional Voice AI ready offline & online.';
-  };
-
   useEffect(() => {
     const t = localStorage.getItem('bolmizan_voice_tone') || 'SINDHI';
     const h = localStorage.getItem('bolmizan_user_honorific') || 'Saeen';
     setTone(t);
     setTitle(h);
-    setMessages([{ id: 'INIT-1', sender: 'BOT', text: makeGreeting(t, h), time: new Date().toLocaleTimeString('en-PK', { hour: '2-digit', minute: '2-digit' }) }]);
+    const cfg = LANG_CONFIG[t] || LANG_CONFIG.SINDHI;
+    setMessages([{ id: 'INIT-1', sender: 'BOT', text: '(' + h + ') ' + cfg.greet, time: new Date().toLocaleTimeString('en-PK', { hour: '2-digit', minute: '2-digit' }) }]);
   }, []);
 
   const speak = (txt: string, t: string) => {
@@ -39,7 +71,7 @@ export const SovereignRockingChatbot: React.FC = () => {
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(txt);
-        u.lang = t === 'ENGLISH' ? 'en-US' : 'ur-PK';
+        u.lang = (LANG_CONFIG[t] || LANG_CONFIG.SINDHI).speechCode;
         window.speechSynthesis.speak(u);
       }
     } catch {}
@@ -64,12 +96,12 @@ export const SovereignRockingChatbot: React.FC = () => {
           localStorage.setItem(key, json);
           await Preferences.set({ key, value: json });
         } catch {}
-        return 'Ji ' + h + '! ' + party + ' ja Rs. ' + amt.toLocaleString() + ' (' + (isUdhaar ? 'Udhaar' : 'Cash Jama') + ') offline Khata mein save thi wya aahin!';
+        return 'Ji ' + h + '! ' + party + ' — Rs. ' + amt.toLocaleString() + ' (' + (isUdhaar ? 'Udhaar' : 'Cash Jama') + ') offline Khata mein save ho gaya!';
       }
     }
 
     if (q.includes('8171') || q.includes('bisp') || q.includes('otp') || q.includes('scam')) {
-      return 'KHABARDAR ' + h + '! Asli 8171 kadhen b personal mobile number taan SMS natho moklay ain na hi JazzCash/EasyPaisa PIN mangay tho!';
+      return 'KHABARDAR ' + h + '! Asli 8171 kabhi personal number se SMS nahi bhejta aur na PIN/OTP maangta hai!';
     }
 
     if (q.includes('khata') || q.includes('balance') || q.includes('hisab')) {
@@ -86,22 +118,22 @@ export const SovereignRockingChatbot: React.FC = () => {
           }
         }
       } catch {}
-      return h + ', Offline Khata Hisab: Cash In = Rs. ' + cash.toLocaleString() + ' | Udhaar = Rs. ' + udhaar.toLocaleString() + ' | Net = Rs. ' + (cash - udhaar).toLocaleString();
+      return h + ', Offline Khata: Cash In = Rs. ' + cash.toLocaleString() + ' | Udhaar = Rs. ' + udhaar.toLocaleString() + ' | Net = Rs. ' + (cash - udhaar).toLocaleString();
     }
 
     if (q.includes('zakat')) {
       const m = q.match(/\d[\d,]*/);
       const val = m ? Number(m.replace(/,/g, '')) : 100000;
-      return h + ', Rs. ' + val.toLocaleString() + ' tay 2.5% Zakat = Rs. ' + Math.round(val * 0.025).toLocaleString() + ' thiye thi.';
+      return h + ', Rs. ' + val.toLocaleString() + ' par 2.5% Zakat = Rs. ' + Math.round(val * 0.025).toLocaleString();
     }
 
     if (q.includes('ushr')) {
       const m = q.match(/\d[\d,]*/);
       const val = m ? Number(m.replace(/,/g, '')) : 100000;
-      return h + ', Rs. ' + val.toLocaleString() + ' fasal tay Nehri Ushr (5%) = Rs. ' + Math.round(val * 0.05).toLocaleString() + ' | Barani (10%) = Rs. ' + Math.round(val * 0.1).toLocaleString();
+      return h + ', Rs. ' + val.toLocaleString() + ' fasal par Nehri Ushr (5%) = Rs. ' + Math.round(val * 0.05).toLocaleString() + ' | Barani (10%) = Rs. ' + Math.round(val * 0.1).toLocaleString();
     }
 
-    return 'Ji ' + h + '! Likho: "Ahmed 5000 jama likho", "Khata balance", "Zakat 500000", "Ushr 200000", ya "8171 scam check".';
+    return 'Ji ' + h + '! Try: "Ahmed 5000 jama likho", "Khata balance", "Zakat 500000", "Ushr 200000", or "8171 scam check".';
   };
 
   const handleSend = async (customText?: string) => {
@@ -117,8 +149,10 @@ export const SovereignRockingChatbot: React.FC = () => {
     if (customText === undefined) setInput('');
     sovereignSound.playSuccessChime();
     speak(rep, tone);
-    await telemetryAgent.track('REGIONAL_CHAT_' + tone, 'VOICE_AI');
+    await telemetryAgent.track('GLOBAL_CHAT_' + tone, 'VOICE_AI');
   };
+
+  const langKeys = Object.keys(LANG_CONFIG);
 
   const toggleBtn = React.createElement(
     'button',
@@ -126,14 +160,14 @@ export const SovereignRockingChatbot: React.FC = () => {
       onClick: () => setOpen(!open),
       style: { position: 'fixed', bottom: '16px', right: '16px', zIndex: 10000, background: 'linear-gradient(135deg, #059669, #0284c7)', color: '#ffffff', border: '1.5px solid #a7f3d0', borderRadius: '999px', padding: '8px 15px', fontSize: '12px', fontWeight: 900, boxShadow: '0 6px 20px rgba(16,185,129,0.5)', cursor: 'pointer' }
     },
-    open ? '✕ Close Voice AI' : '🎤 Sindhi / Urdu AI'
+    open ? 'Close Voice AI' : 'Global Voice AI (' + (LANG_CONFIG[tone]?.label || 'Sindhi') + ')'
   );
 
   const panel = open
     ? React.createElement(
         'div',
         {
-          style: { position: 'fixed', bottom: '62px', right: '16px', zIndex: 10000, width: '335px', height: '440px', display: 'flex', flexDirection: 'column', background: '#090d16', color: '#f8fafc', border: '2px solid #10b981', borderRadius: '18px', overflow: 'hidden', fontFamily: 'sans-serif', boxShadow: '0 18px 46px rgba(0,0,0,0.9)' }
+          style: { position: 'fixed', bottom: '62px', right: '16px', zIndex: 10000, width: '340px', height: '455px', display: 'flex', flexDirection: 'column', background: '#090d16', color: '#f8fafc', border: '2px solid #10b981', borderRadius: '18px', overflow: 'hidden', fontFamily: 'sans-serif', boxShadow: '0 18px 46px rgba(0,0,0,0.9)' }
         },
         React.createElement(
           'div',
@@ -141,30 +175,45 @@ export const SovereignRockingChatbot: React.FC = () => {
           React.createElement(
             'div',
             { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' } },
-            React.createElement('span', { style: { fontSize: '13px', fontWeight: 900 } }, 'BolMizan Regional Voice AI'),
-            React.createElement('button', { onClick: () => setVoiceOn(!voiceOn), style: { background: '#0f172a', color: '#fbbf24', border: '1px solid #fbbf24', borderRadius: '999px', padding: '3px 8px', fontSize: '10px', fontWeight: 800, cursor: 'pointer' } }, voiceOn ? '🔊 Voice On' : '🔇 Mute')
+            React.createElement('span', { style: { fontSize: '13px', fontWeight: 900 } }, 'BolMizan 7-Language Edge AI'),
+            React.createElement('button', { onClick: () => setVoiceOn(!voiceOn), style: { background: '#0f172a', color: '#fbbf24', border: '1px solid #fbbf24', borderRadius: '999px', padding: '3px 8px', fontSize: '10px', fontWeight: 800, cursor: 'pointer' } }, voiceOn ? 'Voice On' : 'Mute')
           ),
           React.createElement(
             'div',
-            { style: { display: 'flex', gap: '4px' } },
-            React.createElement('button', { onClick: () => { setTone('SINDHI'); localStorage.setItem('bolmizan_voice_tone', 'SINDHI'); }, style: { flex: 1, padding: '4px', borderRadius: '6px', border: 'none', fontSize: '10px', fontWeight: 800, cursor: 'pointer', background: tone === 'SINDHI' ? '#fbbf24' : '#0f172a', color: tone === 'SINDHI' ? '#090d16' : '#fff' } }, 'Sindhi Tone'),
-            React.createElement('button', { onClick: () => { setTone('URDU'); localStorage.setItem('bolmizan_voice_tone', 'URDU'); }, style: { flex: 1, padding: '4px', borderRadius: '6px', border: 'none', fontSize: '10px', fontWeight: 800, cursor: 'pointer', background: tone === 'URDU' ? '#fbbf24' : '#0f172a', color: tone === 'URDU' ? '#090d16' : '#fff' } }, 'Urdu Tone'),
-            React.createElement('input', { value: title, onChange: (e: React.ChangeEvent<HTMLInputElement>) => { setTitle(e.target.value); localStorage.setItem('bolmizan_user_honorific', e.target.value); }, style: { width: '70px', padding: '4px', borderRadius: '6px', border: '1px solid #38bdf8', background: '#0f172a', color: '#fde68a', fontSize: '10px' } })
+            { style: { display: 'flex', gap: '4px', overflowX: 'auto', paddingBottom: '4px' } },
+            langKeys.map((k) =>
+              React.createElement(
+                'button',
+                {
+                  key: k,
+                  onClick: () => {
+                    setTone(k);
+                    localStorage.setItem('bolmizan_voice_tone', k);
+                    const g = '(' + title + ') ' + LANG_CONFIG[k].greet;
+                    setMessages((prev) => [...prev, { id: 'L-' + Date.now(), sender: 'BOT', text: g, time: new Date().toLocaleTimeString('en-PK', { hour: '2-digit', minute: '2-digit' }) }]);
+                    speak(g, k);
+                  },
+                  style: { whiteSpace: 'nowrap', padding: '4px 7px', borderRadius: '6px', border: 'none', fontSize: '10px', fontWeight: 800, cursor: 'pointer', background: tone === k ? '#fbbf24' : '#0f172a', color: tone === k ? '#090d16' : '#fff' }
+                },
+                LANG_CONFIG[k].label
+              )
+            )
           )
         ),
         React.createElement(
           'div',
-          { style: { display: 'flex', gap: '4px', padding: '6px 8px', background: '#0f172a', overflowX: 'auto' } },
-          React.createElement('button', { onClick: () => handleSend('Ahmed 5000 jama likho'), style: { whiteSpace: 'nowrap', background: '#1e293b', color: '#38bdf8', border: 'none', borderRadius: '999px', padding: '4px 8px', fontSize: '10px', cursor: 'pointer' } }, '+5000 Jama'),
-          React.createElement('button', { onClick: () => handleSend('Khata balance'), style: { whiteSpace: 'nowrap', background: '#1e293b', color: '#38bdf8', border: 'none', borderRadius: '999px', padding: '4px 8px', fontSize: '10px', cursor: 'pointer' } }, 'Khata Balance'),
-          React.createElement('button', { onClick: () => handleSend('8171 scam check'), style: { whiteSpace: 'nowrap', background: '#1e293b', color: '#38bdf8', border: 'none', borderRadius: '999px', padding: '4px 8px', fontSize: '10px', cursor: 'pointer' } }, '8171 Check')
-        ),
-        React.createElement(
-          'div',
-          { style: { flex: 1, overflowY: 'auto', padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px' } },
-          messages.map((m) =>
-            React.createElement(
-              'div',
+Use code with caution.
+{ style: { display: 'flex', gap: '4px', padding: '6px 8px', background: '#0f172a', overflowX: 'auto' } },
+React.createElement('button', { onClick: () => handleSend('Ahmed 5000 jama likho'), style: { whiteSpace: 'nowrap', background: '#1e293b', color: '#38bdf8', border: 'none', borderRadius: '999px', padding: '4px 8px', fontSize: '10px', cursor: 'pointer' } }, '+5000 Jama'),
+React.createElement('button', { onClick: () => handleSend('Khata balance'), style: { whiteSpace: 'nowrap', background: '#1e293b', color: '#38bdf8', border: 'none', borderRadius: '999px', padding: '4px 8px', fontSize: '10px', cursor: 'pointer' } }, 'Khata Balance'),
+React.createElement('button', { onClick: () => handleSend('8171 scam check'), style: { whiteSpace: 'nowrap', background: '#1e293b', color: '#38bdf8', border: 'none', borderRadius: '999px', padding: '4px 8px', fontSize: '10px', cursor: 'pointer' } }, '8171 Check')
+),
+React.createElement(
+'div',
+{ style: { flex: 1, overflowY: 'auto', padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px' } },
+messages.map((m) =>
+React.createElement(
+'div',
 { key: m.id, style: { alignSelf: m.sender === 'USER' ? 'flex-end' : 'flex-start', maxWidth: '85%', background: m.sender === 'USER' ? '#059669' : '#1e293b', color: '#fff', padding: '8px 10px', borderRadius: '12px', fontSize: '12px', lineHeight: 1.4 } },
 m.text
 )
@@ -175,7 +224,7 @@ React.createElement(
 { style: { padding: '8px', background: '#0f172a', display: 'flex', gap: '6px' } },
 React.createElement('input', {
 type: 'text',
-placeholder: 'Sawal likhein...',
+placeholder: 'Write in Sindhi, Urdu, Arabic, Hindi, English...',
 value: input,
 onChange: (e: React.ChangeEvent) => setInput(e.target.value),
 onKeyDown: (e: React.KeyboardEvent) => { if (e.key === 'Enter') handleSend(); },

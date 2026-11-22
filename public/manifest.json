@@ -1,19 +1,17 @@
 {
-  "name": "BolMizan VERITAS-SOVEREIGN OS",
+  "name": "BolMizan Sovereign OS",
   "short_name": "BolMizan",
-  "description": "Zero-Riba Shariah Khata, Anti-Scam Cognitive Firewall & Sakrand-to-Gulf Trade OS",
+  "description": "100% Offline-First Cryptographic & Islamic Financial Operating System for Rural Mandis & Farmers",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#030B10",
-  "theme_color": "#0F766E",
-  "orientation": "portrait-primary",
-  "categories": ["finance", "business", "productivity"],
+  "background_color": "#050811",
+  "theme_color": "#059669",
+  "orientation": "portrait",
   "icons": [
     {
-      "src": "/icon.svg",
+      "src": "/bolmizan-logo.svg",
       "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "type": "image/svg+xml"
     }
   ]
 }
