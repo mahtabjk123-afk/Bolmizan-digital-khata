@@ -1,4 +1,4 @@
-import './utils/SovereignCenturyEngine';
+import './utils/sovereignIndexedDbVault';nimport { Sovereign3DSpatialLayer } from './utils/Sovereign3DSpatialLayer';nimport './utils/SovereignCenturyEngine';
 import './utils/SovereignZeroLoopholeShield';
 import { SovereignFeedbackWidget } from './utils/SovereignFeedbackWidget';
 import './utils/sovereignSoundEngine';
