@@ -4,28 +4,30 @@ const APK_URL = 'https://github.com';
 
 export const SovereignViralShare: React.FC = () => {
   const [open, setOpen] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState('');
 
-  const viralMessage = `🌾 *BolMizan Sovereign OS (100% Free & Offline)*\nBina internet chalne wali Digital Khata, Sindhi/Urdu Voice Sabzi Parchi aur BISP/8171 Scam Bachao App!\n\n📲 Direct Free Android APK Download:\n${APK_URL}`;
-
-  const handleWhatsAppShare = () => {
-    const waUrl = `https://wa.me{encodeURIComponent(viralMessage)}`;
-    window.open(waUrl, '_blank');
+  const templates = {
+    merchant: `🌾 *BolMizan Sovereign OS (100% Free & Offline)*\nBina internet chalne wali Digital Khata, Sindhi/Urdu Voice Sabzi Parchi aur Ushr/Karda App!\n\n📲 Direct Free Android APK:\n${APK_URL}`,
+    scam: `🚨 *ZARORI WARNING (BISP 8171 / JazzCash Fraud Bachao)*\nKisi ko apna OTP ya PIN na dein! Apne phone par bina internet fake SMS check karne ke liye *BolMizan Scam Shield* free download karein:\n${APK_URL}`,
+    vasooli: `📒 *Mizan Digital Khata Reminder*\nMohtaram, aapka mandi/dukan ka hisab BolMizan cryptographic ledger par mehfooz hai. Apni tasdeeq shuda digital parchi aur free app yahan se hasil karein:\n${APK_URL}`
   };
 
-  const handleCopyFooter = async () => {
+  const shareViaWhatsApp = (text: string) => {
+    window.open(`https://wa.me{encodeURIComponent(text)}`, '_blank');
+  };
+
+  const copyText = async (key: string, text: string) => {
     try {
-      await navigator.clipboard.writeText(viralMessage);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
+      await navigator.clipboard.writeText(text);
+      setCopied(key);
+      setTimeout(() => setCopied(''), 2500);
     } catch {}
   };
 
   return (
     <>
       <button
-        onClick={() => setOpen(!open)}
-        title="Share BolMizan App via WhatsApp"
+        onClick={() => { setOpen(!open); setCopied(''); }}
         style={{
           position: 'fixed',
           bottom: '16px',
@@ -42,7 +44,7 @@ export const SovereignViralShare: React.FC = () => {
           cursor: 'pointer'
         }}
       >
-        {open ? 'Close Share' : 'Share App (Free)'}
+        {open ? 'Close' : 'Viral Share (Free)'}
       </button>
 
       {open && (
@@ -52,7 +54,7 @@ export const SovereignViralShare: React.FC = () => {
             bottom: '60px',
             left: '16px',
             zIndex: 9999,
-            width: '295px',
+            width: '305px',
             background: '#0f172a',
             color: '#f8fafc',
             border: '1px solid #10b981',
@@ -62,44 +64,39 @@ export const SovereignViralShare: React.FC = () => {
             fontFamily: 'sans-serif'
           }}
         >
-          <div style={{ fontWeight: 700, fontSize: '14px', color: '#34d399', marginBottom: '6px' }}>
-            Doston & Dukandaron Ko Bhejein
+          <div style={{ fontWeight: 700, fontSize: '14px', color: '#34d399', marginBottom: '4px' }}>
+            Auto-Viral Growth Engine
           </div>
-          <p style={{ fontSize: '12px', color: '#cbd5e1', marginBottom: '12px', lineHeight: 1.4 }}>
-            Har Sabzi Parchi ya Khata message ke saath apna free download link share karein taake har kisan aur dukandar offline app use kar sake.
+          <p style={{ fontSize: '11px', color: '#94a3b8', marginBottom: '12px' }}>
+            Har Sabzi Parchi ke saath link khud-ba-khud lag jata hai. Mazeed tezi ke liye 1 click mein forward karein:
           </p>
+
           <button
-            onClick={handleWhatsAppShare}
-            style={{
-              width: '100%',
-              background: '#25D366',
-              color: '#052e16',
-              fontWeight: 800,
-              border: 'none',
-              borderRadius: '8px',
-              padding: '10px',
-              fontSize: '13px',
-              cursor: 'pointer',
-              marginBottom: '8px'
-            }}
+            onClick={() => shareViaWhatsApp(templates.merchant)}
+            style={{ width: '100%', background: '#25D366', color: '#052e16', fontWeight: 800, border: 'none', borderRadius: '8px', padding: '9px', fontSize: '12px', cursor: 'pointer', marginBottom: '7px' }}
           >
-            WhatsApp Par Share Karein
+            1. Dukandar / Kisan Ko App Bhejein
           </button>
+
           <button
-            onClick={handleCopyFooter}
-            style={{
-              width: '100%',
-              background: '#1e293b',
-              color: '#f8fafc',
-              fontWeight: 600,
-              border: '1px solid #475569',
-              borderRadius: '8px',
-              padding: '9px',
-              fontSize: '12px',
-              cursor: 'pointer'
-            }}
+            onClick={() => shareViaWhatsApp(templates.scam)}
+            style={{ width: '100%', background: '#ef4444', color: '#ffffff', fontWeight: 700, border: 'none', borderRadius: '8px', padding: '9px', fontSize: '12px', cursor: 'pointer', marginBottom: '7px' }}
           >
-            {copied ? 'Copied! Ab Parchi Ke Saath Paste Karein' : 'Parchi Viral Footer Copy Karein'}
+            2. BISP / 8171 Scam Alert Forward Karein
+          </button>
+
+          <button
+            onClick={() => shareViaWhatsApp(templates.vasooli)}
+            style={{ width: '100%', background: '#0284c7', color: '#ffffff', fontWeight: 700, border: 'none', borderRadius: '8px', padding: '9px', fontSize: '12px', cursor: 'pointer', marginBottom: '7px' }}
+          >
+            3. Udhaar / Vasooli Slip Bhejein
+          </button>
+
+          <button
+            onClick={() => copyText('link', APK_URL)}
+            style={{ width: '100%', background: '#1e293b', color: '#cbd5e1', fontWeight: 600, border: '1px solid #475569', borderRadius: '8px', padding: '7px', fontSize: '11px', cursor: 'pointer' }}
+          >
+            {copied === 'link' ? 'Direct APK Link Copied!' : 'Direct APK Link Copy Karein'}
           </button>
         </div>
       )}

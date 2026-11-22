@@ -1,3 +1,5 @@
+import { installViralGrowthInterceptor } from './utils/SovereignViralLoopInterceptor';
+installViralGrowthInterceptor();
 import { SovereignViralShare } from './utils/SovereignViralShare';
 import { SovereignBackupDrawer } from './utils/SovereignBackupDrawer';
 import { SovereignErrorBoundary, installBlackScreenGuard } from './utils/SovereignErrorBoundary';
