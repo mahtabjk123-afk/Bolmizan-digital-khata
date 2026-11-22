@@ -1,3 +1,4 @@
+import { SovereignViralShare } from './utils/SovereignViralShare';
 import { SovereignBackupDrawer } from './utils/SovereignBackupDrawer';
 import { SovereignErrorBoundary, installBlackScreenGuard } from './utils/SovereignErrorBoundary';
 installBlackScreenGuard();
@@ -11,7 +12,7 @@ installOfflineAndroidBridge();
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <SovereignErrorBoundary><><App /><SovereignBackupDrawer /></></SovereignErrorBoundary>
+        <SovereignErrorBoundary><><App /><SovereignBackupDrawer /><SovereignViralShare /></></SovereignErrorBoundary>
     </StrictMode>
 );
 
