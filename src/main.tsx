@@ -1,3 +1,4 @@
+import './utils/SovereignAntiCloneGuard';
 import { SovereignMasterControl } from './utils/SovereignMasterControl';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
