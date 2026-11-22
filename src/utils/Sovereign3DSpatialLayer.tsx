@@ -13,30 +13,29 @@ const ctx = canvas.getContext('2d');
 if (!ctx) return;
 let animId = 0;
 let angle = 0;
-const vertices = [[0, -1, 0], [1, 0, 0], [0, 0, 1], [-1, 0, 0], [0, 0, -1], [0, 1, 0]];
-const edges = [[0, 1], [0, 2], [0, 3], [0, 4], [5, 1], [5, 2], [5, 3], [5, 4], [1, 2], [2, 3], [3, 4], [4, 1]];
 const render = () => {
-angle += 0.022;
+angle += 0.025;
 ctx.clearRect(0, 0, canvas.width, canvas.height);
 const cx = canvas.width / 2;
 const cy = canvas.height / 2;
-const scale = 22;
-const projected = vertices.map(([x, y, z]) => {
-const rx = x * Math.cos(angle) - z * Math.sin(angle);
-const rz = x * Math.sin(angle) + z * Math.cos(angle);
-const ry = y * Math.cos(angle * 0.6) - rz * Math.sin(angle * 0.6);
-const fz = y * Math.sin(angle * 0.6) + rz * Math.cos(angle * 0.6) + 3.2;
-const factor = scale / (fz * 0.42);
-return [cx + rx * factor, cy + ry * factor];
-});
+const r = 13;
+const x1 = cx + Math.cos(angle) * r;
+const x2 = cx - Math.cos(angle) * r;
+const z1 = Math.sin(angle) * 5;
 ctx.strokeStyle = '#10b981';
 ctx.lineWidth = 1.6;
-for (const [a, b] of edges) {
 ctx.beginPath();
-ctx.moveTo(projected[a][0], projected[a][1]);
-ctx.lineTo(projected[b][0], projected[b][1]);
+ctx.moveTo(cx, cy - r);
+ctx.lineTo(x1, cy + z1 * 0.3);
+ctx.lineTo(cx, cy + r);
+ctx.lineTo(x2, cy - z1 * 0.3);
+ctx.closePath();
 ctx.stroke();
-}
+ctx.strokeStyle = '#fbbf24';
+ctx.beginPath();
+ctx.moveTo(x1, cy + z1 * 0.3);
+ctx.lineTo(x2, cy - z1 * 0.3);
+ctx.stroke();
 animId = requestAnimationFrame(render);
 };
 render();
