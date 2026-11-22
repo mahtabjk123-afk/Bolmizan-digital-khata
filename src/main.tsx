@@ -1,3 +1,4 @@
+import './utils/SovereignPrecisionFinance';
 import { installViralGrowthInterceptor } from './utils/SovereignViralLoopInterceptor';
 installViralGrowthInterceptor();
 import { SovereignViralShare } from './utils/SovereignViralShare';
