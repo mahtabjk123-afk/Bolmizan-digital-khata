@@ -180,6 +180,7 @@ const ref = useRef<HTMLInputElement | null>(null);
 const fileRef = useRef<HTMLInputElement | null>(null);
 useEffect(() => { try { localStorage.setItem(STORE, JSON.stringify(bills)); } catch {} }, [bills]);
 useEffect(() => { const t = setTimeout(() => setCurtain(false), 2200); return () => clearTimeout(t); }, []);
+useEffect(() => { const onKey = (e: KeyboardEvent) => { if ((e.target as HTMLElement)?.tagName === 'INPUT' || (e.target as HTMLElement)?.tagName === 'TEXTAREA') return; if (e.key === '1') runMic(); if (e.key === '2') saveRecord('PAID'); if (e.key === '3') saveRecord('UDHAAR'); if (e.key === '4') setScamOpen((v) => !v); if (e.key === '5') setVerifyOpen((v) => !v); }; window.addEventListener('keydown', onKey); return () => window.removeEventListener('keydown', onKey); });
 const lCfg = LANGS[lang] || LANGS.sd;
 const rCfg = ROLES[role] || ROLES.SHOP;
 const flash = (m: string) => { setMsg(m); setTimeout(() => setMsg(''), 4000); };
@@ -446,6 +447,7 @@ E('button', { onClick: () => shareSMS(b), className: 'act-sms' }, 'Keypad SMS'),
 );
 };
 ReactDOM.createRoot(document.getElementById('root')!).render(E(App, null));
+
 
 
 
