@@ -1,17 +1,135 @@
 {
-  "name": "BolMizan Sovereign OS",
+  "id": "pk.sindh.bolmizan.app",
+  "name": "BolMizan — Offline Voice Digital Khata & Mandi Parchi",
   "short_name": "BolMizan",
-  "description": "100% Offline-First Cryptographic & Islamic Financial Operating System for Rural Mandis & Farmers",
+  "description": "Zero-cost offline Sindhi and Urdu voice digital khata, mandi calculator, and WhatsApp receipt generator.",
+  "lang": "ur",
+  "dir": "auto",
   "start_url": "/",
+  "scope": "/",
+  "scope_extensions": [
+    { "type": "origin", "origin": "https://surge.sh" }
+  ],
   "display": "standalone",
-  "background_color": "#050811",
-  "theme_color": "#059669",
+  "display_override": ["window-controls-overlay", "tabbed", "standalone", "minimal-ui"],
+  "tab_strip": {
+    "home_tab": { "url": "/" },
+    "new_tab_button": { "url": "/?action=voice" }
+  },
   "orientation": "portrait",
+  "background_color": "#000000",
+  "theme_color": "#10b981",
+  "categories": ["finance", "business"],
+  "note_taking": {
+    "new_note_url": "/?action=voice"
+  },
+  "prefer_related_applications": false,
+  "related_applications": [
+    {
+      "platform": "webapp",
+      "url": "https://surge.sh/manifest.json"
+    }
+  ],
+  "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7",
+  "edge_side_panel": {
+    "preferred_width": 420
+  },
+  "launch_handler": {
+    "client_mode": ["focus-existing", "auto"]
+  },
+  "share_target": {
+    "action": "/",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "widgets": [
+    {
+      "name": "BolMizan Daily Summary",
+      "short_name": "BolMizan",
+      "description": "Quick view of daily Wasool and Udhaar",
+      "tag": "bolmizan-summary",
+      "ms_ac_template": "widget-template.json",
+      "data": "widget-data.json",
+      "type": "application/json",
+      "screenshots": [
+        {
+          "src": "/screenshot-mobile.png",
+          "sizes": "540x960",
+          "label": "BolMizan Summary Widget"
+        }
+      ],
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Bol Kar Parchi Banayein",
+      "short_name": "Voice Parchi",
+      "description": "Start voice ledger entry immediately",
+      "url": "/?action=voice",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Founder & Business OS",
+      "short_name": "Business OS",
+      "description": "Open Sakrand Cash Pitches & Checklist",
+      "url": "/?action=os",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "/",
+      "accept": {
+        "application/json": [".json"],
+        "text/csv": [".csv"]
+      }
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+bolmizan",
+      "url": "/?entry=%s"
+    }
+  ],
   "icons": [
     {
-      "src": "/bolmizan-logo.svg",
-      "sizes": "any",
-      "type": "image/svg+xml"
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "540x960",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "BolMizan Mobile Voice Ledger"
+    },
+    {
+      "src": "/screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "BolMizan Desktop & Tablet Dashboard"
     }
   ]
 }

@@ -1,4 +1,0 @@
-merchant_id,merchant_role,literacy_level,offline_tx_count,time_to_first_parchi_sec,scams_or_errors_caught,paper_vs_bolmizan_preference,merchant_quote
-M01,Sabzi_Arhti_Sakrand,Basic_Urdu_Sindhi,42,28,2_duplicate_refs,BolMizan,"Pehle kachi parchi phat jati thi ab phone par sab pakka hai"
-M02,Basmati_Trader_Sakrand,Illiterate_Voice_Only,35,34,1_typo_10x_blocked,BolMizan,"Bol kar hisab likhna bohat asaan hai aur vibration se tasalli hoti hai"
-M03,Khairpur_Date_Supplier,Matric,58,19,1_edited_screenshot,BolMizan,"WhatsApp par bhejne ke baad bhi receipt verify ho jati hai"

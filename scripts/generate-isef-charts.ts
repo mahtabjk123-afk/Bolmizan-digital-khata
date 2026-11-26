@@ -47,7 +47,7 @@ function generateIsefCharts() {
     .join('');
 
   const svgContent = `
-    <svg xmlns="http://w3.org" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+    <svg xmlns="https://w3.org" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
       <rect width="100%" height="100%" fill="#ffffff" />
       <text x="${width / 2}" y="35" text-anchor="middle" font-size="18" font-weight="bold" font-family="Arial" fill="#0f172a">
         Mukasa Graph Solver: Execution Latency vs. Merchant Network Size

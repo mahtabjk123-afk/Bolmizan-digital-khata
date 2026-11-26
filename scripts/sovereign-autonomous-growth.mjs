@@ -1,17 +1,17 @@
-import fs from 'node:fs';
+﻿import fs from 'node:fs';
 import path from 'node:path';
 
-const LIVE_URL = 'https://surge.sh';
+const LIVE_URL = 'https://bolmizan-sakrand.surge.sh';
 const APK_URL = 'https://github.com';
 
 const LOCAL_TRENDS = [
   'Sakrand & Nawabshah Sabzi Mandi Daily Rate & Karda Transparency',
-  'Sindhi Voice Khata — Anparh Kisan & Dukandar 5-Second Digital Parchi',
+  'Sindhi Voice Khata â€” Anparh Kisan & Dukandar 5-Second Digital Parchi',
   '8171 / BISP Fake SMS & JazzCash PIN Fraud Protection Alert'
 ];
 
 const NATIONAL_TRENDS = [
-  'Pakistan Offline Fintech Revolution — Zero Internet Digital Khata',
+  'Pakistan Offline Fintech Revolution â€” Zero Internet Digital Khata',
   'Sugar & Rice Mill Weighbridge Parchi Anti-Tamper QIM Seal',
   'Islamic Zero-Riba Ushr & Zakat Calculator for Pakistani Traders'
 ];
@@ -41,7 +41,7 @@ const cyclePayload = {
     internationalGlobal: globalTopic
   },
   readyToPublishPack: {
-    sindhiUrduShortScript: `خبردار یا خوشخبري! ${localTopic} — هاڻي بنا انٽرنيٽ صرف 5 سيڪنڊن ۾ پڪي پرچي ٺاهيو ۽ 8171 فراڊ کان بچو! لنڪ: ${LIVE_URL}`,
+    sindhiUrduShortScript: `Ø®Ø¨Ø±Ø¯Ø§Ø± ÛŒØ§ Ø®ÙˆØ´Ø®Ø¨Ø±ÙŠ! ${localTopic} â€” Ù‡Ø§Ú»ÙŠ Ø¨Ù†Ø§ Ø§Ù†Ù½Ø±Ù†ÙŠÙ½ ØµØ±Ù 5 Ø³ÙŠÚªÙ†ÚŠÙ† Û¾ Ù¾ÚªÙŠ Ù¾Ø±Ú†ÙŠ ÙºØ§Ù‡ÙŠÙˆ Û½ 8171 ÙØ±Ø§ÚŠ Ú©Ø§Ù† Ø¨Ú†Ùˆ! Ù„Ù†Úª: ${LIVE_URL}`,
     englishGlobalPost: `Built in Sakrand, Sindh: ${globalTopic}. Works 100% offline in Airplane Mode with 8x8 QIM receipt watermarking and BigInt Paisa precision. Try live in 0.5s: ${LIVE_URL}`,
     hashtags: '#BolMizan #Sakrand #Sindh #PakistanFintech #8171Alert #OfflineAI #AgriTech #ISEF2026'
   }
@@ -68,7 +68,7 @@ const htmlStream = `<!doctype html>
 </head>
 <body>
   <div class="card">
-    <span class="badge">● 24/7 AUTONOMOUS 15-MIN AI ORCHESTRATOR LIVE</span>
+    <span class="badge">â— 24/7 AUTONOMOUS 15-MIN AI ORCHESTRATOR LIVE</span>
     <h1>BolMizan Global & Local Trend Content Factory</h1>
     <p style="font-size:12px;color:#94a3b8;">Auto-Updated UTC: ${cyclePayload.generatedAtUTC} | Cycle #${slotIndex}</p>
     <p><strong>Local Trend (Sakrand/Sindh):</strong> ${localTopic}</p>
