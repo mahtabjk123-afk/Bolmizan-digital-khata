@@ -135,7 +135,7 @@ ctx.fillStyle = '#ECFDF5'; ctx.beginPath(); ctx.roundRect(80, 925, 920, 210, 22)
 ctx.strokeStyle = '#059669'; ctx.lineWidth = 3; ctx.stroke();
 ctx.fillStyle = '#022C22'; ctx.fillRect(115, 958, 144, 144);
 ctx.fillStyle = '#FDE68A'; ctx.font = 'bold 24px sans-serif'; ctx.fillText('VERIFIED', 187, 1020); ctx.fillText('OTP: ' + otp, 187, 1060);
-ctx.textAlign = 'left'; ctx.fillStyle = '#064E3B'; ctx.font = 'bold 24px sans-serif'; ctx.fillText('BOLMIZAN GUARANTEED • ZERO-TAMPERING STAMP', 295, 975);
+ctx.textAlign = 'left'; ctx.fillStyle = '#064E3B'; ctx.font = 'bold 24px sans-serif'; ctx.fillText('BOLMIZAN GUARANTEED • LOCAL VERIFICATION STAMP', 295, 975);
 ctx.fillStyle = '#0F172A'; ctx.font = 'bold 22px sans-serif'; ctx.fillText('Seal: ' + seal + '  |  OTP: ' + otp, 295, 1020);
 ctx.fillStyle = '#334155'; ctx.font = '19px sans-serif'; ctx.fillText('Duniya ke kisi bhi phone par verify karein:', 295, 1065);
 ctx.fillText(LIVE_URL + ' (Verify? button)', 295, 1100);
@@ -213,7 +213,7 @@ if (!SR) { ref.current?.focus(); flash('Keyboard ka Mic dabayein ya neeche likhe
 try {
 const r = new SR(); r.lang = lCfg.code || 'ur-PK'; r.interimResults = false; setMic(true);
 r.onresult = (e: any) => { const x = e.results[0][0].transcript; setText(x); saveRecord(undefined, x); };
-r.onerror = () => { setMic(false); flash('Mic check karein ya neeche likhein'); };
+r.onerror = () => { if (r.lang !== 'ur-PK') { try { const r2 = new SR(); r2.lang = 'ur-PK'; r2.onresult = r.onresult; r2.onend = () => setMic(false); r2.start(); return; } catch {} } setMic(false); flash('Keyboard ka Mic dabayein ya neeche likhein'); };
 r.onend = () => setMic(false); r.start();
 } catch { setMic(false); }
 };
@@ -375,7 +375,7 @@ E('input', { value: vOtp, onChange: (e: any) => setVOtp(e.target.value), placeho
 if (!vSeal.trim() || !vOtp.trim()) return E('div', { style: { fontSize: '11px', color: '#475569' } }, 'Parchi par likha Seal aur 6-Digit OTP daal kar tasdeeq karein.');
 const found = bills.find((x) => makeSeal(x.id + '|' + x.customerName + '|' + x.amount) === vSeal.trim() && makeOtp(vSeal.trim(), Number(x.amount)) === vOtp.trim());
 return found
-? E('div', { style: { padding: '10px', borderRadius: '12px', background: '#ECFDF5', color: '#065F46', fontSize: '12px', fontWeight: 800 } }, '100% GUARANTEED & VERIFIED: ' + found.customerName + ' — Rs. ' + Number(found.amount).toLocaleString() + ' (' + found.type + ')')
+? E('div', { style: { padding: '10px', borderRadius: '12px', background: '#ECFDF5', color: '#065F46', fontSize: '12px', fontWeight: 800 } }, 'VERIFIED RECEIPT SEAL: ' + found.customerName + ' — Rs. ' + Number(found.amount).toLocaleString() + ' (' + found.type + ')')
 : E('div', { style: { padding: '10px', borderRadius: '12px', background: '#FFF1F2', color: '#9F1239', fontSize: '12px', fontWeight: 800 } }, 'UNVERIFIED: Local ledger mein yeh Seal/OTP nahi mila (WhatsApp Proof Link se check karein).');
 })()
 ) : null,
@@ -450,6 +450,7 @@ E('button', { onClick: () => shareSMS(b), className: 'act-sms' }, 'Keypad SMS'),
 );
 };
 ReactDOM.createRoot(document.getElementById('root')!).render(E(App, null));
+
 
 
 
