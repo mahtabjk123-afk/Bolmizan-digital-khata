@@ -24,6 +24,7 @@ const ROLES: Record<string, any> = {
   DOCTOR: { label: 'Doctor / Clinic', tag: 'SHIFA', title: 'AL-SHIFA CLINIC & RX', sub: 'PATIENT RECEIPT & DAWAI RECORD', theme: 'linear-gradient(145deg,#0C4A6E,#0369A1 65%,#0284C7)', def: 'Al-Shifa Medical & Clinic Sakrand', inL: 'Fee Wasool', outL: 'Baqi Fee / Dawai', pL: 'MAREEZ (PATIENT)', eL: 'Dawai / Diagnosis', ePh: 'e.g. Checkup + Panadol + Syrup', ph: 'e.g. Mareez Ali 1000 fee wasool', pre: ['Checkup Fee 500 wasool', 'Lab Test 1800 baqi', 'Followup 300 wasool', 'Drip & Injection 1200 wasool'] },
   TEACHER: { label: 'Ustad / Academy', tag: 'ACADEMY', title: 'ILM-O-HUNAR ACADEMY', sub: 'STUDENT FEE & PARENT PARCHI', theme: 'linear-gradient(145deg,#312E81,#4338CA 65%,#4F46E5)', def: 'Mizan CS & Skill Academy', inL: 'Fees Jama', outL: 'Baqi Fees', pL: 'STUDENT / WALID', eL: 'Class / Course', ePh: 'e.g. Class 10th - November Fee', ph: 'e.g. Student Hamza 3000 monthly fees jama', pre: ['Monthly Tuition 2000 jama', 'Computer Course 3500 jama', 'Books & Notes 800 baqi', 'Exam Fee 1000 jama'] },
   AGENCY: { label: 'B2B / Agency', tag: 'GLOBAL', title: 'GLOBAL B2B UNITY', sub: 'SINDH X WORLD AUTOMATION RECEIPT', theme: 'linear-gradient(145deg,#1E1B4B,#0F172A 65%,#0D9488)', def: 'BolMizan AI Solutions', inL: 'Invoice Paid', outL: 'Client Due', pL: 'CLIENT / COMPANY', eL: 'Deliverable / Scope', ePh: 'e.g. WhatsApp AI Bot + Global Deal', ph: 'e.g. Dubai Clinic AI Bot 45000 paid', pre: ['WhatsApp AI Setup 25000 paid', 'Retainer 10000 due', 'Voice Bot 50000 paid', 'Training 15000 paid'] },
+  EXPORT: { label: 'Export / Trade', tag: 'EXPORT', title: 'SINDH GLOBAL EXPORT', sub: 'KHAJOOR, AAM, AJRAK & KASHI DIRECT TRADE', theme: 'linear-gradient(145deg,#7C2D12,#9A3412 65%,#B45309)', def: 'Sindh Heritage & Agri Exports', inL: 'Export Advance', outL: 'Buyer Due', pL: 'GLOBAL BUYER / PORT', eL: 'Cargo / Product', ePh: 'e.g. 500 Box Khairpur Dates + Ajrak', ph: 'e.g. Dubai Buyer 500 box khajoor 85000 paid', pre: ['500 box khajoor 85000 paid', '100 Ajrak Rilli 45000 paid', '200 crate aam 60000 due', 'Hala Kashi Order 30000 paid'] },
   GHAR: { label: 'Ghar / Personal', tag: 'GHAR', title: 'HALAL GHAR & BACHAT', sub: 'ROZMARRA KHARCHA & BARKAT', theme: 'linear-gradient(145deg,#3F3F46,#18181B 65%,#065F46)', def: 'Mera Halal Ghar & Bachat', inL: 'Aamdani / Bachat', outL: 'Kharcha / Qarz', pL: 'MAD / KHARCHA', eL: 'Zaroorat / Note', ePh: 'e.g. Mahana Rashan / Bijli Bill', ph: 'e.g. Ghar Rashan 6500 kharcha', pre: ['Bijli Bill 4500 kharcha', 'Ghar Rashan 8000 kharcha', 'Fees 3000 kharcha', 'Sadqah 1000 kharcha'] }
 };
 
@@ -447,6 +448,7 @@ E('button', { onClick: () => shareSMS(b), className: 'act-sms' }, 'Keypad SMS'),
 );
 };
 ReactDOM.createRoot(document.getElementById('root')!).render(E(App, null));
+
 
 
 
