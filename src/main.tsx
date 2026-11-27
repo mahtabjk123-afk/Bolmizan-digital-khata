@@ -304,10 +304,7 @@ const maango = (b: any) => {
   openWaLink(fp, txt);
 };
 
-const invite = () => {
-  const txt = 'Bhali Kare Aaya! Apni dukaan, kheti-baari, ya clinic ka FREE Voice Khata & QR-Verified Ajrak Parchi lagwayein: ' + LIVE_URL;
-  openWaLink('', txt);
-};
+const invite = async () => { const txt = 'Bhali Kare Aaya! Apni dukaan, mandi, ya clinic ka FREE Voice Khata & Ajrak Parchi lagwayein (Offline bhi chalta hai): ' + LIVE_URL; if (navigator.share) { try { await navigator.share({ title: 'BolMizan AI', text: txt, url: LIVE_URL }); return; } catch {} } navigator.clipboard?.writeText(txt); flash('Invite Link Copy Ho Gaya! WhatsApp khul raha hai...'); openWaLink('', txt); };
 const settle = (b: any) => { setBills(bills.map((x) => x.id === b.id ? { ...x, type: 'PAID' } : x)); flash('Done: ' + b.customerName); };
 const removeBill = (b: any) => { if (window.confirm('Delete ' + b.customerName + '?')) setBills(bills.filter((x) => x.id !== b.id)); };
 const exportBackup = () => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(bills)], { type: 'application/json' })); a.download = 'BolMizan_Backup.json'; a.click(); };
@@ -450,6 +447,7 @@ E('button', { onClick: () => shareSMS(b), className: 'act-sms' }, 'Keypad SMS'),
 );
 };
 ReactDOM.createRoot(document.getElementById('root')!).render(E(App, null));
+
 
 
 
