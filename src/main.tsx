@@ -15,6 +15,8 @@ const LANGS: Record<string, any> = {
   skr: { code: 'ur-PK', name: 'Saraiki', welcome: 'JEE AAYAN NOON!', culture: 'Multani Kashi Heritage', mic: 'BOL KE SHAH PARCHI BANAO', search: 'Naan golo...' },
   pa: { code: 'pa-PK', name: 'Punjabi', welcome: 'JEE AAYAN NOON!', culture: 'Punjabi Phulkari Heritage', mic: 'BOL KE PARCHI BANAO', search: 'Naan labho...' },
   ar: { code: 'ar-SA', name: 'Arabic', welcome: 'AHLAN WA SAHLAN!', culture: 'Al-Mizan Andalusi Gold', mic: 'TAHADDATH LI INSHA AL-FATOURAH', search: 'Ibhaith...' },
+  sw: { code: 'sw-KE', name: 'Swahili', welcome: 'KARIBU MIZAN!', culture: 'East Africa Mesh Trade', mic: 'SEMA KUTENGENEZA RISITI', search: 'Tafuta jina...' },
+  hi: { code: 'hi-IN', name: 'Hindi', welcome: 'SWAGAT HAI!', culture: 'Bharat Gramin Mizan', mic: 'BOL KAR PARCHI BANAYEIN', search: 'Naam khojein...' },
   en: { code: 'en-PK', name: 'English', welcome: 'WELCOME TO MIZAN!', culture: 'Global Trade Collaboration', mic: 'SPEAK TO CREATE RECEIPT', search: 'Search record...' }
 };
 
@@ -171,7 +173,7 @@ const [mic, setMic] = useState(false);
 const [msg, setMsg] = useState('');
 const [scamOpen, setScamOpen] = useState(false);
 const [verifyOpen, setVerifyOpen] = useState(Boolean(urlProof));
-const [guideOpen, setGuideOpen] = useState(false); const [survOpen, setSurvOpen] = useState(false);
+const [guideOpen, setGuideOpen] = useState(false); const [survOpen, setSurvOpen] = useState(false); const [calcVal, setCalcVal] = useState('100');
 const [scamIn, setScamIn] = useState('');
 const [vSeal, setVSeal] = useState(urlProof ? urlProof.seal || '' : '');
 const [vOtp, setVOtp] = useState(urlProof ? urlProof.otp || '' : '');
@@ -448,6 +450,7 @@ E('button', { onClick: () => shareSMS(b), className: 'act-sms' }, 'Keypad SMS'),
 );
 };
 ReactDOM.createRoot(document.getElementById('root')!).render(E(App, null));
+
 
 
 
