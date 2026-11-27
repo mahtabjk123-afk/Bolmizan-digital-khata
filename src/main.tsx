@@ -200,7 +200,7 @@ if (!raw) { ref.current?.focus(); flash('Pehle naam aur raqam likhein'); return;
 const p = parseEntry(raw);
 const ft = forced || p.type;
 if (p.amount <= 0) { flash('Raqam bhi likhein'); return; }
-const prevHash = bills.length ? makeSeal(bills.id + '|' + bills.amount + '|' + (bills.chainHash || '')) : 'GENESIS-MZN'; const chainHash = makeSeal(prevHash + '|' + p.customerName + '|' + p.amount); const item = { id: String(Date.now()), prevHash, chainHash, role, customerName: p.customerName, customerPhone: phone.trim() || p.extractedPhone, amount: p.amount, type: ft, details: p.details, extra: extra.trim(), createdAt: Date.now() };
+const prevHash = bills.length ? makeSeal(bills.at(0)?.id + '|' + bills.at(0)?.amount + '|' + (bills.at(0)?.chainHash || '')) : 'GENESIS-MZN'; const chainHash = makeSeal(prevHash + '|' + p.customerName + '|' + p.amount); const item = { id: String(Date.now()), prevHash, chainHash, role, customerName: p.customerName, customerPhone: phone.trim() || p.extractedPhone, amount: p.amount, type: ft, details: p.details, extra: extra.trim(), createdAt: Date.now() };
 setBills([item, ...bills]);
 setText(''); setExtra(''); setPhone('');
 const out = makeParchiPNG(item, shop, rCfg, lCfg);
@@ -450,6 +450,7 @@ E('button', { onClick: () => shareSMS(b), className: 'act-sms' }, 'Keypad SMS'),
 );
 };
 ReactDOM.createRoot(document.getElementById('root')!).render(E(App, null));
+
 
 
 
