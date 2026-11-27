@@ -144,7 +144,7 @@ ctx.fillStyle = '#FEF3C7'; ctx.beginPath(); ctx.roundRect(80, 1165, 920, 200, 24
 ctx.strokeStyle = '#F59E0B'; ctx.lineWidth = 3; ctx.stroke();
 ctx.fillStyle = '#0F172A'; ctx.font = 'bold 24px sans-serif'; ctx.fillText('Apni Dukaan ya Clinic ka Free Co-Branded Khata Lagwayein:', 540, 1225);
 ctx.fillStyle = '#881337'; ctx.font = 'bold 34px sans-serif'; ctx.fillText(LIVE_URL, 540, 1280);
-ctx.fillStyle = '#064E3B'; ctx.font = 'bold 20px sans-serif'; ctx.fillText('BHALI KARE AAYA  •  MADE IN SAKRAND, SINDH', 540, 1330);
+ctx.fillStyle = '#064E3B'; ctx.font = 'bold 20px sans-serif'; ctx.fillText(b.role === 'EXPORT' ? 'INDUS HERITAGE ORIGIN: SAKRAND, SINDH • DIRECT TRADE' : 'BHALI KARE AAYA  •  MADE IN SAKRAND, SINDH', 540, 1330);
 return { dataUrl: c.toDataURL('image/png'), seal, otp, proofUrl };
 };
 const loadBills = (): any[] => {
@@ -450,6 +450,7 @@ E('button', { onClick: () => shareSMS(b), className: 'act-sms' }, 'Keypad SMS'),
 );
 };
 ReactDOM.createRoot(document.getElementById('root')!).render(E(App, null));
+
 
 
 
