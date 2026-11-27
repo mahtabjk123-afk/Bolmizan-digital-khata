@@ -200,7 +200,7 @@ if (!raw) { ref.current?.focus(); flash('Pehle naam aur raqam likhein'); return;
 const p = parseEntry(raw);
 const ft = forced || p.type;
 if (p.amount <= 0) { flash('Raqam bhi likhein'); return; }
-const item = { id: String(Date.now()), role, customerName: p.customerName, customerPhone: phone.trim() || p.extractedPhone, amount: p.amount, type: ft, details: p.details, extra: extra.trim(), createdAt: Date.now() };
+const prevHash = bills.length ? makeSeal(bills.id + '|' + bills.amount + '|' + (bills.chainHash || '')) : 'GENESIS-MZN'; const chainHash = makeSeal(prevHash + '|' + p.customerName + '|' + p.amount); const item = { id: String(Date.now()), prevHash, chainHash, role, customerName: p.customerName, customerPhone: phone.trim() || p.extractedPhone, amount: p.amount, type: ft, details: p.details, extra: extra.trim(), createdAt: Date.now() };
 setBills([item, ...bills]);
 setText(''); setExtra(''); setPhone('');
 const out = makeParchiPNG(item, shop, rCfg, lCfg);
@@ -431,7 +431,7 @@ E('div', { className: 'row' },
 E('div', { style: { flex: 1, minWidth: 0, cursor: 'pointer' }, onClick: () => setSearch(b.customerName) },
 E('div', { style: { fontWeight: 900, fontSize: '16px' } }, b.customerName),
 E('div', { style: { fontSize: '12px', color: '#64748B', marginTop: '2px' } }, (b.extra ? b.extra + ' | ' : '') + b.details),
-E('div', { style: { fontSize: '10px', fontWeight: 800, color: '#065F46', marginTop: '3px' } }, 'Seal: ' + bSeal + ' • OTP: ' + bOtp)
+E('div', { style: { fontSize: '10px', fontWeight: 800, color: '#065F46', marginTop: '3px' } }, 'Seal: ' + bSeal + ' • OTP: ' + bOtp + (b.chainHash ? ' • Chain: ' + b.chainHash : ''))
 ),
 E('div', { style: { textAlign: 'right' } },
 E('div', { style: { fontWeight: 900, fontSize: '18px', color: isPaid ? '#059669' : '#E11D48' } }, 'Rs. ' + Number(b.amount).toLocaleString()),
@@ -450,6 +450,7 @@ E('button', { onClick: () => shareSMS(b), className: 'act-sms' }, 'Keypad SMS'),
 );
 };
 ReactDOM.createRoot(document.getElementById('root')!).render(E(App, null));
+
 
 
 
