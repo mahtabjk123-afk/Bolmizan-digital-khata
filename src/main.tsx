@@ -170,7 +170,7 @@ const [mic, setMic] = useState(false);
 const [msg, setMsg] = useState('');
 const [scamOpen, setScamOpen] = useState(false);
 const [verifyOpen, setVerifyOpen] = useState(Boolean(urlProof));
-const [guideOpen, setGuideOpen] = useState(false);
+const [guideOpen, setGuideOpen] = useState(false); const [survOpen, setSurvOpen] = useState(false);
 const [scamIn, setScamIn] = useState('');
 const [vSeal, setVSeal] = useState(urlProof ? urlProof.seal || '' : '');
 const [vOtp, setVOtp] = useState(urlProof ? urlProof.otp || '' : '');
@@ -350,7 +350,7 @@ E('div', { className: 'row', style: { marginTop: '10px', justifyContent: 'center
 E('button', { onClick: () => setVerifyOpen(!verifyOpen), className: 'pill-gold' }, 'Verify?'),
 E('button', { onClick: () => setScamOpen(!scamOpen), className: 'pill-red' }, 'Scam?'),
 E('button', { onClick: () => setGuideOpen(!guideOpen), className: 'pill' }, 'Backup'),
-E('button', { onClick: invite, className: 'pill' }, 'Invite')
+E('button', { onClick: () => setSurvOpen(!survOpen), className: 'pill-gold' }, 'Kisan/Help'), E('button', { onClick: invite, className: 'pill' }, 'Invite')
 )
 )
 ),
@@ -447,6 +447,7 @@ E('button', { onClick: () => shareSMS(b), className: 'act-sms' }, 'Keypad SMS'),
 );
 };
 ReactDOM.createRoot(document.getElementById('root')!).render(E(App, null));
+
 
 
 
